@@ -37,4 +37,12 @@ Testing--Liz W
 #Hi
 #Rima
 
+<<<<<<< HEAD
+
+=======
+#jenn testing
+hello greetings how do ya do
+#Anjani P.
+>>>>>>> 54fa84e441a329eceebe09a76c4e859af4c20970
+
 #Nicole Allen
