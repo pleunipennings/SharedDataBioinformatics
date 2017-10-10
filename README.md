@@ -25,3 +25,5 @@
 #Great to see many of you here! 
 
 #Jacob Daniel Elliott
+What's up everyone, hurry up and do this! -Sam
+What's up everyone? - Sam
