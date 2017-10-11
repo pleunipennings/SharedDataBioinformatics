@@ -5,7 +5,7 @@
 
 <<<<<<< HEAD
 #Victoria
-#Milo
+#Milo: "For what is man that he should live out the life time of his God?" -Moby Dick
 =======
 # hi, how is everyone - Hasan
 >>>>>>> 7f2bbe0df5459fe241d598122b6931332dcc1590
