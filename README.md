@@ -3,7 +3,8 @@
 # SharedDataBioinformatics
 
 #In this project the students in the bioinformatics class are going to collaborate on code and research. 
-ko
+#Ricky was here. Hi everyone! 
+
 <<<<<<< HEAD
 #Victoria
 <<<<<<< HEAD
