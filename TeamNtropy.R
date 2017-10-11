@@ -1,0 +1,1 @@
+#Team NTROPY. Albert, Liana, Alejandro's project on graphing frequency of mutations on each location of gene
