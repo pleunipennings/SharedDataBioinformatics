@@ -5,7 +5,12 @@
 
 <<<<<<< HEAD
 #Victoria
+<<<<<<< HEAD
 #Milo: "For what is man that he should live out the life time of his God?" -Moby Dick
+=======
+#Milo
+#kellenisgreatNOT
+>>>>>>> 88842fb114da24992c261a1b4e1bc2c3873e91e1
 =======
 # hi, how is everyone - Hasan
 >>>>>>> 7f2bbe0df5459fe241d598122b6931332dcc1590
@@ -23,6 +28,8 @@
 #gabriela's test
 
 #Jasmine S.
+
+#Fernando Lorenzo's here :D
 
 #Great to see many of you here! 
 
@@ -51,3 +58,5 @@ hello greetings how do ya do
 
 #Natalie Fiutek
 
+#Avery has entered the matrix, file corrupted...Attack Commencing in 30 seconds (game refference)
+#Liana was here
