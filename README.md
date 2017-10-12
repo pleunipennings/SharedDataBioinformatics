@@ -1,10 +1,9 @@
-<<<<<<< HEAD
+
 hey 
 =======
 =======
 #Will test
 
->>>>>>> 777f46ffb558ce98c949914406466c968d4d4fd2
 Team Dengue Fever - 100% caffeinated
 #hi N is here
 # Fran was here :) 
@@ -18,17 +17,17 @@ Team Dengue Fever - 100% caffeinated
 #In this project the students in the bioinformatics class are going to collaborate on code and research. 
 #Ricky was here. Hi everyone! 
 
-<<<<<<< HEAD
+
 #Victoria
-<<<<<<< HEAD
+
 #Milo: "For what is man that he should live out the life time of his God?" -Moby Dick
 =======
 #Milo
 #kellenisgreatNOT
->>>>>>> 88842fb114da24992c261a1b4e1bc2c3873e91e1
+
 =======
 # hi, how is everyone - Hasan
->>>>>>> 7f2bbe0df5459fe241d598122b6931332dcc1590
+
 #Victoria was here
 
 #Adrienne needs help 
@@ -63,15 +62,13 @@ Testing--Liz W
 #Hi
 #Rima
 
-<<<<<<< HEAD
-
 
 Test
 =======
 #jenn testing
 hello greetings how do ya do
 #Anjani P.
->>>>>>> 54fa84e441a329eceebe09a76c4e859af4c20970
+
 
 #Nicole Allen
 
@@ -80,10 +77,17 @@ hello greetings how do ya do
 #Avery has entered the matrix, file corrupted...Attack Commencing in 30 seconds (game refference)
 #Liana was here
 took long enough
+A line I wrote on my local computer
+A line from my local computer
+This is a line from R studio -Annie
+
+#becs is lost AF, i hate this
+=======
 
 This is a line from R studio -Annie
 #This is Jesse
 #hmm
+
 
 
 
