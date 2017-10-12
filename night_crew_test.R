@@ -50,10 +50,17 @@ levels(data$combo) <- gsub("5", "yesAA yesCPG", levels(data$combo))
 #building numbers for letter might not be needed
 data$number<- data$WTnt
 data$number<- as.factor(data$num)
+<<<<<<< HEAD
 levels(data$number) <- gsub("a", as.numeric("1"), levels(data$num))
 levels(data$number) <- gsub("c", as.numeric("2"), levels(data$num))
 levels(data$number) <- gsub("g", as.numeric("3"), levels(data$num))
 levels(data$number) <- gsub("t", as.numeric("4"), levels(data$num))
+=======
+levels(data$number) <- gsub("a", as.numeric("1"), levels(data$number))
+levels(data$number) <- gsub("c", as.numeric("2"), levels(data$number))
+levels(data$number) <- gsub("g", as.numeric("3"), levels(data$number))
+levels(data$number) <- gsub("t", as.numeric("4"), levels(data$number))
+>>>>>>> 3e5a94a9e397f67661fa5d557f539158387e065e
 
 #graph 1 Synonymous Sites
 
