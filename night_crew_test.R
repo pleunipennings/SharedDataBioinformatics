@@ -181,6 +181,7 @@ ggplot(aes(factor(number), MeanFreq), data = syndata)+
     geom_jitter(data = synNNdata, aes(factor(number), MeanFreq),fill=5, col = "red") +
     geom_errorbar(data = synNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     geom_point(data =synNNa, aes('1',median(c(median(lowerConf),median(upperConf)))))+
+    geom_jitter(data = synNYdata, aes(factor(number), MeanFreq),fill=5, col = "blue")
     
 
 
