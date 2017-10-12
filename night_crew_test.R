@@ -57,6 +57,16 @@ levels(data$number) <- gsub("c", as.numeric("2"), levels(data$num))
 levels(data$number) <- gsub("g", as.numeric("3"), levels(data$num))
 levels(data$number) <- gsub("t", as.numeric("4"), levels(data$num))
 
+syn <- which(data$TypeOfSite=="syn")
+non <- which(data$TypeOfSite == "nonsyn")
+cols<-c("red","yellow","blue","green")
+colsyn<-cols[syndata$combo]
+
+#syn subset stuff
+syndata <- subset(data, TypeOfSite=="syn")
+noncpGdata <- subset(syndata, combo=="noAA noCPG")
+cpGdata<- subset(syndata, combo=="noAA yesCPG")
+
 
 #graph 1 Synonymous Sites
 
@@ -71,16 +81,10 @@ graph + geom_boxplot() +
                  fill="blue") +
     theme(axis.text.x = element_text(angle=65, vjust=0.6)) 
 
-syn <- which(data$TypeOfSite=="syn")
-non <- which(data$TypeOfSite == "nonsyn")
-cols<-c("red","yellow","blue","green")
-colsyn<-cols[syndata$combo]
 
 
-#syn subset stuff
-syndata <- subset(data, TypeOfSite=="syn")
-noncpGdata <- subset(syndata, combo=="noAA noCPG")
-cpGdata<- subset(syndata, combo=="noAA yesCPG")
+
+
 
 
 #building the subset plot
