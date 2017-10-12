@@ -100,7 +100,7 @@ ggplot(aes(factor(WTnt), MeanFreq), data = cpGdata)+
 #nonsyn sub set stuff
 nonsyndata <- subset(data, TypeOfSite=="nonsyn")
 nonnoncpGdata <- subset(nonsyndata, combo=="noAA noCPG")
-noncpGdata<- subset(nonsyndata, combo=="noAA yesCPG")
+nonyescpGdata<- subset(nonsyndata, combo=="noAA yesCPG")
 
 
 
