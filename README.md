@@ -1,3 +1,5 @@
+#Will test
+
 Team Dengue Fever - 100% caffeinated
 #hi N is here
 # Fran was here :) 
@@ -23,6 +25,8 @@ Team Dengue Fever - 100% caffeinated
 # hi, how is everyone - Hasan
 >>>>>>> 7f2bbe0df5459fe241d598122b6931332dcc1590
 #Victoria was here
+
+#Adrienne needs help 
 
 #The 11 AM class is here too! 
 
