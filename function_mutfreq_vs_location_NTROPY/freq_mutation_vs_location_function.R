@@ -1,0 +1,1 @@
+#script for Team NTROPY's function graphing Frequency of synonymous/nonsynonmous/other mutation vs location

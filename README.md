@@ -1,4 +1,6 @@
 
+Emily wuz here
+
 hey 
 =======
 =======
@@ -34,6 +36,7 @@ Team Dengue Fever - 100% caffeinated
 
 #The 11 AM class is here too! 
 
+#Hi
 
 #Yuri Nguyen
 
