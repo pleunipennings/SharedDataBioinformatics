@@ -60,12 +60,39 @@ levels(data$number) <- gsub("t", as.numeric("4"), levels(data$num))
 syn <- which(data$TypeOfSite=="syn")
 non <- which(data$TypeOfSite == "nonsyn")
 cols<-c("red","yellow","blue","green")
-colsyn<-cols[syndata$combo]
+#colsyn<-cols[syndata$combo]
 
 #syn subset stuff
 syndata <- subset(data, TypeOfSite=="syn")
-noncpGdata <- subset(syndata, combo=="noAA noCPG")
-cpGdata<- subset(syndata, combo=="noAA yesCPG")
+
+#syn subset for no AA and no CPG
+synNNdata <- subset(syndata, combo=="noAA noCPG")
+#syn subset for no AA and no CPG for a, c, g, t (for HIV all 4 should be here)
+synNNa <- subset(synNNdata, WTnt=="a")
+synNNc <- subset(synNNdata, WTnt=="c")
+synNNg  <- subset(synNNdata, WTnt=="g")
+synNNt  <- subset(synNNdata, WTnt=="t")
+#syn subset for no AA and yes CPG
+synNYdata<- subset(syndata, combo=="noAA yesCPG")
+#syn subset for no AA and yes CPG for a, c, g, t (for HIV a, t )
+synNYa <- subset(synNYdata, WTnt=="a")
+synNYc <- subset(synNYdata, WTnt=="c")
+synNYg  <- subset(synNYdata, WTnt=="g")
+synNYt  <- subset(synNYdata, WTnt=="t")
+#syn subset for yes AA and no CPG 
+synYNdata <- subset(syndata, combo=="yesAA noCPG")
+#syn subset for yes AA and no CPG for a, c, g, t (none for HIV)
+synNNa <- subset(synYNdata, WTnt=="a")
+synNNc <- subset(synYNdata, WTnt=="c")
+synNNg  <- subset(synYNdata, WTnt=="g")
+synNNt  <- subset(synYNdata, WTnt=="t")
+#syn subset for yes AA and yes CPG
+synYYdata <- subset(syndata, combo=="yesAA yesCPG")
+#syn subset for yes AA and yes CPG for a, c, g, t (none for HIV)
+synYYa <- subset(synYYdata, WTnt=="a")
+synYYc <- subset(synYYdata, WTnt=="c")
+synYYg  <- subset(synYYdata, WTnt=="g")
+synYYt  <- subset(synYYdata, WTnt=="t")
 
 
 #graph 1 Synonymous Sites
@@ -86,6 +113,7 @@ graph + geom_boxplot() +
 
 
 
+fora <- which(noncpGdata$WTnt=="a")
 
 #building the subset plot
 ggplot(aes(factor(WTnt), MeanFreq), data = noncpGdata)+
@@ -103,9 +131,37 @@ ggplot(aes(factor(WTnt), MeanFreq), data = cpGdata)+
 
 #nonsyn sub set stuff
 nonsyndata <- subset(data, TypeOfSite=="nonsyn")
-nonnoncpGdata <- subset(nonsyndata, combo=="noAA noCPG")
+
 nonyescpGdata<- subset(nonsyndata, combo=="noAA yesCPG")
 
+#nonsyn subset for no AA and no CPG
+nonNNdata <- subset(nonsyndata, combo=="noAA noCPG")
+#nonsyn subset for no AA and no CPG for a, c, g, t (for HIV all 4 should be here)
+nonsynNNa <- subset(nonNNdata, WTnt=="a")
+nonsynNNc <- subset(nonNNdata, WTnt=="c")
+nonsynNNg  <- subset(nonNNdata, WTnt=="g")
+nonsynNNt  <- subset(nonNNdata, WTnt=="t")
+#nonsyn subset for no AA and yes CPG
+nonNYdata<- subset(nonsyndata, combo=="noAA yesCPG")
+#syn subset for no AA and yes CPG for a, c, g, t (for HIV a, t )
+nonsynNYa <- subset(nonNYdata, WTnt=="a")
+nonsynNYc <- subset(nonNYdata, WTnt=="c")
+nonsynNYg  <- subset(nonNYdata, WTnt=="g")
+nonsynNYt  <- subset(nonNYdata, WTnt=="t")
+#syn subset for yes AA and no CPG 
+nonYNdata <- subset(nonsyndata, combo=="yesAA noCPG")
+#syn subset for yes AA and no CPG for a, c, g, t (for HIV all 4 should be here)
+nonsynNNa <- subset(nonYNdata, WTnt=="a")
+nonsynNNc <- subset(nonYNdata, WTnt=="c")
+nonsynNNg  <- subset(nonYNdata, WTnt=="g")
+nonsynNNt  <- subset(nonYNdata, WTnt=="t")
+#syn subset for yes AA and yes CPG
+nonYYdata <- subset(nonsyndata, combo=="yesAA yesCPG")
+#syn subset for yes AA and yes CPG for a, c, g, t (for HIV a, t)
+nonsynYYa <- subset(nonYYdata, WTnt=="a")
+nonsynYYc <- subset(nonYYdata, WTnt=="c")
+nonsynYYg  <- subset(nonYYdata, WTnt=="g")
+nonsynYYt  <- subset(nonYYdata, WTnt=="t")
 
 
 # not usinf ggplot
