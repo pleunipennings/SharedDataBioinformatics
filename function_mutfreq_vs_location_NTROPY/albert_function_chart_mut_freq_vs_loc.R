@@ -8,3 +8,4 @@ data<-read.csv("OverviewSelCoeff_BachelerFilter.csv")
 head(data)
 tail(data)
 summary(data)
+
