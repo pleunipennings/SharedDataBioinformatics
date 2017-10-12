@@ -95,6 +95,7 @@ ggplot(aes(factor(WTnt), MeanFreq), data = noncpGdata)+
     geom_point(aes())
 =======
     geom_point(aes('a',median(c(median(lowerConf),median(upperConf)))))
+# need to find lower and upper conf for each individual nuc (a,c,g,t)
 
 >>>>>>> 614ba77ac02b148533c8fc46ddfab6bc2e48893f
 ggplot(aes(factor(WTnt), MeanFreq), data = cpGdata)+
