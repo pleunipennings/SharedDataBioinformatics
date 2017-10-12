@@ -56,7 +56,6 @@ levels(data$num) <- gsub("g", as.numeric("3"), levels(data$num))
 levels(data$num) <- gsub("t", as.numeric("4"), levels(data$num))
 
 #graph 1 Synonymous Sites
-ggplot(MeanFreq, aes(WTnt), data = data)
 
 #still working
 graph <- ggplot(aes(factor(WTnt), MeanFreq, colour = combo), data = syndata)+
