@@ -10,7 +10,7 @@
 setwd("~/Desktop/Git")
 install.packages('ggplot2')
 install.packages("gridExtra")
-install.packages(dplyr)
+install.packages("dplyr")
 library(ggplot2)
 library(gridExtra)
 library(dplyr)
@@ -24,18 +24,18 @@ library(ggplot2)
 
 ?theme_set()
 # test plot sample
-g <- ggplot(mpg, aes(manufacturer, cty))
-g + geom_boxplot() + 
-    geom_dotplot(binaxis='y', 
-                 stackdir='center', 
-                 dotsize = .5, 
-                 fill="red") +
-    theme(axis.text.x = element_text(angle=65, vjust=0.6)) + 
-    labs(title="Box plot + Dot plot", 
-         subtitle="City Mileage vs Class: Each dot represents 1 row in source data",
-         caption="Source: mpg",
-         x="Class of Vehicle",
-         y="City Mileage")
+#g <- ggplot(mpg, aes(manufacturer, cty))
+#g + geom_boxplot() + 
+#    geom_dotplot(binaxis='y', 
+#                 stackdir='center', 
+#                 dotsize = .5, 
+ #                fill="red") +
+ #   theme(axis.text.x = element_text(angle=65, vjust=0.6)) + 
+#    labs(title="Box plot + Dot plot", 
+#         subtitle="City Mileage vs Class: Each dot represents 1 row in source data",
+#         caption="Source: mpg",
+#         x="Class of Vehicle",
+#         y="City Mileage")
 
 
 #building the combo lines to help sort 
