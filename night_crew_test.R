@@ -138,6 +138,12 @@ ggplot()+
 ?geom_errorbar
 
 
+#created 10/11
+ggplot(aes(factor(WTnt), MeanFreq), data = synNNdata)+
+    geom_jitter(col = "red") +
+    geom_errorbar(aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(aes('a',median(c(median(lowerConf),median(upperConf)))))
+
 #nonsyn sub set stuff
 nonsyndata <- subset(data, TypeOfSite=="nonsyn")
 
