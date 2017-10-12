@@ -97,9 +97,17 @@ synYYt  <- subset(synYYdata, WTnt=="t")
 
 #graph 1 Synonymous Sites
 
+
+
+
 #still working
-graph <- ggplot(aes(factor(WTnt), MeanFreq, colour = combo), data = syndata)+
-    geom_jitter()
+#graph <- 
+meansyn <- ((syndata$lowerConf+syndata$upperConf)/2)
+ggplot(aes(factor(WTnt), MeanFreq, colour = combo), data = syndata)+
+    #geom_jitter()+
+    geom_point()+
+    geom_errorbar(aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+    
 #not yet done
 graph + geom_boxplot() + 
     geom_dotplot(binaxis='y', 
@@ -113,10 +121,8 @@ graph + geom_boxplot() +
 
 
 
-fora <- which(noncpGdata$WTnt=="a")
-
 #building the subset plot
-ggplot(aes(factor(WTnt), MeanFreq), data = noncpGdata)+
+ggplot(aes(factor(WTnt), MeanFreq), data = synNYa)+
     geom_jitter(col = "red") +
     geom_errorbar(aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     geom_point(aes('a',median(c(median(lowerConf),median(upperConf)))))
@@ -125,8 +131,11 @@ ggplot(aes(factor(WTnt), MeanFreq), data = noncpGdata)+
 ggplot(aes(factor(WTnt), MeanFreq), data = cpGdata)+
     geom_jitter(color ="blue")
 
-
-
+ggplot()+
+    #geom_jitter(data = synNYa, aes(factor(WTnt), MeanFreq),col = "red") +
+    geom_errorbar(data = synNYa, aes(ymin = median(lowerConf), ymax = median(upperConf),position = 1, width = 0.2))+
+    geom_point(aes('a',median(c(median(lowerConf),median(upperConf)))),data = synNYa)
+?geom_errorbar
 
 
 #nonsyn sub set stuff
