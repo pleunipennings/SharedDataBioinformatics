@@ -89,7 +89,8 @@ graph + geom_boxplot() +
 
 #building the subset plot
 ggplot(aes(factor(WTnt), MeanFreq), data = noncpGdata)+
-    geom_jitter(col = "red") 
+    geom_jitter(col = "red") +
+    geom_errorbar(aes(ymin = lowerConf, ymax = upperConf), width = 0.2)
 ggplot(aes(factor(WTnt), MeanFreq), data = cpGdata)+
     geom_jitter(color ="blue")
 
