@@ -94,7 +94,10 @@ synYYc <- subset(synYYdata, WTnt=="c")
 synYYg  <- subset(synYYdata, WTnt=="g")
 synYYt  <- subset(synYYdata, WTnt=="t")
 
-
+alla <- subset(syndata, WTnt=="a")
+allc <- subset(syndata, WTnt=="c")
+allg <- subset(syndata, WTnt=="g")
+allt <- subset(syndata, WTnt=="t")
 #graph 1 Synonymous Sites
 
 
@@ -138,12 +141,17 @@ ggplot()+
 ?geom_errorbar
 
 
-#created 10/11
+#created 10/11 (bars are wrong)
 ggplot(aes(factor(WTnt), MeanFreq), data = synNNdata)+
-    geom_jitter(col = "red") +
-    geom_errorbar(aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(aes('a',median(c(median(lowerConf),median(upperConf)))))
-
+    geom_jitter(fill=5, col = "red") +
+    geom_errorbar(data = alla, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =alla, aes('a',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = allc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =allc, aes('c',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = allg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =allg, aes('g',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = allt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =allt, aes('t',median(c(median(lowerConf),median(upperConf)))))
 #nonsyn sub set stuff
 nonsyndata <- subset(data, TypeOfSite=="nonsyn")
 
