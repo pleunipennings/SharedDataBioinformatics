@@ -6,3 +6,5 @@ jacky
 # save changes
 # go to Git tab -> hit Commit
 # type message
+# pull -> commit
+# push
