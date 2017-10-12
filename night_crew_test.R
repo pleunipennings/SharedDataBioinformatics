@@ -90,7 +90,7 @@ graph + geom_boxplot() +
 #building the subset plot
 ggplot(aes(factor(WTnt), MeanFreq), data = noncpGdata)+
     geom_jitter(col = "red") 
-geom_jitter(aes(factor(WTnt), MeanFreq), data = cpGdata)+
+ggplot(aes(factor(WTnt), MeanFreq), data = cpGdata)+
     geom_jitter(color ="blue")
 
 
