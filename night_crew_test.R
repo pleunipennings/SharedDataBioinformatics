@@ -50,12 +50,11 @@ levels(data$combo) <- gsub("5", "yesAA yesCPG", levels(data$combo))
 
 #building numbers for letter might not be needed
 data$number<- data$WTnt
-data$number<- as.factor(data$num)
-
-levels(data$number) <- gsub("a", as.numeric("1"), levels(data$num))
-levels(data$number) <- gsub("c", as.numeric("2"), levels(data$num))
-levels(data$number) <- gsub("g", as.numeric("3"), levels(data$num))
-levels(data$number) <- gsub("t", as.numeric("4"), levels(data$num))
+data$number<- as.factor(data$number)
+levels(data$number) <- gsub("a", as.numeric("1"), levels(data$number))
+levels(data$number) <- gsub("c", as.numeric("2"), levels(data$number))
+levels(data$number) <- gsub("g", as.numeric("3"), levels(data$number))
+levels(data$number) <- gsub("t", as.numeric("4"), levels(data$number))
 
 syn <- which(data$TypeOfSite=="syn")
 non <- which(data$TypeOfSite == "nonsyn")
@@ -154,6 +153,7 @@ ggplot(aes(factor(WTnt), MeanFreq), data = synNNdata)+
 # combinging the differt colors
 #In HIV data there is no C,G change for synNY values
 ggplot(aes(factor(WTnt), MeanFreq), data = syndata)+
+    #synNNdata
     geom_jitter(data = synNNdata, aes(factor(WTnt), MeanFreq),fill=5, col = "red") +
     geom_errorbar(data = synNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     geom_point(data =synNNa, aes('a',median(c(median(lowerConf),median(upperConf)))))+
@@ -163,6 +163,7 @@ ggplot(aes(factor(WTnt), MeanFreq), data = syndata)+
     geom_point(data =synNNg, aes('g',median(c(median(lowerConf),median(upperConf)))))+
     geom_errorbar(data = synNNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     geom_point(data =synNNt, aes('t',median(c(median(lowerConf),median(upperConf)))))+
+    #synNYdata
     geom_jitter(data = synNYdata, aes(factor(WTnt), MeanFreq),fill=5, col = "blue")+
     geom_errorbar(data = synNYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     geom_point(data =synNYa, aes('a',median(c(median(lowerConf),median(upperConf)))))+
@@ -173,6 +174,14 @@ ggplot(aes(factor(WTnt), MeanFreq), data = syndata)+
     geom_errorbar(data = synNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     geom_point(data =synNYt, aes('t',median(c(median(lowerConf),median(upperConf)))))
 
+
+#tring out numbers
+ggplot(aes(factor(number), MeanFreq), data = syndata)+
+    #synNNdata
+    geom_jitter(data = synNNdata, aes(factor(number), MeanFreq),fill=5, col = "red") +
+    geom_errorbar(data = synNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNNa, aes('1',median(c(median(lowerConf),median(upperConf)))))+
+    
 
 
 
