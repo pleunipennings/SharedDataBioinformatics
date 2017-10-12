@@ -140,7 +140,6 @@ ggplot()+
 
 #created 10/11
 ggplot(aes(factor(WTnt), MeanFreq), data = synNNdata)+
-<<<<<<< HEAD
     geom_jitter(fill=5, col = "red") +
     geom_errorbar(data = alla, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     geom_point(data =alla, aes('a',median(c(median(lowerConf),median(upperConf)))))+
@@ -177,11 +176,9 @@ ggplot(aes(factor(WTnt), MeanFreq), data = syndata)+
 
 
 
-=======
     geom_jitter(col = "red") +
     geom_errorbar(aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     geom_point(aes('a',median(c(median(lowerConf),median(upperConf)))))
->>>>>>> 5747c0a0a548a940e861e5b445c260f88d136e37
 
 #nonsyn sub set stuff
 nonsyndata <- subset(data, TypeOfSite=="nonsyn")
