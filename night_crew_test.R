@@ -91,7 +91,12 @@ graph + geom_boxplot() +
 ggplot(aes(factor(WTnt), MeanFreq), data = noncpGdata)+
     geom_jitter(col = "red") +
     geom_errorbar(aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+<<<<<<< HEAD
     geom_point(aes())
+=======
+    geom_point(aes('a',median(c(median(lowerConf),median(upperConf)))))
+
+>>>>>>> 614ba77ac02b148533c8fc46ddfab6bc2e48893f
 ggplot(aes(factor(WTnt), MeanFreq), data = cpGdata)+
     geom_jitter(color ="blue")
 
