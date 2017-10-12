@@ -1,4 +1,5 @@
-
+Omar was here
+ANdrew 10/12
 Emily wuz here
 
 hey 
@@ -36,6 +37,7 @@ Team Dengue Fever - 100% caffeinated
 
 #The 11 AM class is here too! 
 
+#Darryl
 
 #Yuri Nguyen
 
@@ -60,6 +62,9 @@ adding a line
 This is a line from RStudio
 Amir Jaberi
 amir jaberi
+
+TEST
+=======
 Testing--Liz W
 #Hi
 #Rima
@@ -91,5 +96,8 @@ This is a line from R studio -Annie
 #hmm
 
 
+
+
+hi
 
 
