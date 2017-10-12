@@ -1,3 +1,4 @@
+krystal 
 Omar was here
 ANdrew 10/12
 Emily wuz here
@@ -99,5 +100,6 @@ This is a line from R studio -Annie
 
 
 hi
+#Hi!
 
 
