@@ -48,12 +48,12 @@ levels(data$combo) <- gsub("3", "yesAA noCPG", levels(data$combo))
 levels(data$combo) <- gsub("5", "yesAA yesCPG", levels(data$combo))
 
 #building numbers for letter might not be needed
-data$num<- data$WTnt
-data$num<- as.factor(data$num)
-levels(data$num) <- gsub("a", as.numeric("1"), levels(data$num))
-levels(data$num) <- gsub("c", as.numeric("2"), levels(data$num))
-levels(data$num) <- gsub("g", as.numeric("3"), levels(data$num))
-levels(data$num) <- gsub("t", as.numeric("4"), levels(data$num))
+data$number<- data$WTnt
+data$number<- as.factor(data$num)
+levels(data$number) <- gsub("a", as.numeric("1"), levels(data$number))
+levels(data$number) <- gsub("c", as.numeric("2"), levels(data$number))
+levels(data$number) <- gsub("g", as.numeric("3"), levels(data$number))
+levels(data$number) <- gsub("t", as.numeric("4"), levels(data$number))
 
 #graph 1 Synonymous Sites
 
