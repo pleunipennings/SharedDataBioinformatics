@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+krystal 
+>>>>>>> ba421546c6dd4214b6dc4413d8f1e1d2aca5bf21
 Omar was here
 ANdrew 10/12
 Emily wuz here
@@ -89,10 +93,13 @@ A line from my local computer
 This is a line from R studio -Annie
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Hey it's Annie
 =======
 =======
 >>>>>>> 5be4b36bcc5570828125c945c90793b2c2e2717d
+=======
+>>>>>>> ba421546c6dd4214b6dc4413d8f1e1d2aca5bf21
 
 #becs is lost AF, i hate this
 =======
@@ -105,9 +112,15 @@ This is a line from R studio -Annie
 
 
 hi
+<<<<<<< HEAD
 
 
 <<<<<<< HEAD
 >>>>>>> 54c909019f2f904d2084cd03c438fbbcb3060c28
 =======
 >>>>>>> 5be4b36bcc5570828125c945c90793b2c2e2717d
+=======
+#Hi!
+
+
+>>>>>>> ba421546c6dd4214b6dc4413d8f1e1d2aca5bf21
