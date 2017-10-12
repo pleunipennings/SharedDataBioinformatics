@@ -1,3 +1,5 @@
+#Will test
+
 Team Dengue Fever - 100% caffeinated
 #hi N is here
 # Fran was here :) 
@@ -70,3 +72,7 @@ hello greetings how do ya do
 
 #Avery has entered the matrix, file corrupted...Attack Commencing in 30 seconds (game refference)
 #Liana was here
+took long enough
+A line I wrote on my local computer
+A line from my local computer
+This is a line from R studio -Annie
