@@ -92,6 +92,7 @@ ggplot(aes(factor(WTnt), MeanFreq), data = noncpGdata)+
     geom_jitter(col = "red") +
     geom_errorbar(aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     geom_point(aes('a',median(c(median(lowerConf),median(upperConf)))))
+# need to find lower and upper conf for each individual nuc (a,c,g,t)
 
 ggplot(aes(factor(WTnt), MeanFreq), data = cpGdata)+
     geom_jitter(color ="blue")
