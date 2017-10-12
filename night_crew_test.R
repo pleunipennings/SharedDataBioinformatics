@@ -82,10 +82,10 @@ synNYt  <- subset(synNYdata, WTnt=="t")
 #syn subset for yes AA and no CPG 
 synYNdata <- subset(syndata, combo=="yesAA noCPG")
 #syn subset for yes AA and no CPG for a, c, g, t (none for HIV)
-synNNa <- subset(synYNdata, WTnt=="a")
-synNNc <- subset(synYNdata, WTnt=="c")
-synNNg  <- subset(synYNdata, WTnt=="g")
-synNNt  <- subset(synYNdata, WTnt=="t")
+synYNa <- subset(synYNdata, WTnt=="a")
+synYNc <- subset(synYNdata, WTnt=="c")
+synYNg  <- subset(synYNdata, WTnt=="g")
+synYNt  <- subset(synYNdata, WTnt=="t")
 #syn subset for yes AA and yes CPG
 synYYdata <- subset(syndata, combo=="yesAA yesCPG")
 #syn subset for yes AA and yes CPG for a, c, g, t (none for HIV)
@@ -152,6 +152,34 @@ ggplot(aes(factor(WTnt), MeanFreq), data = synNNdata)+
     geom_point(data =allg, aes('g',median(c(median(lowerConf),median(upperConf)))))+
     geom_errorbar(data = allt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     geom_point(data =allt, aes('t',median(c(median(lowerConf),median(upperConf)))))
+
+
+# combinging the differt colors
+#In HIV data there is no C,G change for synNY values
+ggplot(aes(factor(WTnt), MeanFreq), data = syndata)+
+    geom_jitter(data = synNNdata, aes(factor(WTnt), MeanFreq),fill=5, col = "red") +
+    geom_errorbar(data = synNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNNa, aes('a',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = synNNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNNc, aes('c',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = synNNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNNg, aes('g',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = synNNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNNt, aes('t',median(c(median(lowerConf),median(upperConf)))))+
+    geom_jitter(data = synNYdata, aes(factor(WTnt), MeanFreq),fill=5, col = "blue")+
+    geom_errorbar(data = synNYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNYa, aes('a',median(c(median(lowerConf),median(upperConf)))))+
+    #geom_errorbar(data = synNYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    #geom_point(data =synNYc, aes('c',median(c(median(lowerConf),median(upperConf)))))+
+   # geom_errorbar(data = synNYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+   # geom_point(data =synNYg, aes('g',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = synNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNYt, aes('t',median(c(median(lowerConf),median(upperConf)))))
+
+
+
+
+
 #nonsyn sub set stuff
 nonsyndata <- subset(data, TypeOfSite=="nonsyn")
 
