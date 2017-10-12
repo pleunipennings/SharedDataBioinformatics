@@ -8,3 +8,5 @@ jacky
 # type message
 # pull -> commit
 # push
+
+#pull->#push->#committ 
