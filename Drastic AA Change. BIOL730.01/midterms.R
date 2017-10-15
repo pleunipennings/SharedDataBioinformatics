@@ -1,6 +1,6 @@
 library(ape)
 library(seqinr)
-library()
+library(Biostrings)
 setwd("/Users/hasansulaeman/Google Drive/Bioinformatics/InfluenzaVirus")
 seqs = read.dna("InfluenzaAvirus_NA_H1N1.fasta.mu.fasta", format = "fasta", as.character=TRUE)
 a=nrow(seqs)
