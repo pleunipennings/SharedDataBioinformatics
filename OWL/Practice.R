@@ -18,3 +18,4 @@ HIVdata[CpG,7]->loc2
 
 
 
+
