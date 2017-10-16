@@ -1,4 +1,3 @@
-setwd("~/Desktop")
 read.csv("OverviewSelCoeff_BachelerFilter.csv")->HIVdata
 print(HIVdata)
 summary(HIVdata)
