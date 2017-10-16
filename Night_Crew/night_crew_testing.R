@@ -62,30 +62,35 @@ cols<-c("red","yellow","blue","green")
 #colsyn<-cols[syndata$combo]
 
 #adding x values
-data$one<- 1
-data$two<- 2
-data$three<- 3
-data$four<- 4
-data$five<- 5
-data$six<-6
-data$seven<- 7
-data$eight<- 8
-data$nine<- 9
-data$ten<- 10
-data$eliven<- 11
-data$twelve<- 12
-data$thirteen<- 13
-data$fourteen<- 14
-data$fifteen<- 15
-data$sixteen<- 16
+#data$one<- 1
+#data$two<- 2
+#data$three<- 3
+#data$four<- 4
+#data$five<- 5
+#data$six<-6
+#data$seven<- 7
+#data$eight<- 8
+#data$nine<- 9
+#data$ten<- 10
+#data$eliven<- 11
+#data$twelve<- 12
+#data$thirteen<- 13
+#data$fourteen<- 14
+#data$fifteen<- 15
+#data$sixteen<- 16
 
 data$xvalue<- 0
 
 #syn subset stuff
 syndata <- subset(data, TypeOfSite=="syn")
 if(syndata$combo=="noAA noCPG"){
-    if (syndata$WTnt=="a") (syndata$xvalue=1)
+    
+    if (syndata$WTnt[]=="a"){ (syndata$xvalue<-1)}
+    if (syndata$WTnt[]=="c"){ (syndata$xvalue<-2)}
+    if (syndata$WTnt[]=="g"){ (syndata$xvalue<-3)}
+    if (syndata$WTnt[]=="t"){ (syndata$xvalue<-4)}
 }
+
 
 
 
