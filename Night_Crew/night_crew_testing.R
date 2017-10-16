@@ -53,9 +53,10 @@ levels(data$number) <- gsub("t", as.numeric("4"), levels(data$number))
 
 #syn <- which(data$TypeOfSite=="syn")
 #non <- which(data$TypeOfSite == "nonsyn")
-cols<-c("red","yellow","blue","green")
+cols<-c("why","did","I","dothis")
 colsyn<-cols[syndata$combo]
-
+colall<-cols[data$combo]
+colnon<-cols[nonsyndata$combo]
 #adding x values
 #data$one<- 1
 #data$two<- 2
@@ -75,6 +76,7 @@ colsyn<-cols[syndata$combo]
 #data$sixteen<- 16
 
 data$xvalue<- 0
+data$color <- 0
 
 
 #givine values to each nucecotide and if they have a cetain combo
@@ -82,36 +84,52 @@ data$xvalue<- 0
 for (i in 1:length(data$num)) {
     if (data$bigAAChange[i] == 0 && data$makesCpG[i] == 0 && data$WTnt[i] == "a") {
         data$xvalue[i] <- 1
+        data$color[i] <- "blue"
     } else if (data$bigAAChange[i] == 1 && data$makesCpG[i] == 0 && data$WTnt[i] == "a") {
         data$xvalue[i] <- 2
+        data$color[i] <- "red"
     } else if (data$bigAAChange[i] == 0 && data$makesCpG[i] == 1 && data$WTnt[i] == "a") {
         data$xvalue[i] <- 3
+        data$color[i] <- "green"
     } else if (data$bigAAChange[i] == 1 && data$makesCpG[i] == 1 && data$WTnt[i] == "a") {
         data$xvalue[i] <- 4
+        data$color[i] <- "purple"
     } else if (data$bigAAChange[i] == 0 && data$makesCpG[i] == 0 && data$WTnt[i] == "g") {
         data$xvalue[i] <- 5
+        data$color[i] <- "blue"
     } else if (data$bigAAChange[i] == 1 && data$makesCpG[i] == 0 && data$WTnt[i] == "g") {
         data$xvalue[i] <- 6
+        data$color[i] <- "red"
     } else if (data$bigAAChange[i] == 0 && data$makesCpG[i] == 1 && data$WTnt[i] == "g") {
         data$xvalue[i] <- 7
+        data$color[i] <- "green"
     } else if (data$bigAAChange[i] == 1 && data$makesCpG[i] == 1 && data$WTnt[i] == "g") {
         data$xvalue[i] <- 8
+        data$color[i] <- "purple"
     } else if (data$bigAAChange[i] == 0 && data$makesCpG[i] == 0 && data$WTnt[i] == "c") {
         data$xvalue[i] <- 9
+        data$color[i] <- "blue"
     } else if (data$bigAAChange[i] == 1 && data$makesCpG[i] == 0 && data$WTnt[i] == "c") {
         data$xvalue[i] <- 10
+        data$color[i] <- "red"
     } else if (data$bigAAChange[i] == 0 && data$makesCpG[i] == 1 && data$WTnt[i] == "c") {
         data$xvalue[i] <- 11
+        data$color[i] <- "green"
     } else if (data$bigAAChange[i] == 1 && data$makesCpG[i] == 1 && data$WTnt[i] == "c") {
         data$xvalue[i] <- 12
+        data$color[i] <- "purple"
     } else if (data$bigAAChange[i] == 0 && data$makesCpG[i] == 0 && data$WTnt[i] == "t") {
         data$xvalue[i] <- 13
+        data$color[i] <- "blue"
     } else if (data$bigAAChange[i] == 1 && data$makesCpG[i] == 0 && data$WTnt[i] == "t") {
         data$xvalue[i] <- 14
+        data$color[i] <- "red"
     } else if (data$bigAAChange[i] == 0 && data$makesCpG[i] == 1 && data$WTnt[i] == "t") {
         data$xvalue[i] <- 15
+        data$color[i] <- "green"
     } else if (data$bigAAChange[i] == 1 && data$makesCpG[i] == 1 && data$WTnt[i] == "t") {
         data$xvalue[i] <- 16
+        data$color[i] <- "purple"
     }
 }
 
@@ -256,29 +274,29 @@ ggplot(aes(factor(WTnt), MeanFreq), data = syndata)+
 
 
 #new functions
-ggplot(aes(factor(WTnt), MeanFreq), data = syndata)+
+ggplot(aes(factor(xvalue), MeanFreq), data = syndata)+
     #synNNdata
-    scale_x_discrete() +
-    geom_jitter(aes(colour = colsyn, x = factor(WTnt)),position = position_jitter(width = .05), alpha = 0.5) +
+    scale_x_discrete(limits=c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16),breaks=c("2","6","10", "14"), labels=c("a", "g", "c","t"))+
+    geom_jitter(aes(colour = colsyn, x = factor(xvalue)),position = position_jitter(width = .2), alpha = 0.5) +
     #facet_wrap(~ factor(WTnt))+
     geom_errorbar(data = synNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_boxplot(outlier.colour = NA, position = position_dodge(width=0.9))+
-    geom_point(data =synNNa, aes('a',median(c(median(lowerConf),median(upperConf)))))+
+    #geom_boxplot(outlier.colour = NA, position = position_dodge(width=0.9))+
+    geom_point(data =synNNa, aes('1',median(c(median(lowerConf),median(upperConf)))))+
     geom_errorbar(data = synNNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =synNNc, aes('c',median(c(median(lowerConf),median(upperConf)))))+
+    geom_point(data =synNNc, aes('9',median(c(median(lowerConf),median(upperConf)))))+
     geom_errorbar(data = synNNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =synNNg, aes('g',median(c(median(lowerConf),median(upperConf)))))+
+    geom_point(data =synNNg, aes('5',median(c(median(lowerConf),median(upperConf)))))+
     geom_errorbar(data = synNNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =synNNt, aes('t',median(c(median(lowerConf),median(upperConf)))))+
+    geom_point(data =synNNt, aes('13',median(c(median(lowerConf),median(upperConf)))))+
     #synNYdata
     geom_errorbar(data = synNYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =synNYa, aes('a',median(c(median(lowerConf),median(upperConf)))))+
+    geom_point(data =synNYa, aes('3',median(c(median(lowerConf),median(upperConf)))))+
     #geom_errorbar(data = synNYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    #geom_point(data =synNYc, aes('c',median(c(median(lowerConf),median(upperConf)))))+
+    #geom_point(data =synNYc, aes('10',median(c(median(lowerConf),median(upperConf)))))+
     # geom_errorbar(data = synNYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    # geom_point(data =synNYg, aes('g',median(c(median(lowerConf),median(upperConf)))))+
+    # geom_point(data =synNYg, aes('6',median(c(median(lowerConf),median(upperConf)))))+
     geom_errorbar(data = synNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =synNYt, aes('t',median(c(median(lowerConf),median(upperConf)))))
+    geom_point(data =synNYt, aes('15',median(c(median(lowerConf),median(upperConf)))))
 
 
 ?facet_wrap()
@@ -307,7 +325,7 @@ ggplot(aes(factor(number), MeanFreq), data = syndata)+
     ggplot(aes(factor(xvalue), MeanFreq), data = data)+
         #synNNdata 
         geom_jitter(data = synNNdata, aes(factor(xvalue), MeanFreq),fill=5, col = "red") +
-        scale_x_discrete(limits=c(1,2,3,4,5,6,7,8,9,10,11,12,13,15,16))+
+        #scale_x_discrete(limits=c(1,2,3,4,5,6,7,8,9,10,11,12,13,15,16))+
         geom_errorbar(data = synNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
         geom_point(data =synNNa, aes('1',median(c(median(lowerConf),median(upperConf)))))+
         geom_errorbar(data = synNNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
@@ -351,10 +369,10 @@ nonsynNYt  <- subset(nonNYdata, WTnt=="t")
 #syn subset for yes AA and no CPG 
 nonYNdata <- subset(nonsyndata, combo=="yesAA noCPG")
 #syn subset for yes AA and no CPG for a, c, g, t (for HIV all 4 should be here)
-nonsynNNa <- subset(nonYNdata, WTnt=="a")
-nonsynNNc <- subset(nonYNdata, WTnt=="c")
-nonsynNNg  <- subset(nonYNdata, WTnt=="g")
-nonsynNNt  <- subset(nonYNdata, WTnt=="t")
+nonsynYNa <- subset(nonYNdata, WTnt=="a")
+nonsynYNc <- subset(nonYNdata, WTnt=="c")
+nonsynYNg  <- subset(nonYNdata, WTnt=="g")
+nonsynYNt  <- subset(nonYNdata, WTnt=="t")
 #syn subset for yes AA and yes CPG
 nonYYdata <- subset(nonsyndata, combo=="yesAA yesCPG")
 #syn subset for yes AA and yes CPG for a, c, g, t (for HIV a, t)
@@ -378,3 +396,148 @@ boxplot(MeanFreq~as.numeric(WTnt), data=syndata, col=colsyn)
 
 
 #graph 2 Non-synomymous Sites
+syndata <- subset(data, TypeOfSite=="syn")
+datatww <- subset(data, TypeOfSite=="syn" | TypeOfSite=="nonsyn")
+coltww<-cols[datatww$combo]
+
+ggplot(aes(factor(xvalue), MeanFreq), data = datatww)+
+    #synNNdata 
+    geom_jitter(data = datatww, aes(factor(xvalue), MeanFreq),fill=5, col = datatww$color) +
+    #facet_wrap(~ TypeOfSite)+
+    scale_x_discrete(limits=c(1,2,3,4,5,6,7,8,9,10,11,12,13,15,16))+
+    geom_errorbar(data = synNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNNa, aes('1',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = synNNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNNc, aes('9',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = synNNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNNg, aes('5',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = synNNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNNt, aes('13',median(c(median(lowerConf),median(upperConf)))))+
+    #synNYdata
+    #geom_jitter(data = synNYdata, aes(factor(xvalue), MeanFreq),fill=5, col = "blue")+
+    geom_errorbar(data = synNYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNYa, aes('3',median(c(median(lowerConf),median(upperConf)))))+
+    #geom_errorbar(data = synNYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    #geom_point(data =synNYc, aes('c',median(c(median(lowerConf),median(upperConf)))))+
+    # geom_errorbar(data = synNYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    # geom_point(data =synNYg, aes('g',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = synNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNYt, aes('15',median(c(median(lowerConf),median(upperConf)))))
+
+ggplot(aes(factor(xvalue), MeanFreq), data = nonsyndata)+
+    #synNNdata
+    scale_x_discrete(limits=c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16),breaks=c("2","6","10", "14"), labels=c("a", "g", "c","t"))+
+    geom_jitter(aes(colour = colnon, x = factor(xvalue)),position = position_jitter(width = .2), alpha = 0.5) +
+    #facet_wrap(~ factor(WTnt))+
+    geom_errorbar(data = nonsynNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    #geom_boxplot(outlier.colour = NA, position = position_dodge(width=0.9))+
+    geom_point(data =nonsynNNa, aes('1',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynNNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynNNc, aes('9',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynNNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynNNg, aes('5',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynNNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynNNt, aes('13',median(c(median(lowerConf),median(upperConf)))))+
+    #
+    geom_errorbar(data = nonsynNYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynNYa, aes('3',median(c(median(lowerConf),median(upperConf)))))+
+    #geom_errorbar(data = nonsynNYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    #geom_point(data =nonsynNYc, aes('10',median(c(median(lowerConf),median(upperConf)))))+
+    #geom_errorbar(data = nonsynNYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    #geom_point(data =nonsynNYg, aes('6',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynNYt, aes('15',median(c(median(lowerConf),median(upperConf)))))+
+   #
+     geom_errorbar(data = nonsynYNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynYNa, aes('1',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynYNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynYNc, aes('9',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynYNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynYNg, aes('5',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynYNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynYNt, aes('13',median(c(median(lowerConf),median(upperConf)))))+
+    #
+    geom_errorbar(data = nonsynYYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynYYa, aes('3',median(c(median(lowerConf),median(upperConf)))))+
+    #geom_errorbar(data = nonsynYYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    #geom_point(data =nonsynYYc, aes('10',median(c(median(lowerConf),median(upperConf)))))+
+    #geom_errorbar(data = nonsynYYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    #geom_point(data =nonsynYYg, aes('6',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynNYt, aes('15',median(c(median(lowerConf),median(upperConf)))))
+
+
+
+
+
+#please work
+
+
+ggplot(aes(factor(xvalue), MeanFreq), data = datatww)+
+    #synNNdata
+    scale_x_discrete(limits=c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16),breaks=c("2","6","10", "14"), labels=c("a", "g", "c","t"))+
+    geom_jitter(data= syndata,aes(colour = colsyn, x = factor(xvalue)),position = position_jitter(width = .2), alpha = 0.5) +
+    facet_wrap(~ TypeOfSite)+
+    geom_errorbar(data = synNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNNa, aes('1',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = synNNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNNc, aes('9',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = synNNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNNg, aes('5',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = synNNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNNt, aes('13',median(c(median(lowerConf),median(upperConf)))))+
+    #synNYdata
+    geom_errorbar(data = synNYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNYa, aes('3',median(c(median(lowerConf),median(upperConf)))))+
+    #geom_errorbar(data = synNYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    #geom_point(data =synNYc, aes('10',median(c(median(lowerConf),median(upperConf)))))+
+    # geom_errorbar(data = synNYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    # geom_point(data =synNYg, aes('6',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = synNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =synNYt, aes('15',median(c(median(lowerConf),median(upperConf)))))+
+
+
+    geom_jitter(data= nonsyndata,aes(colour = colnon, x = factor(xvalue)),position = position_jitter(width = .2), alpha = 0.5) +
+    geom_errorbar(data = nonsynNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynNNa, aes('1',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynNNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynNNc, aes('9',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynNNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynNNg, aes('5',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynNNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynNNt, aes('13',median(c(median(lowerConf),median(upperConf)))))+
+    #
+    geom_errorbar(data = nonsynNYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynNYa, aes('3',median(c(median(lowerConf),median(upperConf)))))+
+    #geom_errorbar(data = nonsynNYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    #geom_point(data =nonsynNYc, aes('10',median(c(median(lowerConf),median(upperConf)))))+
+    #geom_errorbar(data = nonsynNYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    #geom_point(data =nonsynNYg, aes('6',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynNYt, aes('15',median(c(median(lowerConf),median(upperConf)))))+
+    #
+    geom_errorbar(data = nonsynYNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynYNa, aes('1',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynYNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynYNc, aes('9',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynYNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynYNg, aes('5',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynYNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynYNt, aes('13',median(c(median(lowerConf),median(upperConf)))))+
+    #
+    geom_errorbar(data = nonsynYYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynYYa, aes('3',median(c(median(lowerConf),median(upperConf)))))+
+    #geom_errorbar(data = nonsynYYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    #geom_point(data =nonsynYYc, aes('10',median(c(median(lowerConf),median(upperConf)))))+
+    #geom_errorbar(data = nonsynYYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    #geom_point(data =nonsynYYg, aes('6',median(c(median(lowerConf),median(upperConf)))))+
+    geom_errorbar(data = nonsynNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynNYt, aes('15',median(c(median(lowerConf),median(upperConf)))))
+
+
+
+
+
+
+
+
