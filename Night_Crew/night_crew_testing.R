@@ -53,7 +53,7 @@ levels(data$number) <- gsub("t", as.numeric("4"), levels(data$number))
 
 #syn <- which(data$TypeOfSite=="syn")
 #non <- which(data$TypeOfSite == "nonsyn")
-cols<-c("why","did","I","dothis")
+cols<-c("why","did","YN","dothis")
 colsyn<-cols[syndata$combo]
 colall<-cols[data$combo]
 colnon<-cols[nonsyndata$combo]
@@ -449,22 +449,22 @@ ggplot(aes(factor(xvalue), MeanFreq), data = nonsyndata)+
     geom_point(data =nonsynNYt, aes('15',median(c(median(lowerConf),median(upperConf)))))+
    #
      geom_errorbar(data = nonsynYNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =nonsynYNa, aes('1',median(c(median(lowerConf),median(upperConf)))))+
+    geom_point(data =nonsynYNa, aes('2',median(c(median(lowerConf),median(upperConf)))))+
     geom_errorbar(data = nonsynYNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =nonsynYNc, aes('9',median(c(median(lowerConf),median(upperConf)))))+
+    geom_point(data =nonsynYNc, aes('10',median(c(median(lowerConf),median(upperConf)))))+
     geom_errorbar(data = nonsynYNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =nonsynYNg, aes('5',median(c(median(lowerConf),median(upperConf)))))+
+    geom_point(data =nonsynYNg, aes('6',median(c(median(lowerConf),median(upperConf)))))+
     geom_errorbar(data = nonsynYNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =nonsynYNt, aes('13',median(c(median(lowerConf),median(upperConf)))))+
+    geom_point(data =nonsynYNt, aes('14',median(c(median(lowerConf),median(upperConf)))))+
     #
     geom_errorbar(data = nonsynYYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =nonsynYYa, aes('3',median(c(median(lowerConf),median(upperConf)))))+
+    geom_point(data =nonsynYYa, aes('4',median(c(median(lowerConf),median(upperConf)))))+
     #geom_errorbar(data = nonsynYYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     #geom_point(data =nonsynYYc, aes('10',median(c(median(lowerConf),median(upperConf)))))+
     #geom_errorbar(data = nonsynYYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     #geom_point(data =nonsynYYg, aes('6',median(c(median(lowerConf),median(upperConf)))))+
-    geom_errorbar(data = nonsynNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =nonsynNYt, aes('15',median(c(median(lowerConf),median(upperConf)))))
+    geom_errorbar(data = nonsynYYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynYYt, aes('16',median(c(median(lowerConf),median(upperConf)))))
 
 
 
@@ -517,23 +517,22 @@ ggplot(aes(factor(xvalue), MeanFreq), data = datatww)+
     geom_point(data =nonsynNYt, aes('15',median(c(median(lowerConf),median(upperConf)))))+
     #
     geom_errorbar(data = nonsynYNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =nonsynYNa, aes('1',median(c(median(lowerConf),median(upperConf)))))+
+    geom_point(data =nonsynYNa, aes('2',median(c(median(lowerConf),median(upperConf)))))+
     geom_errorbar(data = nonsynYNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =nonsynYNc, aes('9',median(c(median(lowerConf),median(upperConf)))))+
+    geom_point(data =nonsynYNc, aes('10',median(c(median(lowerConf),median(upperConf)))))+
     geom_errorbar(data = nonsynYNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =nonsynYNg, aes('5',median(c(median(lowerConf),median(upperConf)))))+
+    geom_point(data =nonsynYNg, aes('6',median(c(median(lowerConf),median(upperConf)))))+
     geom_errorbar(data = nonsynYNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =nonsynYNt, aes('13',median(c(median(lowerConf),median(upperConf)))))+
+    geom_point(data =nonsynYNt, aes('14',median(c(median(lowerConf),median(upperConf)))))+
     #
     geom_errorbar(data = nonsynYYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =nonsynYYa, aes('3',median(c(median(lowerConf),median(upperConf)))))+
+    geom_point(data =nonsynYYa, aes('4',median(c(median(lowerConf),median(upperConf)))))+
     #geom_errorbar(data = nonsynYYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     #geom_point(data =nonsynYYc, aes('10',median(c(median(lowerConf),median(upperConf)))))+
     #geom_errorbar(data = nonsynYYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     #geom_point(data =nonsynYYg, aes('6',median(c(median(lowerConf),median(upperConf)))))+
-    geom_errorbar(data = nonsynNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =nonsynNYt, aes('15',median(c(median(lowerConf),median(upperConf)))))
-
+    geom_errorbar(data = nonsynYYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
+    geom_point(data =nonsynYYt, aes('16',median(c(median(lowerConf),median(upperConf)))))
 
 
 
