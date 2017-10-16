@@ -110,3 +110,5 @@ for (i in OverviewDFilter$num){
   OverviewDFilter$FracFiltered[i]<-length(which(Nonconsensusday0_pat_pos[,2]==i))
 }
 plot(OverviewDFilter$MeanFreq,OverviewDFilter$FracFiltered) 
+
+# Hasan has no idea how pushing and pulling works
