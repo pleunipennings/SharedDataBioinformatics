@@ -112,3 +112,4 @@ for (i in OverviewDFilter$num){
 plot(OverviewDFilter$MeanFreq,OverviewDFilter$FracFiltered) 
 
 # Hasan has no idea how pushing and pulling works
+# I guess you have to write something when commiting changes
