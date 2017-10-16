@@ -83,12 +83,14 @@ data$xvalue<- 0
 
 #syn subset stuff
 syndata <- subset(data, TypeOfSite=="syn")
+
+#givine values to each nucecotide and if they have a cetain combo
 if(syndata$combo=="noAA noCPG"){
     
-    if (syndata$WTnt[]=="a"){ (syndata$xvalue<-1)}
-    if (syndata$WTnt[]=="c"){ (syndata$xvalue<-2)}
-    if (syndata$WTnt[]=="g"){ (syndata$xvalue<-3)}
-    if (syndata$WTnt[]=="t"){ (syndata$xvalue<-4)}
+    if (WTnt=="a"){ (xvalue<-1)}
+    if (WTnt=="c"){ (xvalue<-2)}
+    if (WTnt=="g"){ (xvalue<-3)}
+    if (WTnt=="t"){ (xvalue<-4)}
 }
 
 
