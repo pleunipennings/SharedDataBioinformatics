@@ -4,4 +4,6 @@
   #Plot num column vs MeanFreq column in a scatterplot. The points should be colored
   #depending on whether they are Cpg / not CpG.
 
+#remember [PULL > Comment > Commit > PUSH]
+
 #TEST 
