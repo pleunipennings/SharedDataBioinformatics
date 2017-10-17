@@ -53,7 +53,7 @@ levels(data$number) <- gsub("t", as.numeric("4"), levels(data$number))
 
 #syn <- which(data$TypeOfSite=="syn")
 #non <- which(data$TypeOfSite == "nonsyn")
-cols<-c("why","did","YN","dothis")
+cols<-c("NN","NY","YN","YY")
 colsyn<-cols[syndata$combo]
 colall<-cols[data$combo]
 colnon<-cols[nonsyndata$combo]
