@@ -36,6 +36,9 @@ plot(data[,2],
 #add legend but not yet right
 legend("topright", 
        legend = levels(data$TypeOfSite), 
-       pch=c(data$TypeOfSite)
+       pch=c(1,2,3,4,5),
+       col=c(1,2,3,4,5)
 )
 str(data$TypeOfSite)
+data$TypeOfSite
+View(data$TypeOfSite)
