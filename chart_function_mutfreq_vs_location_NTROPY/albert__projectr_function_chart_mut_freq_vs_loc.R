@@ -14,3 +14,4 @@ class(data)
 #   Plot num column vs MeanFreq column in a scatterplot. The points should be colored
 #   depending on whether they are syn/nonsyn/drastic/nonsense.
 
+plot(data[,2],data[,3],col=data$TypeOfSite)
