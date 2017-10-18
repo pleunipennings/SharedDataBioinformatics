@@ -476,7 +476,7 @@ ggplot(aes(factor(xvalue), MeanFreq), data = nonsyndata)+
 ggplot(aes(factor(xvalue), MeanFreq), data = datatww)+
     #synNNdata
     scale_x_discrete(limits=c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16),breaks=c("2","6","10", "14"), labels=c("a", "g", "c","t"))+
-    geom_jitter(data= syndata,aes(colour = colsyn, x = factor(xvalue)),position = position_jitter(width = .2), alpha = 0.5) +
+    geom_jitter(data= syndata,aes(colour = syndata$color, x = factor(xvalue)),position = position_jitter(width = .2), alpha = 0.5) +
     facet_wrap(~ TypeOfSite)+
     geom_errorbar(data = synNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     geom_point(data =synNNa, aes('1',median(c(median(lowerConf),median(upperConf)))))+
@@ -497,7 +497,7 @@ ggplot(aes(factor(xvalue), MeanFreq), data = datatww)+
     geom_point(data =synNYt, aes('15',median(c(median(lowerConf),median(upperConf)))))+
 
 
-    geom_jitter(data= nonsyndata,aes(colour = colnon, x = factor(xvalue)),position = position_jitter(width = .2), alpha = 0.5) +
+    geom_jitter(data= nonsyndata,aes(colour = nonsyndata$color, x = factor(xvalue)),position = position_jitter(width = .2), alpha = 0.5) +
     geom_errorbar(data = nonsynNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     geom_point(data =nonsynNNa, aes('1',median(c(median(lowerConf),median(upperConf)))))+
     geom_errorbar(data = nonsynNNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
@@ -532,7 +532,11 @@ ggplot(aes(factor(xvalue), MeanFreq), data = datatww)+
     #geom_errorbar(data = nonsynYYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     #geom_point(data =nonsynYYg, aes('6',median(c(median(lowerConf),median(upperConf)))))+
     geom_errorbar(data = nonsynYYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
-    geom_point(data =nonsynYYt, aes('16',median(c(median(lowerConf),median(upperConf)))))
+    geom_point(data =nonsynYYt, aes('16',median(c(median(lowerConf),median(upperConf)))))+
+    scale_color_manual(labels = c("No drastic AA change (non-Cpg-forming)","No drastic AA change (Cpg-forming)","Drastic AA change (non-Cpg-forming)","Drastic AA change (Cpg-forming)"), values = c("blue", "red","green", "purple")) +
+    labs(x="Mutation Type", y="Mutation Frquency",  
+         col=" ")
+
 
 
 
