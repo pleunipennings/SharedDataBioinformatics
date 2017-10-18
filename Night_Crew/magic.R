@@ -98,3 +98,5 @@ bk_data <- data.frame(num,wtnt,freq)
 
 # outputs data to file
 write.csv(bk_data,"bk_data.csv")
+plot(bk_data$freq + 0.01, log="y", col=c(1,2,3))
+#1 black fist aa in codon, 2 red 2nd aa in codon, 3 green 3rd aa in codon
