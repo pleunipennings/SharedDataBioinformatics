@@ -29,11 +29,11 @@ CpG_plotter <- function(){
     #Formatted the group master script
     # added sections
     #
-HPIV1a = read.fasta("humanparainfluenzavirus1.fasta_pruned.mu.trim05")
-HPIV1b = read.fasta("humanparainfluenzavirus1_F.fasta_pruned.mu.trim05")
-HPIV1c = read.fasta("humanparainfluenzavirus1_HN.fasta_pruned.mu.trim05")
-HPIV3a = read.fasta("humanparainfluenzavirus3.fasta_pruned.mu.trim05")
-HPIV3b = read.fasta("humanparainfluenzavirus3_HN.fasta_pruned.mu.trim05")
+HPIV1a = read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05")
+HPIV1b = read.alignment("humanparainfluenzavirus1_F.fasta_pruned.mu.trim05")
+HPIV1c = read.alignment("humanparainfluenzavirus1_HN.fasta_pruned.mu.trim05")
+HPIV3a = read.alignment("humanparainfluenzavirus3.fasta_pruned.mu.trim05")
+HPIV3b = read.alignment("humanparainfluenzavirus3_HN.fasta_pruned.mu.trim05")
 #average size of each sample is 15,500
 
 
