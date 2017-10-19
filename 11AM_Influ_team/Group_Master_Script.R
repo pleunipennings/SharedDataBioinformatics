@@ -59,6 +59,6 @@ HPIV1cT = read.csv("HPIV1cT.csv")
 HPIV3aT = read.csv("HPIV3aT.csv")
 HPIV3bT = read.csv("HPIV3bT.csv")
 #average size of each sample is 15,500~ approx
-str(HPIV1a)
-head(HPIV1a)
+str(HPIV1aT)
+head(HPIV1aT)
 
