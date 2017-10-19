@@ -13,11 +13,17 @@
 
 #### function to find CpG Islands ####
 
-CpG_finder <- function("namefasta" format(n)){
-    n = read.alignment("namefasta")
-    format = #look at format code for 
-    
-}
+CpG_finder <- function(data, window, step){
+        total <- length(data)
+        spots <- seq(from = 1, to = (total-window), by = step)
+        result <- vector(length = length(spots))
+        for(i in 1:length(spots)){result[i]}
+        return(result)
+    }
+slide_function(seqT,3,500)
+
+
+
 
 #### function to plot CpG Islands ####
 CpG_plotter <- function(){
