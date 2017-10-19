@@ -54,6 +54,30 @@
 for(j in 1:b){
   df[j,5]=amCat(df[j,3])
 }
+  
+#creates Mut strain of current WTseq enters it into 
+  for (i in 1:b){
+   curNuc <-  df[i,1]
+   
+   if(curNuc == "a" || curNuc == "g"){
+     
+     if(curNuc == "a"){
+       df [i, 2] = "g"
+      }else{
+       df [i, 2] = "a"
+        }
+      
+     }else{
+     
+       if(curNuc == "t"){
+       df [i, 2] = "c"
+     }else{
+       df [i, 2] = "t"
+     }
+   
+       }
+   
+  }
 
 # Let's pull up a different sequence for comparison
 df[,2]=seqs[89,]                                            # Picking the sequence, 89 is arbitrary
