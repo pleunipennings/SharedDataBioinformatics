@@ -13,11 +13,17 @@
 
 #### function to find CpG Islands ####
 
-CpG_finder <- function("namefasta" format(n)){
-    n = read.alignment("namefasta")
-    format = #look at format code for 
-    
-}
+CpG_finder <- function(data, window, step){
+        total <- length(data)
+        spots <- seq(from = 1, to = (total-window), by = step)
+        result <- vector(length = length(spots))
+        for(i in 1:length(spots)){result[i]}
+        return(result)
+    }
+slide_function(seqT,3,500)
+
+
+
 
 #### function to plot CpG Islands ####
 CpG_plotter <- function(){
@@ -29,8 +35,12 @@ CpG_plotter <- function(){
     #Formatted the group master script
     # added sections
     #
+HPIV1a = read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format = "fasta")
+HPIV1b = read.alignment("humanparainfluenzavirus1_F.fasta_pruned.mu.trim05", format = "fasta")
+HPIV1c = read.alignment("humanparainfluenzavirus1_HN.fasta_pruned.mu.trim05", format = "fasta")
+HPIV3a = read.alignment("humanparainfluenzavirus3.fasta_pruned.mu.trim05", format = "fasta")
+HPIV3b = read.alignment("humanparainfluenzavirus3_HN.fasta_pruned.mu.trim05", format = "fasta")
+#average size of each sample is 15,500
 
-
-#TEST AMIR 
-
-
+str(HPIV1a)
+head(HPIV1a)
