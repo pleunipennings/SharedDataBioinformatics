@@ -19,15 +19,15 @@ for(i in 0:(b-1)){
 # Translate the WT RNA sequence to AA sequence
 
 curSeq <- translate(paste(df[,1], sep=" "),NAstring="X", ambiguous=FALSE, sens="F")
-curAA = 1
+count <- 0
 
-
-for(i in 1:seq(1,b,3)){ # incrementing down sequence by 3 (needs work)
-    for(j in i:i+2){ # incrementing within the codon
-        df [j,3] <- curSeq[curAA] #assigning positions within the codons
-        
-    }
-    curAA <- curAA + 1 #changing amino acid base
+for(i in 1:length(curSeq)){ # incrementing down sequence by 3 (needs work)
+        count <- count + 1
+        df[count,]$WTAA <- curSeq[i]
+        count <- count + 1
+        df[count,]$WTAA <- curSeq[i]
+        count <- count + 1
+        df[count,]$WTAA <- curSeq[i]
 }
 
 
