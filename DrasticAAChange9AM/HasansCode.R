@@ -42,11 +42,11 @@
   spe <- "C|U|G|P"
   hyd <- "A|I|L|F|M|W|Y|V"
   amCat <- function(AA){
-    if(regexpr(pos, AA) > 0){ return(0) }
-    if(regexpr(neg, AA) > 0){ return(1) }
-    if(regexpr(unc, AA) > 0){ return(2) }
-    if(regexpr(spe, AA) > 0){ return(3) }
-    if(regexpr(hyd, AA) > 0){ return(4) }
+    if(regexpr(pos, AA) > 0){ return("pos") }
+    if(regexpr(neg, AA) > 0){ return("neg") }
+    if(regexpr(unc, AA) > 0){ return("unc") }
+    if(regexpr(spe, AA) > 0){ return("spe") }
+    if(regexpr(hyd, AA) > 0){ return("hyd") }
     return(5)
   }
 
@@ -54,6 +54,30 @@
 for(j in 1:b){
   df[j,5]=amCat(df[j,3])
 }
+  
+#creates Mut strain of current WTseq enters it into 
+  for (i in 1:b){
+   curNuc <-  df[i,1]
+   
+   if(curNuc == "a" || curNuc == "g"){
+     
+     if(curNuc == "a"){
+       df [i, 2] = "g"
+      }else{
+       df [i, 2] = "a"
+        }
+      
+     }else{
+     
+       if(curNuc == "t"){
+       df [i, 2] = "c"
+     }else{
+       df [i, 2] = "t"
+     }
+   
+       }
+   
+  }
 
 # Let's pull up a different sequence for comparison
 df[,2]=seqs[89,]                                            # Picking the sequence, 89 is arbitrary
@@ -66,9 +90,9 @@ for(j in 1:b){
 # Function to compare
 for(h in 1:b){
   if (df[h,5]==df[h,6]){
-    df[h,7]=0                      # If WT AA category = Mut AA Category, no drastic change
+    df[h,7]= "0"                      # If WT AA category = Mut AA Category, no drastic change
   }
   if (df[h,5]!=df[h,6]){
-    df[h,7]=1                      # If WT AA category =/= Mut AA Category, yes drastic change
+    df[h,7]= "X"                      # If WT AA category =/= Mut AA Category, yes drastic change
   }
 }
