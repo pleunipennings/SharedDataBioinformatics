@@ -52,12 +52,13 @@ HPIV3b = read.alignment("humanparainfluenzavirus3_HN.fasta_pruned.mu.trim05", fo
 #       str(B)
 
 # I took each fasta file and converteded it into a csv tabulated format
+# the T stands for Tabulated format or .csv
+HPIV1aT = read.csv("HPIV1aT.csv") #from HPIV1a = read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format = "fasta")
+HPIV1bT = read.csv("HPIV1bT.csv") #from HPIV1b = read.alignment("humanparainfluenzavirus1_F.fasta_pruned.mu.trim05", format = "fasta")
+HPIV1cT = read.csv("HPIV1cT.csv") #from HPIV1c = read.alignment("humanparainfluenzavirus1_HN.fasta_pruned.mu.trim05", format = "fasta")
+HPIV3aT = read.csv("HPIV3aT.csv") #from HPIV3a = read.alignment("humanparainfluenzavirus3.fasta_pruned.mu.trim05", format = "fasta")
+HPIV3bT = read.csv("HPIV3bT.csv") #from HPIV3b = read.alignment("humanparainfluenzavirus3_HN.fasta_pruned.mu.trim05", format = "fasta")
 
-HPIV1aT = read.csv("HPIV1aT.csv")
-HPIV1bT = read.csv("HPIV1bT.csv")
-HPIV1cT = read.csv("HPIV1cT.csv")
-HPIV3aT = read.csv("HPIV3aT.csv")
-HPIV3bT = read.csv("HPIV3bT.csv")
 #average size of each sample is 15,500~ approx
 str(HPIV1aT)
 head(HPIV1aT)
