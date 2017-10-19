@@ -2,13 +2,15 @@
 
 #set directory and open data faile
 setwd("~/Desktop")
+library(seqinr)
+library(ape)
+read.fasta("HumanBocavirus1_NS1.fasta_pruned.mu.trim05")->SN1seq
+read.alignment("HumanBocavirus1_NS1.fasta_pruned.mu.trim05",format = "fasta")->SN1seqalign
+cons<-consensus(SN1seqalign)
+SN1data<-read.dna("HumanBocavirus1_NS1.fasta_pruned.mu.trim05", format = "fasta",as.character=TRUE)
 
-data<-read.csv("OverviewSelCoeff_BachelerFilter.csv")
-#HIV practice file read into R as csv 
-#examination of data summary,tail,and head 
-head(data)
-tail(data)
-summary(data)
+
+summary(HBOVdf)
 plot(data[,2],data[,3],col=data$TypeOfSite,xlab = "Number",
      ylab = "Mean Frequency")
 
