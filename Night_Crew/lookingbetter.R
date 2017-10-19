@@ -103,7 +103,7 @@ bk_data <- data.frame(num,wtnt,freq)
 # outputs data to file
 write.csv(bk_data,"bk_data.csv")
 
-
+#Start of the graph
 
 
 #install.packages('ggplot2')
@@ -261,7 +261,10 @@ nonsynYYt  <- subset(nonYYdata, WTnt=="t")
 
 
 #datatww$TypeOfSite <- revalue(x = datatww$TypeOfSite , c("syn" = "Synonymous Sites", "nonsyn" = "Non-synonymous Sites"))
-
+#levels(datatww$TypeOfSite) <- gsub("syn", "Synonymous Sites", levels(datatww$TypeOfSite))
+#levels(datatww$TypeOfSite) <- gsub("nonsyn", "Nonsynonymous Sites", levels(datatww$TypeOfSite))
+#still need to log
+#graph
 ggplot(aes(factor(xvalue), MeanFreq), data = datatww)+
     #synNNdata
     scale_x_discrete(limits=c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16),breaks=c("2","6","10", "14"), labels=c("a", "g", "c","t"))+
