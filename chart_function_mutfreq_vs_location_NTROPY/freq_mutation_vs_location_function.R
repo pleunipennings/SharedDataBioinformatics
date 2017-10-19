@@ -6,10 +6,17 @@ setwd("C:/Users/alber/Downloads")
 #read csv file into variable "data"
 data<-read.csv("OverviewSelCoeff_BachelerFilter.csv")
 
-#plot data mut freq vs location
-plot(data[,2],
-     data[,3],
+#plot data mut freq vs location. 
+#   Assumptions: plot based on column names, "num", "MeanFreq", "TypeOfSite".
+#   Your data must be in these columns! 
+plot(
+    #x vector
+    data$num,
+    #y vector
+     data$MeanFreq,
+     #colors by category factors from column "TypeOfSite
      col=data$TypeOfSite,
+     #symbols attached by category factors from column "TypeOfSite"
      pch=c(data$TypeOfSite),
      #Title label
     main = "HIV Practice Data",
@@ -29,3 +36,4 @@ legend("topright",
        #colors matching dataframe's factors of data$TypeOfSite
        col=c(1,2,3,4,5)
 )
+
