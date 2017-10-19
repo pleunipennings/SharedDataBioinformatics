@@ -107,6 +107,52 @@ slide_function <- function(data, window, step){
     return(result)
 }
 slide_function(seqT,3,500)
+#### from divergence class data ####
+as.table(HPIV1a, stringsAsFactors=FALSE)
+M <- as.data.frame(read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format = "fasta"))
+# Here's a function that we've coded that will calculate divergence for basepair windows 
+#   across the chromosome. We create it using a function called "function", and assign it to 
+#   it's own function named "div.by.window".
+#   The output is a dataframe with 5 columns, 
+#     1) the number of the window (in sequential order)
+#     2) the starting chromosomal position
+#     3) the ending chromosomal position
+#     4) the number of bps in the window
+#     5) the proportion of diverged sites in the window
+#   Run this code in order to use the function.
+div.by.window = function(x, window_size){
+    # window_size = number of bp per window
+    # x = dataframe, with a column, "div" with a TRUE value for a diverged site and FALSE for non-diverged
+    window_start = seq(from=1, to=nrow(x), by=window_size)
+    diverged.window = data.frame(window=1:length(window_start), start.pos=NA, end.pos=NA, length=NA, p.diverged=NA)
+    for (i in 1:length(window_start) ){
+        focal_start = window_start[i]
+        if (i == length(window_start) ){
+            focal_end = nrow(x)
+        } else {
+            focal_end = focal_start + window_size  
+        }
+        focal = x[focal_start:focal_end, ]
+        diverged.window[i,2] = focal[1,1]
+        diverged.window[i,3] = focal[nrow(focal),1]
+        diverged.window[i,4] = diverged.window[i,3]-diverged.window[i,2]
+        if ( nrow(focal) <= 0 ) {next}
+        diverged.window[i,5] = mean(focal$div)  
+    }
+    diverged.window
+}
+
+# Use this new function "div.by.window". It takes two arguments, "x" (your humanchimp data object)
+#   and "window_size" (the number of bp that you want per window). For now, use 5000 bp, 
+#   which is the approximate size of a small gene. 
+#   Assign the output to the object "diverged.window".
+diverged.window <- div.by.window(x = humanchimp,
+                                 window_size = 5000
+)
+mean(diverged.window$p.diverged)
+#### python not R code does not work for us ####
+# below is a non R code for a CPG Island Finder with Sliding Window Algorithm: 
+    #String Index Out of Bound Exception intermittently
 
 public static List<Integer> finalCPGIslands(List<Integer> iList,
                                             String iSeq, int width) {

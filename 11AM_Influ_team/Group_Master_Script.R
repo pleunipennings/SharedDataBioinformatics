@@ -43,4 +43,10 @@ HPIV3b = read.alignment("humanparainfluenzavirus3_HN.fasta_pruned.mu.trim05", fo
 #average size of each sample is 15,500
 
 str(HPIV1a)
-head(HPIV1a)
+as.table(HPIV1a, stringsAsFactors=FALSE)
+M <- as.table(read.alignment("clean_HPIV1.txt", format = "fasta"))
+M
+
+B <-read.csv("Clean_HPIV1.csv")
+B
+str(B)
