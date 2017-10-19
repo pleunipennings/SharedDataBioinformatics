@@ -2,11 +2,17 @@ setwd("~/Dropbox/2015_fallBioinformatics/RTutorials/Influenza")
 library(seqinr)
 library(ape)
 
-NAseqs<-read.fasta("NA_alignment.fasta") #NA stands for neuraminidase, the gene for which we have the sequences 
+#boca NS1 stands for bocavirus NS1 gene
+bocaNS1seqs<-read.fasta("HumanBocavirus1_NS1.fasta_pruned.mu.trim05") 
 
 #How to get the consensus (= most common nucleotide for each position)
-NAseqsAli<-read.alignment("NA_alignment.fasta", format="fasta") #NA stands for neuraminidase, the gene for which we have the sequences 
-cons<-consensus(NAseqsAli)
+bocaNS1seqsAli<-read.alignment("HumanBocavirus1_NS1.fasta_pruned.mu.trim05", format="fasta")
+bocaNS1seqsAli
+class(bocaNS1seqsAli)
+tail(bocaNS1seqsAli)
+bocaNS1seqsAli[3]
+
+cons<-consensus(bocaNS1seqsAli[[1:31]])
 
 #use read.dna to get the data in matrix form, this makes it easier to count
 NAseqsDNA<-read.dna("NA_alignment.fasta", format = "fasta",as.character=TRUE)
