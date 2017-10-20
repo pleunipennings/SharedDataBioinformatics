@@ -18,7 +18,7 @@ seq_CG <- read.fasta("class25Influ.txt")
         x= split(seq, (0:nrow(seq_CG) %/% 500))
 
     #slide function scrolls through variable set looking for matching pairs then outputs T/F if pair for the phrame is found.
-slide_function <- function(data, window, step){
+CpG_Finder <- function(data, window, step){
     a=lapply(x, function(vec){
         x <- gregexpr("gc", vec, perl = TRUE)
         res <- sum(attr(x[[1]], "match.length"))
@@ -41,7 +41,7 @@ slide_function <- function(data, window, step){
     
     return(result)
 }
-slide_function(seq_CG,4,500)
+CpG_Finder(seq_CG,4,500)
 
 #### notes and comments section ####
 #10-17-2017 nathan 12:53
