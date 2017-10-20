@@ -1,21 +1,17 @@
-setwd("~/Dropbox/2015_fallBioinformatics/RTutorials/Influenza")
+setwd("~/bioinformatics/HumanBocaVirus/HumanBocaVirus")
 library(seqinr)
 library(ape)
 
 #boca NS1 stands for bocavirus NS1 gene
 bocaNS1seqs<-read.fasta("HumanBocavirus1_NS1.fasta_pruned.mu.trim05") 
-
+bocaNS1seqs
+tail(bocaNS1seqs)
 #How to get the consensus (= most common nucleotide for each position)
 bocaNS1seqsAli<-read.alignment("HumanBocavirus1_NS1.fasta_pruned.mu.trim05", format="fasta")
 bocaNS1seqsAli
-class(bocaNS1seqsAli)
-tail(bocaNS1seqsAli)
-bocaNS1seqsAli
-bocaNS1seqs
-bocaNS1seqsAli$seq[[1]]
 
 #CANT MAKE IT WORK returns error "Error: $ operator is invalid for atomic vectors"
-cons<-consensus(bocaNS1seqsAli, format="fasta")
+cons<-consensus(bocaNS1seqsAli, method = "IUPAC")
 
 #use read.dna to get the data in matrix form, this makes it easier to count
 bocaNS1seqsDNA<-read.dna("HumanBocavirus1_NS1.fasta_pruned.mu.trim05", format = "fasta",as.character=TRUE)
