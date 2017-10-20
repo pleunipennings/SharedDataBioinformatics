@@ -6,11 +6,11 @@ library(ape)
 bocaVP1seqs<-read.fasta("HumanBocavirus1_VP1.fasta_pruned.mu.trim05") 
 
 #How to get the consensus (= most common nucleotide for each position)
-bocaVP1seqsAli<-read.alignment("HumanBocavirus1_VP1.fasta_pruned.mu.trim05", format="fasta")
+bocaVP1seqsAli<-read.alignment("HumanBocavirus1_VP1.fasta_pruned.mu.trim05",format="fasta")
 bocaNS1seqsAli
 
 #CANT MAKE IT WORK returns error "Error: $ operator is invalid for atomic vectors"
-cons<-consensus(bocaVP1seqsAli)
+cons<-consensus(bocaVP1seqs)
 
 #use read.dna to get the data in matrix form, this makes it easier to count
 bocaNS1seqsDNA<-read.dna("HumanBocavirus1_NS1.fasta_pruned.mu.trim05", format = "fasta",as.character=TRUE)
