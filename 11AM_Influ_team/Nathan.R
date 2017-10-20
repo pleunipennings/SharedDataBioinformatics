@@ -101,12 +101,13 @@ c=lapply(x, function(vec){
 
 slide_function <- function(data, window, step){
     total <- length(data)
-    spots <- seq(from = 1, to = (total-window), by = step)
+    spots <- seq(from = 1, to = (total-window), length.out = step)
     result <- vector(length = length(spots))
     for(i in 1:length(spots)){result[i]}
     return(result)
 }
-slide_function(seqT,3,500)
+slide_function(seqT,2,500)
+?seq.default
 #### from divergence class data ####
 as.table(HPIV1a, stringsAsFactors=FALSE)
 M <- as.data.frame(read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format = "fasta"))

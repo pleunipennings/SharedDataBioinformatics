@@ -13,9 +13,35 @@
 
 #### function to find CpG Islands ####
 
-CpG_finder <- function(){
+#setwd(SharedDataBioinformatics/11AM_Influ_team)    
+seq_CG <- read.fasta("class25Influ.txt")
+        x= split(seq, (0:nrow(seq_CG) %/% 500))
+
+    #slide function scrolls through variable set looking for matching pairs then outputs T/F if pair for the phrame is found.
+slide_function <- function(data, window, step){
+    a=lapply(x, function(vec){
+        x <- gregexpr("gc", vec, perl = TRUE)
+        res <- sum(attr(x[[1]], "match.length"))
+        res
+    })
+    b=lapply(x, function(vec){
+        x <- gregexpr("g", vec, perl = TRUE)
+        res <- regmatches(vec, x)
+        res
+    }) 
+    c=lapply(x, function(vec){
+        x <- gregexpr("c", vec, perl = TRUE)
+        res <- regmatches(vec, x)
+        res
+    }) 
+    total <- length(data)
+    spots <- seq(from = 1, to = (total-window), length.out = step)
+    result <- vector(length = length(spots))
+    for(i in 1:length(spots)){result[i]}
     
+    return(result)
 }
+slide_function(seq_CG,4,500)
 
 #### notes and comments section ####
 #10-17-2017 nathan 12:53
