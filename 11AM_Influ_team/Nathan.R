@@ -232,3 +232,76 @@ public static List<Integer> finalCPGIslands(List<Integer> iList,
     ahub <- AnnotationHub()
     ahub["AH5086"]
     
+    > HPIV1a = read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format = "fasta")
+    > consensus(HPIV1a)
+    Error in obj[[1]]$tip.label : $ operator is invalid for atomic vectors
+    > ??read.alignment
+    > ?consensus
+    > seqinr::consensus(HPIV1a)
+    [1] "-" "g" "g" "a" "c" "a" "a" "g" "t" "c" "a" "c" "a" "g" "a" "c" "a" "t" "t"
+    [20] "t" "g" "a" "t" "c" "t" "t" "a" "g" "t" "t" "a" "a" "a" "a" "c" "c" "t" "t"
+    [39] "t" "a" "t" "a" "a" "t" "g" "g" "c" "t" "g" "g" "g" "c" "t" "a" "c" "t" "a"
+    [58] "a" "g" "t" "a" "c" "t" "t" "t" "t" "g" "a" "c" "a" "c" "a" "t" "t" "c" "a"
+    [77] "g" "c" "t" "c" "c" "a" "g" "g" "a" "g" "g" "a" "g" "t" "g" "a" "g" "a" "g"
+    [96] "c" "a" "t" "c" "a" "a" "t" "a" "a" "g" "t" "c" "t" "g" "g" "c" "g" "g" "a"
+    [115] "g" "g" "a" "g" "c" "a" "a" "t" "t" "a" "t" "a" "c" "c" "t" "g" "g" "t" "c"
+    [134] "a" "a" "a" "g" "a" "a" "g" "t" "a" "c" "c" "g" "t" "t" "t" "c" "t" "g" "t"
+    [153] "c" "t" "t" "c" "a" "c" "a" "t" "t" "a" "g" "g" "c" "c" "c" "g" "a" "g" "t"
+    [172] "g" "t" "g" "a" "c" "a" "g" "a" "t" "g" "a" "t" "g" "c" "a" "g" "a" "t" "a"
+    [191] "a" "a" "t" "t" "a" "t" "t" "a" "a" "t" "a" "g" "c" "a" "a" "c" "c" "a" "c"
+    [210] "t" "t" "t" "c" "t" "t" "a" "g" "c" "c" "c" "a" "c" "t" "c" "a" "c" "t" "g"
+    [229] "g" "a" "t" "a" "c" "a" "g" "a" "t" "a" "a" "a" "c" "a" "a" "c" "a" "c" "t"
+    [248] "c" "t" "c" "a" "a" "a" "g" "a" "g" "g" "a" "g" "g" "a" "t" "t" "t" "t" "t"
+    [267] "a" "g" "t" "a" "t" "c" "a" "c" "t" "c" "c" "t" "t" "g" "c" "a" "a" "t" "g"
+    [286] "g" "c" "t" "t" "a" "c" "a" "g" "t" "a" "g" "c" "c" "c" "g" "g" "a" "g" "t"
+    [305] "t" "a" "t" "a" "t" "c" "t" "c" "a" "c" "t" "a" "c" "a" "a" "a" "c" "g" "g"
+    [324] "t" "g" "t" "c" "a" "a" "t" "g" "c" "t" "g" "a" "t" "g" "t" "c" "a" "a" "g"
+    [343] "t" "a" "t" "g" "t" "g" "a" "t" "a" "t" "a" "c" "a" "g" "t" "a" "t" "a" "g"
+    [362] "a" "g" "a" "g" "a" "g" "a" "t" "c" "c" "t" "a" "a" "a" "a" "g" "g" "a" "c"
+    [381] "a" "a" "a" "a" "a" "c" "a" "g" "a" "t" "g" "g" "g" "t" "t" "c" "a" "t" "t"
+    [400] "g" "t" "c" "a" "a" "a" "a" "c" "a" "a" "g" "a" "g" "a" "c" "a" "t" "g" "g"
+    [419] "a" "g" "t" "a" "t" "g" "a" "a" "a" "g" "a" "a" "c" "a" "a" "c" "a" "g" "a"
+    [438] "g" "t" "g" "g" "t" "t" "g" "t" "t" "c" "g" "g" "a" "c" "c" "t" "a" "t" "g"
+    [457] "g" "t" "c" "a" "a" "c" "a" "a" "g" "a" "a" "c" "c" "c" "a" "t" "t" "g" "t"
+    [476] "t" "c" "c" "a" "a" "g" "g" "g" "c" "a" "a" "a" "g" "a" "g" "a" "g" "a" "a"
+    [495] "t" "g" "c" "g" "g" "a" "t" "c" "t" "a" "g" "a" "a" "g" "c" "a" "t" "t" "g"
+    [514] "c" "t" "t" "c" "a" "g" "a" "c" "a" "t" "a" "t" "g" "g" "a" "t" "a" "t" "c"
+    [533] "c" "t" "g" "c" "a" "t" "g" "t" "c" "t" "c" "g" "g" "a" "g" "c" "t" "a" "t"
+    [552] "a" "a" "t" "a" "g" "t" "t" "c" "a" "a" "g" "t" "t" "t" "g" "g" "a" "t" "a"
+    [571] "g" "t" "g" "c" "t" "g" "g" "t" "t" "a" "a" "g" "g" "c" "c" "a" "t" "a" "a"
+    [590] "c" "a" "a" "g" "t" "a" "g" "t" "g" "c" "t" "g" "g" "t" "c" "t" "a" "a" "g"
+    [609] "a" "a" "a" "a" "g" "g" "a" "t" "t" "c" "t" "t" "c" "a" "a" "t" "a" "g" "a"
+    [628] "t" "t" "a" "g" "a" "a" "g" "c" "a" "t" "t" "c" "a" "g" "a" "c" "a" "a" "g"
+    [647] "a" "t" "g" "g" "a" "a" "c" "c" "g" "t" "c" "a" "a" "a" "a" "g" "t" "g" "c"
+    [666] "t" "c" "t" "g" "g" "t" "c" "t" "t" "c" "a" "c" "a" "g" "g" "a" "g" "a" "c"
+    [685] "a" "c" "a" "g" "t" "t" "g" "a" "a" "g" "g" "c" "a" "t" "t" "g" "g" "t" "g"
+    [704] "c" "a" "g" "t" "g" "a" "t" "g" "a" "g" "g" "t" "c" "a" "c" "a" "a" "c" "a"
+    [723] "a" "a" "g" "c" "t" "t" "a" "g" "t" "a" "t" "c" "t" "c" "t" "t" "a" "t" "g"
+    [742] "g" "t" "a" "g" "a" "g" "a" "c" "t" "c" "t" "a" "g" "t" "g" "a" "c" "t" "a"
+    [761] "t" "g" "a" "a" "c" "a" "c" "a" "t" "c" "c" "a" "g" "g" "t" "c" "a" "g" "a"
+    [780] "t" "c" "t" "a" "a" "c" "t" "a" "c" "a" "t" "t" "a" "g" "a" "g" "a" "a" "g"
+    [799] "a" "a" "c" "a" "t" "t" "c" "a" "g" "a" "t" "t" "g" "t" "a" "g" "g" "a" "a"
+    [818] "a" "t" "t" "a" "c" "a" "t" "a" "a" "g" "a" "g" "a" "t" "g" "c" "a" "g" "g"
+    [837] "a" "t" "t" "a" "g" "c" "a" "t" "c" "t" "t" "t" "c" "a" "t" "g" "a" "a" "c"
+    [856] "a" "c" "c" "a" "t" "c" "a" "a" "g" "t" "a" "t" "g" "g" "t" "g" "t" "a" "g"
+    [875] "a" "a" "a" "c" "g" "a" "a" "g" "a" "t" "g" "g" "c" "c" "g" "c" "c" "t" "t"
+    [894] "g" "a" "c" "a" "c" "t" "a" "t" "c" "a" "a" "a" "c" "c" "t" "g" "a" "g" "a"
+    [913] "c" "c" "a" "g" "a" "t" "c" "t" "a" "a" "a" "c" "a" "a" "a" "c" "t" "g" "a"
+    [932] "g" "a" "a" "g" "c" "c" "t" "t" "g" "t" "t" "g" "a" "t" "a" "t" "c" "t" "a"
+    [951] "t" "c" "t" "a" "t" "c" "a" "a" "a" "g" "g" "g" "a" "g" "c" "c" "c" "g" "a"
+    [970] "g" "c" "c" "c" "c" "t" "t" "t" "t" "a" "t" "a" "t" "g" "t" "a" "t" "a" "c"
+    [989] "t" "c" "a" "g" "a" "g" "a" "c" "c" "c" "a" "g"
+    [ reached getOption("max.print") -- omitted 14473 entries ]
+    > length(seqinr::consensus(HPIV1a))
+    [1] 15473
+    
+  #  1/ make consensus data of our sample DNA (for one file only!)
+n <- data.frame(x = (seqinr::consensus(HPIV1a)))
+head(n)
+  #  2/ determine the frequency of mutation at each base
+  #  3/ create a function that will plot the cpg /posible cpg
+    
+    
+        
+    )
+    
