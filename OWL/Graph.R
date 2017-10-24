@@ -9,17 +9,17 @@ print(noCpG)
 which(HIVdata$makesCpG=="1")->CpG
 
 #Identify mean frequency in association with noCpG sites
-HIVdata[noCpG,3]->Freq
+HIVdata[noCpG,"MeanFreq"]->Freq
 #Identify mean frequency in association with CpG sites
-HIVdata[CpG,3]->Freq2
+HIVdata[CpG,"MeanFreq"]->Freq2
 
 
 
 #Making a plot of mean frequency vs. CpG/nonCpG location
-plot(noCpG, Freq, col="red", main="Mean Frequency vs. CpG/noCpG location", xlab = "Location", ylab = "Mean Frequency")
+plot(noCpG, Freq, log="y",col="black",pch=21.25, bg="red", main="CpG/noCpG location vs. Mean Frequency", xlab = "Location", ylab = "Mean Frequency")
 #Overlapping the two graphs
 par(new = TRUE )
-plot(CpG, Freq2,col="blue",xaxt='n',yaxt='n', ann = FALSE)
+plot(CpG, Freq2, col="black",pch=21.25, bg="blue",xaxt='n',yaxt='n', ann = FALSE)
 
 
 legend("topright",c("noCpG","CpG"),lty = c(1,1),lwd=4, col=c("red","blue"),bty="n")
