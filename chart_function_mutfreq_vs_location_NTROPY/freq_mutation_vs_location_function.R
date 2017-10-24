@@ -15,9 +15,11 @@ plot(
     #y vector
      log(data$MeanFreq),
      #colors by category factors from column "TypeOfSite"
-     col=data$TypeOfSite,
+     col= "black",
      #symbols attached by category factors from column "TypeOfSite"
-     pch=20,
+     pch=21,
+    #fill point colors bg=
+    bg=data$TypeOfSite,
      #Title label
     main = "HIV Practice Data",
     #x axis label
@@ -32,7 +34,8 @@ legend("topright",
        #names of each category
        legend = levels(data$TypeOfSite), 
        #symbols matching dataframe's factors 1:5 of data$TypeOfSite
-       pch=20,
+       pch=21,
        #colors matching dataframe's factors 1:5 of data$TypeOfSite
-       col=c(1:5)
+       col="black",
+       pt.bg=c(1:5)
 )
