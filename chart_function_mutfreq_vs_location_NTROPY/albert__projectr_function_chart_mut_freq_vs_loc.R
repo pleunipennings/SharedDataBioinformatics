@@ -6,6 +6,10 @@ setwd("C:/Users/alber/Downloads")
 #read csv file into variable "data"
 data<-read.csv("OverviewSelCoeff_BachelerFilter.csv")
 
+
+#set overall scale of plots/legends
+op <- par(cex = 1)
+
 #plot data mut freq vs location. 
 #   Assumptions: plot based on column names, "num", "MeanFreq", "TypeOfSite".
 #   Your data must be in these columns! 
@@ -26,18 +30,42 @@ plot(
     xlab ="Location on Sequence", 
     #y axis label
     ylab ="Mean Frequency of Mutation",
-    cex=3
+    #cex changes point size
+    cex=2,
+    #grid superimposes grid onto plot 
+    #nx and ny describes x and y axis 
+    #NA will automatically set x-axis to default plot ticks 
+    grid(nx = NA, ny = NULL, col = "lightgray", lty = "dotted")
 )
+
+#set overall scale of plots/legends
+op <- par(cex = 1)
 
 #add legend in top right corner
 legend("topright", 
-       #names of each category
+       #inset legend off from border
+       inset= 0.01,
+       #names of each category based on factors, alphabetical order of category 1-5 of TypeOfSites
        legend = levels(data$TypeOfSite), 
        #symbols matching dataframe's factors 1:5 of data$TypeOfSite
        pch=21,
        #colors matching dataframe's factors 1:5 of data$TypeOfSite
        col="black",
-       pt.bg=c(1:5)
+       #fill colors of circle matching points of plot
+       pt.bg=c(1:5),
+       #specify scale of whole box of legend to not block data
+       cex=1,
+       #specify point size in legend
+       pt.cex=2,
+       #remove legend border if "n" is specificed. "o" displays border
+       bty="o",
+       #specific box border thickness/width
+       box.lwd=2,
+       #specify box border type
+       #box.lty=,
+       #text.width change
+       text.width=30,
+       #justify text legend, xjust=0 is left justified, xjust=1 means right justified
+       xjust=0.5
+       
 )
-
-
