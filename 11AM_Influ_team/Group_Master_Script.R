@@ -14,15 +14,17 @@
 #following packages are required >>
 library(graphics)
 library(seqinr)
-# HPIV1a = read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format = "fasta")
-# n <- data.frame(seqinr::consensus(HPIV1a))
 
+# value "n" will represent our data.frame of use
 n <- data.frame(read.csv("OverviewSelCoeff_BachelerFilter.csv"))
-  
+
+# look at n, how does the data.frame pan out. i.e. what are the col vs row within. 
 str(n)
 head(n)
 
+
 which(n$makesCpG=="1")
+which(n$makesCpG=="0")
 
 YCpG <- which(n$makesCpG=="1")
 YCpG #lists which variables return a "1" these make a CpG island when mutated "yes cpg or Y"
@@ -57,7 +59,9 @@ LvsF_CpG_Printer(n) #run function
 
 #notes for fucntion:
 # n = must be a data.frame
-#
+# for our data:
+#       HPIV1a = read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format = "fasta")
+#       n <- data.frame(seqinr::consensus(HPIV1a))
 
 #### function to find CpG Islands (NOTICE: WE DO NOT HAVE TO FIND THEM) ####
 
