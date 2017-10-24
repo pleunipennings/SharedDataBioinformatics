@@ -14,10 +14,10 @@ plot(
     data$num,
     #y vector
      log(data$MeanFreq),
-     #colors by category factors from column "TypeOfSite
+     #colors by category factors from column "TypeOfSite"
      col=data$TypeOfSite,
      #symbols attached by category factors from column "TypeOfSite"
-     pch=c(data$TypeOfSite),
+     pch=20,
      #Title label
     main = "HIV Practice Data",
     #x axis label
@@ -31,9 +31,8 @@ plot(
 legend("topright", 
        #names of each category
        legend = levels(data$TypeOfSite), 
-       #symbols matching dataframe's factors of data$TypeOfSite
-       pch=c(1,2,3,4,5),
-       #colors matching dataframe's factors of data$TypeOfSite
-       col=c(1,2,3,4,5)
+       #symbols matching dataframe's factors 1:5 of data$TypeOfSite
+       pch=20,
+       #colors matching dataframe's factors 1:5 of data$TypeOfSite
+       col=c(1:5)
 )
-
