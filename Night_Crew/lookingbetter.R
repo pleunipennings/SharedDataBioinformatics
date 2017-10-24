@@ -356,8 +356,8 @@ ggplot(aes(factor(xvalue), MeanFreq), data = datatww)+
         geom_point(data =nonsynNNc, aes('9',median(c(median(lowerConf),median(upperConf)))))
     } +
     if (nrow(nonsynNNg)!=0) {
-        geom_errorbar(data = nonsynNNg, aes(ymin = median(lowerConf, na.rm = FALSE), ymax = median(upperConf, na.rm = FALSE), width = 0.2))
-        geom_point(data =nonsynNNg, aes('5',median(c(median(lowerConf, na.rm = FALSE),median(upperConf, na.rm = FALSE)))))
+        geom_errorbar(data = nonsynNNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        geom_point(data =nonsynNNg, aes('5',median(c(median(lowerConf),median(upperConf)))))
     } +
     if (nrow(nonsynNNt)!=0) {
         geom_errorbar(data = nonsynNNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
@@ -414,7 +414,7 @@ ggplot(aes(factor(xvalue), MeanFreq), data = datatww)+
         geom_errorbar(data = nonsynYYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
         geom_point(data =nonsynYYt, aes('16',median(c(median(lowerConf),median(upperConf)))))
     } +
-    #fix words :(
+  
     scale_color_manual(labels = c("No drastic AA change (non-Cpg-forming)","No drastic AA change (Cpg-forming)","Drastic AA change (non-Cpg-forming)","Drastic AA change (Cpg-forming)"), values = c("green", "yellow","red", "blue")) +
     labs(x="Mutation Type", y="Mutation Frquency",
          col=" ")
