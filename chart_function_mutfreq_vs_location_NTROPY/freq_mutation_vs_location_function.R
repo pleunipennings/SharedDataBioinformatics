@@ -13,7 +13,7 @@ plot(
     #x vector
     data$num,
     #y vector
-     data$MeanFreq,
+     log(data$MeanFreq),
      #colors by category factors from column "TypeOfSite
      col=data$TypeOfSite,
      #symbols attached by category factors from column "TypeOfSite"
@@ -23,9 +23,9 @@ plot(
     #x axis label
     xlab ="Location on Sequence", 
     #y axis label
-    ylab ="Mean Frequency of Mutation"
+    ylab ="Mean Frequency of Mutation",
+    #set y limits to expand data
 )
-
 
 #add legend in top right corner
 legend("topright", 

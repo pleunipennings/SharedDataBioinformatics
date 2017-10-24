@@ -10,6 +10,7 @@ bocaVP1seqsAli<-read.alignment("HumanBocavirus1_VP1.fasta_pruned.mu.trim05",form
 bocaNS1seqsAli
 
 #CANT MAKE IT WORK returns error "Error: $ operator is invalid for atomic vectors"
+seqinr::consensus(bocaVP1Ali)
 cons<-consensus(bocaVP1seqs)
 
 #use read.dna to get the data in matrix form, this makes it easier to count
