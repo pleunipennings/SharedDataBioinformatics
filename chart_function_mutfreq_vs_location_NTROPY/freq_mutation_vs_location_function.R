@@ -23,8 +23,8 @@ plot(
     #x axis label
     xlab ="Location on Sequence", 
     #y axis label
-    ylab ="Mean Frequency of Mutation"
-    #set y limits to expand data
+    ylab ="Mean Frequency of Mutation",
+    cex=3
 )
 
 #add legend in top right corner
