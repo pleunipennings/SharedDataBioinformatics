@@ -1,4 +1,4 @@
-#Albert's code for chart function
+#script for Team NTROPY's function graphing Frequency of synonymous/nonsynonmous/other mutation vs location
 
 #set directory and open data file
 setwd("C:/Users/alber/Downloads")
@@ -6,34 +6,38 @@ setwd("C:/Users/alber/Downloads")
 #read csv file into variable "data"
 data<-read.csv("OverviewSelCoeff_BachelerFilter.csv")
 
-#examination of data
-head(data)
-tail(data)
-summary(data)
-class(data)
-list(data)
-#structure
-str(data)
-
-#Fig 2: location vs frequency syn/nonsyn/drastic/nonsense.
-#   Plot num column vs MeanFreq column in a scatterplot. The points should be colored
-#   depending on whether they are syn/nonsyn/drastic/nonsense.
-
-#plot of data with legend
-
-plot(data[,2],
-     data[,3],
-     col=data$TypeOfSite,
-     pch=c(data$TypeOfSite)
+#plot data mut freq vs location. 
+#   Assumptions: plot based on column names, "num", "MeanFreq", "TypeOfSite".
+#   Your data must be in these columns! 
+plot(
+    #x vector
+    data$num,
+    #y vector
+    log(data$MeanFreq),
+    #make black empty circles as symbol
+    pch=21,
+    #make outline of symbol black
+    col= "black",
+    #fill inside of point with color by factor category "TypeOfSite" bg=
+    bg=data$TypeOfSite,
+    #Title label
+    main = "HIV Practice Data",
+    #x axis label
+    xlab ="Location on Sequence", 
+    #y axis label
+    ylab ="Mean Frequency of Mutation",
+    cex=3
 )
 
 #add legend in top right corner
 legend("topright", 
        #names of each category
        legend = levels(data$TypeOfSite), 
-       #symbols matching dataframe's factors of data$TypeOfSite
-       pch=c(1,2,3,4,5),
-       #colors matching dataframe's factors of data$TypeOfSite
-       col=c(1,2,3,4,5)
+       #symbols matching dataframe's factors 1:5 of data$TypeOfSite
+       pch=21,
+       #colors matching dataframe's factors 1:5 of data$TypeOfSite
+       col="black",
+       pt.bg=c(1:5)
 )
+
 
