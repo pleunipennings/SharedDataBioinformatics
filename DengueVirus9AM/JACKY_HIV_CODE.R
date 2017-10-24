@@ -9,27 +9,30 @@ paste(HIV$WTnt, collapse = '') -> STRING
 STRING
 
 
-gregexpr(pattern ='tg',STRING ) -> PEN
-PEN
+gregexpr(pattern ='tg',STRING ) -> TG
+TG
 
-BELL <- data.frame(matrix(unlist(PEN)))
+BELL <- data.frame(matrix(unlist(TG)))
 BELL
+
+HIV$NUM1 = HIV$num
+HIV$WTnt1 = HIV$WTnt
 
 HIV$JOHN<- 0
 
-HIV[BELL[,1],"JOHN"] <- BELL[,1]
+HIV[BELL[,1],"JOHN"] <- 1
 
 
+# For CA sites: 
+
+gregexpr(pattern ='ca',STRING ) -> CA
+CA
+
+CASITES <- data.frame(matrix(unlist(CA)))
+CASITES
 
 
-
-##  HIV[2,"JOHN"] <- 1
-
-
-gregexpr(pattern ='ca',HUH) -> MAP
-MA
-
-
+HIV[CASITES[,1]+1,"JOHN"] <- 1
 
 
 
