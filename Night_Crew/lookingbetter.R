@@ -5,7 +5,7 @@ setwd("~/Desktop/Git")
 # freq calc v2 GL
 
 library(seqinr)
-
+ 
 bk <- read.fasta("bk.txt")
 
 # reference sequence
