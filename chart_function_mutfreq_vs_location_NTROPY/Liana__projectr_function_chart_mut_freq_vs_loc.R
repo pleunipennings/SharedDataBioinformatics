@@ -15,5 +15,7 @@ class(data)
 #   depending on whether they are syn/nonsyn/drastic/nonsense.
 
 plot(data[,2],data[,3], main = "HIV Practice Data", xlab ="Number", 
-ylab ="Mean Frequency", col=data$TypeOfSite)
-plot(data)
+ylab ="Mean Frequency", col= data$TypeOfSite, xlim = c(0, 1000), ylim = c(0,.1))
+(col= data$TypeOfSite)
+
+
