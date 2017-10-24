@@ -14,11 +14,11 @@ plot(
     data$num,
     #y vector
      log(data$MeanFreq),
-     #colors by category factors from column "TypeOfSite"
-     col= "black",
-     #symbols attached by category factors from column "TypeOfSite"
+      #make black empty circles as symbol
      pch=21,
-    #fill point colors bg=
+    #make outline of symbol black
+     col= "black",
+    #fill inside of point with color by factor category "TypeOfSite" bg=
     bg=data$TypeOfSite,
      #Title label
     main = "HIV Practice Data",
