@@ -3,11 +3,10 @@ print(HIVdata)
 
 
 #Identify noCpG sites
-#column might be 13 of 15, so change accordingly 
-which(HIVdata[,15]=="0")->noCpG
+which(HIVdata$makesCpG=="0")->noCpG
 print(noCpG)
 #Identify CpG sites
-which(HIVdata[,15]=="1")->CpG
+which(HIVdata$makesCpG=="1")->CpG
 
 #Identify mean frequency in association with noCpG sites
 HIVdata[noCpG,3]->Freq
