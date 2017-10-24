@@ -5,6 +5,7 @@ setwd("~/Desktop/Git")
 # freq calc v2 GL
 
 library(seqinr)
+library(scales)
 
 bk <- read.fasta("bk.txt")
 
@@ -273,6 +274,7 @@ nonsynYYt  <- subset(nonYYdata, WTnt=="t")
 ggplot(aes(factor(xvalue), MeanFreq), data = datatww)+
     #synNNdata
     scale_x_discrete(limits=c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16),breaks=c("2","6","10", "14"), labels=c("a", "g", "c","t"))+
+    scale_y_log10() +
     geom_jitter(data= syndata,aes(colour = syndata$color, x = factor(xvalue)),position = position_jitter(width = .2), alpha = 0.5) +
     facet_wrap(~ TypeOfSite)+
     geom_errorbar(data = synNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
@@ -350,6 +352,6 @@ geom_jitter(data= nonsyndata,aes(colour = nonsyndata$color, x = factor(xvalue)),
     geom_errorbar(data = nonsynYYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))+
     geom_point(data =nonsynYYt, aes('16',median(c(median(lowerConf),median(upperConf)))))+
     #fix words :(
-    scale_color_manual(labels = c("No drastic AA change (non-Cpg-forming)","No drastic AA change (Cpg-forming)","Drastic AA change (non-Cpg-forming)","Drastic AA change (Cpg-forming)"), values = c("green", "yellow","red", "blue")) +
+    scale_color_manual(labels = c("No drastic AA change (non-Cpg-forming)","Drastic AA change (non-Cpg-forming)","Drastic AA change (Cpg-forming)","No drastic AA change (Cpg-forming)"), values = c("green", "yellow","red", "blue")) +
     labs(x="Mutation Type", y="Mutation Frquency",  
          col=" ")
