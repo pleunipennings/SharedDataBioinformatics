@@ -2,30 +2,21 @@ setwd("~/Desktop")
 read.csv("OverviewSelCoeff_BachelerFilter.csv")->HIVdata
 print(HIVdata)
 
-summary(HIVdata)
-
-which(HIVdata[,4]=="syn")->Synonymous 
-which(HIVdata[,4]== "nonsyn")->Nonsynonymous
-
-
+#Identify noCpG sites
 which(HIVdata[,13]=="0")->noCpG
-print(noCpG)
+#Identify CpG sites
 which(HIVdata[,13]=="1")->CpG
-print(CpG)
 
-HIVdata[noCpG,7]->loc
-HIVdata[CpG,7]->loc2
+#Identify mean frequency in association with noCpG sites
 HIVdata[noCpG,3]->Freq
+#Identify mean frequency in association with CpG sites
 HIVdata[CpG,3]->Freq2
-print(Freq)
-
-print(Freq2)
 
 
 
-plot(HIVdata$num, HIVdata$MeanFreq, col=HIVdata$TypeOfSite, pch=c(HIVdata$TypeOfSite), main="HIV", xlab="Location",ylab="Mean")
-
+#Making a plot of mean frequency vs. CpG/nonCpG location
 plot(noCpG, Freq, col="red")
+#Overlapping the two graphs
 par(new = TRUE )
 plot(CpG, Freq2,col="blue")
 
