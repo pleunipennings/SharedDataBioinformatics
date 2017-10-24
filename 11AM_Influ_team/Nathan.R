@@ -27,6 +27,11 @@ G3
 
 ?`ape-package`
 library(help = "ape")
+
+
+ahub <- AnnotationHub()
+ahub["AH5086"]
+
 #### group notes ####
 
 
@@ -228,9 +233,6 @@ public static List<Integer> finalCPGIslands(List<Integer> iList,
     
 
 #### Mergerger ####
-
-    ahub <- AnnotationHub()
-    ahub["AH5086"]
     
     > HPIV1a = read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format = "fasta")
     > consensus(HPIV1a)
