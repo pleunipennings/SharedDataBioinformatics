@@ -14,6 +14,7 @@ HIVdata[noCpG,3]->Freq
 HIVdata[CpG,3]->Freq2
 
 
+
 #Making a plot of mean frequency vs. CpG/nonCpG location
 plot(noCpG, Freq, col="red", main="Mean Frequency vs. CpG/noCpG location", xlab = "Location", ylab = "Mean Frequency")
 #Overlapping the two graphs
