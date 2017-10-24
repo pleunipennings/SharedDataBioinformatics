@@ -375,7 +375,7 @@ ggplot(aes(factor(xvalue), MeanFreq), data = datatww)+
     if (nrow(nonsynNYg)!=0) {
         geom_errorbar(data = nonsynNYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
         geom_point(data =nonsynNYg, aes('6',median(c(median(lowerConf),median(upperConf)))))
-    } +
+    } + 
     if (nrow(nonsynNYt)!=0) {
         geom_errorbar(data = nonsynNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
         geom_point(data =nonsynNYt, aes('14',median(c(median(lowerConf),median(upperConf)))))
