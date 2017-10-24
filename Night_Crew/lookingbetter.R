@@ -132,6 +132,7 @@ levels(data$number) <- gsub("t", as.numeric("4"), levels(data$number))
 
 #Subsetting for the data that we really want
 datatww <- subset(data, TypeOfSite=="syn" | TypeOfSite=="nonsyn")
+datatww$TypeOfSite <- ifelse(datatww$TypeOfSite == "syn", "Synonymous Sites", "Non-synonymous Sites")
 #idea for log
 #datatww$lowerConf= log(datatww$lowerConf)
 #datatww$upperConf= log(datatww$upperConf)
@@ -200,7 +201,7 @@ for (i in 1:length(datatww$num)) {
 #subsetiing all the data by amino acid, drastic AA, and CpG forming 
 
 #syn subset stuff
-syndata <- subset(datatww, TypeOfSite=="syn")
+syndata <- subset(datatww, TypeOfSite=="Synonymous Sites")
 
 #syn subset for no AA and no CPG
 synNNdata <- subset(syndata, combo=="noAA noCPG")
@@ -232,7 +233,7 @@ synYYg  <- subset(synYYdata, WTnt=="g")
 synYYt  <- subset(synYYdata, WTnt=="t")
 
 #nonsyn sub set stuff
-nonsyndata <- subset(datatww, TypeOfSite=="nonsyn")
+nonsyndata <- subset(datatww, TypeOfSite=="Non-synonymous Sites")
 
 nonyescpGdata<- subset(nonsyndata, combo=="noAA yesCPG")
 
@@ -264,6 +265,7 @@ nonsynYYa <- subset(nonYYdata, WTnt=="a")
 nonsynYYc <- subset(nonYYdata, WTnt=="c")
 nonsynYYg  <- subset(nonYYdata, WTnt=="g")
 nonsynYYt  <- subset(nonYYdata, WTnt=="t")
+
 
 
 #datatww$TypeOfSite <- revalue(x = datatww$TypeOfSite , c("syn" = "Synonymous Sites", "nonsyn" = "Non-synonymous Sites"))
