@@ -234,12 +234,13 @@ public static List<Integer> finalCPGIslands(List<Integer> iList,
 
 #### Mergerger ####
     
-    > HPIV1a = read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format = "fasta")
-    > consensus(HPIV1a)
+    HPIV1a = read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format = "fasta")
+    consensus(HPIV1a)
     Error in obj[[1]]$tip.label : $ operator is invalid for atomic vectors
-    > ??read.alignment
-    > ?consensus
-    > seqinr::consensus(HPIV1a)
+    ??read.alignment
+    ??consensus
+    example(ape::consensus)
+    seqinr::consensus(HPIV1a)
     [1] "-" "g" "g" "a" "c" "a" "a" "g" "t" "c" "a" "c" "a" "g" "a" "c" "a" "t" "t"
     [20] "t" "g" "a" "t" "c" "t" "t" "a" "g" "t" "t" "a" "a" "a" "a" "c" "c" "t" "t"
     [39] "t" "a" "t" "a" "a" "t" "g" "g" "c" "t" "g" "g" "g" "c" "t" "a" "c" "t" "a"
@@ -298,12 +299,83 @@ public static List<Integer> finalCPGIslands(List<Integer> iList,
     [1] 15473
     
   #  1/ make consensus data of our sample DNA (for one file only!)
-n <- data.frame(x = (seqinr::consensus(HPIV1a)))
+n <- data.frame(Pos = c(1:length(seqinr::consensus(HPIV1a))),
+                WTnt = (seqinr::consensus(HPIV1a)),
+                Trans = c("frequency()")
+                )
+
+alphabetFrequency(n$WTnt, c("c","g","a","t"), as.prob = T, baseOnly=TRUE
+                  )
+
+
+consensusString(HPIV1a, baseOnly=TRUE, ambiguityMap=IUPAC_CODE_MAP)
 head(n)
+tail(n)
   #  2/ determine the frequency of mutation at each base
   #  3/ create a function that will plot the cpg /posible cpg
-    
-    
-        
-    )
-    
+
+
+
+
+
+################## freq finder? maybe? ####################
+
+import sys,re,fileinput
+
+Argument = []
+Argument = sys.argv[1:] 
+
+if (len(Argument)) < 3:
+  print "Usage: Input_pileup_file Column_with_information_about_read_bases(usually_column_9_in_pileup) Output_file" 
+sys.exit()
+
+File_Pileup = Argument[0]
+index = int(Argument[1])-1
+output = open(str(Argument[2]),"w")
+
+
+nucleotides = ["A","T","C","G","a","t","c","g"]
+complement = {'a':'T','g':'C','t':'A','c':'G'}
+
+output.write("Chromosome\tCoordinate\tReference_base")
+
+Frequency_bases = {"A":0,"T":0,"C":0,"G":0}
+
+for base in sorted(Frequency_bases.keys()):
+  output.write("\t"+str(base))
+
+output.write("\n")
+
+for line in fileinput.input([File_Pileup]):
+  rowlist = []
+rowlist = (line.rstrip("\n")).split('\t')
+rowlist[2] = rowlist[2].upper()
+
+Frequency = {"A":0,"T":0,"C":0,"G":0}
+
+if line.startswith("#"):
+  continue
+else:
+  output.write(str(rowlist[0])+"\t"+str(rowlist[1])+"\t"+str(rowlist[2]))
+for i in rowlist[index]:
+  if i == ".":
+  Frequency[rowlist[2]] = Frequency[rowlist[2]] + 1
+continue
+if i == ",":
+  Frequency[rowlist[2]] = Frequency[rowlist[2]] + 1
+continue
+
+if i in nucleotides:
+  if i.isupper():
+  Frequency[i] = Frequency[i]+1
+
+else:
+  Frequency[complement[i]] = Frequency[complement[i]] + 1
+
+for base in sorted(Frequency.keys()):
+  output.write("\t"+str(Frequency[base]))
+
+output.write("\n")
+
+output.close()
+################### new section of shame ###################

@@ -13,3 +13,9 @@ aln<-as.matrix.alignment(aln)
 # Generate consensus
 con<-seqinr::consensus(aln)
 print(con$seq)
+
+##### from nate for data.frame() #####
+n <- data.frame(Pos = c(1:length(seqinr::consensus(HPIV1a))),
+                WTnt = (seqinr::consensus(HPIV1a)),
+                Trans = c("frequency()")
+)#closes data.frame
