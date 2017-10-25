@@ -10,8 +10,6 @@ data<-read.csv("OverviewSelCoeff_BachelerFilter.csv")
 #set overall scale of plots/legends
 op <- par(cex = 1)
 
-
-
 #plot data mut freq vs location. 
 #   Assumptions: plot based on column names, "num", "MeanFreq", "TypeOfSite".
 #   Your data must be in these columns! 
