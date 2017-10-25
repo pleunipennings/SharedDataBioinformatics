@@ -40,28 +40,31 @@ plot(
     #grid superimposes grid onto plot 
     #nx and ny describes x and y axis 
     #NA will automatically set x-axis to default plot ticks 
-    grid(nx = NA, ny = NULL, col = "lightgray", lty = "dotted"),
+    grid(nx = NA, ny = NULL, col = "black", lty = "dotted",
+         lwd = par("lwd"), equilogs = TRUE),
     #supress y axis drawing by plot fxn, put # in front to not supress
     yaxt="n",
     # or do log of y axis, delete # symbol
     log="y"
 )
-#draw your own y axis
-    #code to set y axis vector to write numbers as power
-    #first specify length of y axis, sequence of decimals to include range of data 0.0001 to 0.01 mean frequency
 
 #set y axis labels 
     #set y values according to y axis plot
-    aty<-axTicks(2)
-    #define labels
-    labels<-sapply(aty,function(i)
-                as.expression(bquote(10^.(i)))
-               )
-    #axis function to write y axis
+#aty<-axTicks(2)
+    #define labels to be the same as the given tick marks
+#labels<-sapply(aty,function(i)
+        #as.expression(bquote(10^.(i))))
+
+    #axis function to write y axis with only scale by 10s. 
+    #USE YOUR OWN APPROPRIATE NUMBERS
     axis(
+        #2 is to specify left axis (aka y axis)
         2,
-        at=aty,
-        labels=labels
+        at=c(0.0001,0.001,0.01,0.1)
+        # dont need to define labels if same as numbers on axis
+        #labels=aty
+        #tck marks
+        #tck=-0.01
         )
 
 #set overall scale of plots/legends
@@ -95,3 +98,4 @@ legend("topright",
        xjust=0.5
 
 )
+
