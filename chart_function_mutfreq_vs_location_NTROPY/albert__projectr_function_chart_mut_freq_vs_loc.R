@@ -10,14 +10,19 @@ data<-read.csv("OverviewSelCoeff_BachelerFilter.csv")
 #set overall scale of plots/legends
 op <- par(cex = 1)
 
+
+
 #plot data mut freq vs location. 
 #   Assumptions: plot based on column names, "num", "MeanFreq", "TypeOfSite".
 #   Your data must be in these columns! 
+#   x axis is location of nucleotide
+#   y axis is log of mean frequency
+
 plot(
     #x vector
     data$num,
     #y vector
-    log(data$MeanFreq),
+    data$MeanFreq,
     #make black empty circles as symbol
     pch=21,
     #make outline of symbol black
@@ -35,8 +40,29 @@ plot(
     #grid superimposes grid onto plot 
     #nx and ny describes x and y axis 
     #NA will automatically set x-axis to default plot ticks 
-    grid(nx = NA, ny = NULL, col = "lightgray", lty = "dotted")
+    grid(nx = NA, ny = NULL, col = "lightgray", lty = "dotted"),
+    #supress y axis drawing by plot fxn, put # in front to not supress
+    yaxt="n",
+    # or do log of y axis, delete # symbol
+    log="y"
 )
+#draw your own y axis
+    #code to set y axis vector to write numbers as power
+    #first specify length of y axis, sequence of decimals to include range of data 0.0001 to 0.01 mean frequency
+
+#set y axis labels 
+    #set y values according to y axis plot
+    aty<-axTicks(2)
+    #define labels
+    labels<-sapply(aty,function(i)
+                as.expression(bquote(10^.(i)))
+               )
+    #axis function to write y axis
+    axis(
+        2,
+        at=aty,
+        labels=labels
+        )
 
 #set overall scale of plots/legends
 op <- par(cex = 1)
@@ -67,5 +93,5 @@ legend("topright",
        text.width=30,
        #justify text legend, xjust=0 is left justified, xjust=1 means right justified
        xjust=0.5
-       
+
 )
