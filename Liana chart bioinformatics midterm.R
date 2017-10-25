@@ -12,9 +12,9 @@ data<-read.csv("OverviewSelCoeff_BachelerFilter.csv")
 
 plot(
   #x vector 
-  data$num,
+  x <-data$num,
+  y <-data$MeanFreq,
   #y vector
-  data$MeanFreq,
   log = "y",
   #colors by category factors from column "TypeOfSite
   col="black",
@@ -27,8 +27,10 @@ plot(
   xlab ="Location on Sequence", 
   #y axis label
   ylab ="Mean Frequency of Mutation", 
-  ylim= c(.001,.1000), 
-  cex = 3
+  ylim= c(.0001,.1000), 
+  cex = 3,
+  grid(nx = NA, ny = NULL, col = "black", lty = "dotted",
+       lwd = par("lwd"), equilogs = FALSE)
 )
   
   #set y limits to expand data
