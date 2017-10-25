@@ -232,6 +232,66 @@ public static List<Integer> finalCPGIslands(List<Integer> iList,
     
     
 
+################## freq finder? maybe? ####################
+    
+    import sys,re,fileinput
+    
+    Argument = []
+    Argument = sys.argv[1:] 
+    
+    if (len(Argument)) < 3:
+      print "Usage: Input_pileup_file Column_with_information_about_read_bases(usually_column_9_in_pileup) Output_file" 
+    sys.exit()
+    
+    File_Pileup = Argument[0]
+    index = int(Argument[1])-1
+    output = open(str(Argument[2]),"w")
+    
+    
+    nucleotides = ["A","T","C","G","a","t","c","g"]
+    complement = {'a':'T','g':'C','t':'A','c':'G'}
+    
+    output.write("Chromosome\tCoordinate\tReference_base")
+    
+    Frequency_bases = {"A":0,"T":0,"C":0,"G":0}
+    
+    for base in sorted(Frequency_bases.keys()):
+      output.write("\t"+str(base))
+    
+    output.write("\n")
+    
+    for line in fileinput.input([File_Pileup]):
+      rowlist = []
+    rowlist = (line.rstrip("\n")).split('\t')
+    rowlist[2] = rowlist[2].upper()
+    
+    Frequency = {"A":0,"T":0,"C":0,"G":0}
+    
+    if line.startswith("#"):
+      continue
+    else:
+      output.write(str(rowlist[0])+"\t"+str(rowlist[1])+"\t"+str(rowlist[2]))
+    for i in rowlist[index]:
+      if i == ".":
+      Frequency[rowlist[2]] = Frequency[rowlist[2]] + 1
+    continue
+    if i == ",":
+      Frequency[rowlist[2]] = Frequency[rowlist[2]] + 1
+    continue
+    
+    if i in nucleotides:
+      if i.isupper():
+      Frequency[i] = Frequency[i]+1
+    
+    else:
+      Frequency[complement[i]] = Frequency[complement[i]] + 1
+    
+    for base in sorted(Frequency.keys()):
+      output.write("\t"+str(Frequency[base]))
+    
+    output.write("\n")
+    
+    output.close()
 #### Mergerger ####
     
     HPIV1a = read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format = "fasta")
@@ -301,81 +361,65 @@ public static List<Integer> finalCPGIslands(List<Integer> iList,
   #  1/ make consensus data of our sample DNA (for one file only!)
 n <- data.frame(Pos = c(1:length(seqinr::consensus(HPIV1a))),
                 WTnt = (seqinr::consensus(HPIV1a)),
-                Trans = c("frequency()")
+                Trans = c(1)
                 )
+rho((seqinr::consensus(HPIV1a)), wordsize = 2, alphabet = s2c("cg"))
 
-alphabetFrequency(n$WTnt, c("c","g","a","t"), as.prob = T, baseOnly=TRUE
-                  )
-
-
-consensusString(HPIV1a, baseOnly=TRUE, ambiguityMap=IUPAC_CODE_MAP)
 head(n)
 tail(n)
+n$Trans
+?seqinr::consensus
+alphabetFrequency(n$WTnt, c("c","g","a","t"), as.prob = T, baseOnly=TRUE
+)
+consensusString(HPIV1a, baseOnly=TRUE, ambiguityMap=IUPAC_CODE_MAP)
+
   #  2/ determine the frequency of mutation at each base
   #  3/ create a function that will plot the cpg /posible cpg
 
+zscore((seqinr::consensus(HPIV1a)), modele = "codon")
 
 
 
 
-################## freq finder? maybe? ####################
+################### pruned section from master script ###################
+#setwd(SharedDataBioinformatics/11AM_Influ_team)    
+seq_CG <- read.alignment("class25Influ.txt", format = "fasta")
+seqinr::consensus(seq_CG) 
+nuc <- data.frame(x = (seqinr::consensus(seq_CG)))
+as.matrix(nuc)
+nuc$x
+?seq.default
+#slide function scrolls through variable set looking for matching pairs then outputs T/F if pair for the phrame is found.
+CpG_Finder <- function(D, window, deslength){
+  total <- length(D)
+  lan <- deslength
+  data <- D$x
+  aa=lapply(x, function(data){
+    x <- gregexpr("gc", data, perl = TRUE)
+    res1 <- sum(attr(x[[1]], "match.length"))
+    res1
+  })
+  bb=lapply(x, function(data){
+    x <- gregexpr("g", data, perl = TRUE)
+    res2 <- regmatches(data, x)
+    res2
+  })
+  cc=lapply(x, function(data){
+    x <- gregexpr("c", data, perl = TRUE)
+    res3 <- regmatches(data, x)
+    res3
+  })
+  
+  result <- vector(length = length(data))
+  for(i in 1:length(data)){result[i]}
+  
+  
+  return(result)
+}
+CpG_Finder(nuc,2,500)
 
-import sys,re,fileinput
 
-Argument = []
-Argument = sys.argv[1:] 
-
-if (len(Argument)) < 3:
-  print "Usage: Input_pileup_file Column_with_information_about_read_bases(usually_column_9_in_pileup) Output_file" 
-sys.exit()
-
-File_Pileup = Argument[0]
-index = int(Argument[1])-1
-output = open(str(Argument[2]),"w")
-
-
-nucleotides = ["A","T","C","G","a","t","c","g"]
-complement = {'a':'T','g':'C','t':'A','c':'G'}
-
-output.write("Chromosome\tCoordinate\tReference_base")
-
-Frequency_bases = {"A":0,"T":0,"C":0,"G":0}
-
-for base in sorted(Frequency_bases.keys()):
-  output.write("\t"+str(base))
-
-output.write("\n")
-
-for line in fileinput.input([File_Pileup]):
-  rowlist = []
-rowlist = (line.rstrip("\n")).split('\t')
-rowlist[2] = rowlist[2].upper()
-
-Frequency = {"A":0,"T":0,"C":0,"G":0}
-
-if line.startswith("#"):
-  continue
-else:
-  output.write(str(rowlist[0])+"\t"+str(rowlist[1])+"\t"+str(rowlist[2]))
-for i in rowlist[index]:
-  if i == ".":
-  Frequency[rowlist[2]] = Frequency[rowlist[2]] + 1
-continue
-if i == ",":
-  Frequency[rowlist[2]] = Frequency[rowlist[2]] + 1
-continue
-
-if i in nucleotides:
-  if i.isupper():
-  Frequency[i] = Frequency[i]+1
-
-else:
-  Frequency[complement[i]] = Frequency[complement[i]] + 1
-
-for base in sorted(Frequency.keys()):
-  output.write("\t"+str(Frequency[base]))
-
-output.write("\n")
-
-output.close()
-################### new section of shame ###################
+#### notes and comments section ####
+#10-17-2017 nathan 12:53
+#Formatted the group master script
+# added sections
