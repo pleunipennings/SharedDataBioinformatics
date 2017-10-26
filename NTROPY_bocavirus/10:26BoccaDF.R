@@ -18,7 +18,8 @@ numTrans<-length(which(SN1seqDNA[,1]==Transition(SN1cons[1])))
 Transition("a")
 
 #make data frame
-class(NS1seqDNA)
-a<-c(1:5188)
-bocans1df<-data.frame(a,NS1seqDNA)
+class(SN1seqDNA)
+dim(SN1seqDNA)
+a<-c(1:5157)
+bocans1df<-data.frame(a)
 bocans1df
