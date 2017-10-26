@@ -167,148 +167,148 @@ nightmare <-ggplot(aes(factor(xvalue), MeanFreq), data = datatww)+
     facet_wrap(~ TypeOfSite)+
     #nonsyn data
     geom_jitter(data= nonsyndata,aes(colour = nonsyndata$color, x = factor(xvalue)),position = position_jitter(width = .2), alpha = 0.5) +
-    geom_vline(xintercept = 4.5, linetype="dotted", color = "dark gray", size=1.5) +
-    geom_vline(xintercept = 8.1, linetype="dotted", color = "dark gray", size=1.5) +
-    geom_vline(xintercept = 12, linetype="dotted", color = "dark gray", size=1.5)+
+    geom_vline(xintercept = 4.5, linetype="solid", color = "black", size=0.9) +
+    geom_vline(xintercept = 8.1, linetype="solid", color = "black", size=0.9) +
+    geom_vline(xintercept = 12, linetype="solid", color = "black", size=0.9)+
     scale_color_manual(labels = c("No drastic AA change (non-Cpg-forming)","Drastic AA change (non-Cpg-forming)","Drastic AA change (Cpg-forming)", "No drastic AA change (Cpg-forming)"), values = c("green", "yellow","red", "blue")) +
     labs(x="Mutation Type", y="Mutation Frquency",col=" ")
 
 #graphing other info basied on conditions
 nightmare
     if (nrow(synNNa)!=0) {
-        nightmare<- nightmare + geom_errorbar(data = synNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare + geom_point(data =synNNa, aes('1',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare + geom_errorbar(data = synNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare + geom_point(data =synNNa, aes('1',median(c(median(lowerConf),median(upperConf)))))
     }
     if (nrow(synNNc)!=0) {
-        nightmare<- nightmare + geom_errorbar(data = synNNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare + geom_point(data =synNNc, aes('9',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare + geom_errorbar(data = synNNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare + geom_point(data =synNNc, aes('9',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(synNNg)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = synNNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =synNNg, aes('5',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = synNNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =synNNg, aes('5',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(synNNt)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = synNNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =synNNt, aes('13',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = synNNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =synNNt, aes('13',median(c(median(lowerConf),median(upperConf)))))
     } 
     #synNYdata
     if (nrow(synNYa)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = synNYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =synNYa, aes('2',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = synNYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =synNYa, aes('2',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(synNYc)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = synNYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =synNYc, aes('10',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = synNYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =synNYc, aes('10',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(synNYg)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = synNYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =synNYg, aes('6',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = synNYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =synNYg, aes('6',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(synNYt)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = synNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =synNYt, aes('14',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = synNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =synNYt, aes('14',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(synYNa)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = synYNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =synYNa, aes('3',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = synYNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =synYNa, aes('3',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(synYNc)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = synYNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =synYNc, aes('11',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = synYNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =synYNc, aes('11',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(synYNg)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = synYNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =synYNg, aes('7',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = synYNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =synYNg, aes('7',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(synYNt)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = synYNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =synYNt, aes('15',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = synYNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =synYNt, aes('15',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(synYYa)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = synYYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =synYYa, aes('4',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = synYYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =synYYa, aes('4',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(synYYc)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = synYYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =synYYc, aes('12',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = synYYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =synYYc, aes('12',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(synYYg)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = synYYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =synYYg, aes('8',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = synYYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =synYYg, aes('8',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(synYYt)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = synYYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =synYYt, aes('16',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = synYYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =synYYt, aes('16',median(c(median(lowerConf),median(upperConf)))))
     } 
     
     #nonsyn data
     
     if (nrow(nonsynNNa)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =nonsynNNa, aes('1',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = nonsynNNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =nonsynNNa, aes('1',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(nonsynNNc)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynNNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =nonsynNNc, aes('9',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = nonsynNNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =nonsynNNc, aes('9',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(nonsynNNg)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynNNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =nonsynNNg, aes('5',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = nonsynNNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =nonsynNNg, aes('5',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(nonsynNNt)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynNNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =nonsynNNt, aes('13',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = nonsynNNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =nonsynNNt, aes('13',median(c(median(lowerConf),median(upperConf)))))
     } 
     
     if (nrow(nonsynNYa)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynNYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare + geom_point(data =nonsynNYa, aes('2',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = nonsynNYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare + geom_point(data =nonsynNYa, aes('2',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(nonsynNYc)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynNYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =nonsynNYc, aes('10',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = nonsynNYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =nonsynNYc, aes('10',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(nonsynNYg)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynNYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =nonsynNYg, aes('6',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = nonsynNYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =nonsynNYg, aes('6',median(c(median(lowerConf),median(upperConf)))))
     }  
     if (nrow(nonsynNYt)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =nonsynNYt, aes('14',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = nonsynNYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =nonsynNYt, aes('14',median(c(median(lowerConf),median(upperConf)))))
     } 
     #
     if (nrow(nonsynYNa)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynYNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =nonsynYNa, aes('3',median(c(median(lowerConf),median(upperConf)))))
+       # nightmare<- nightmare +geom_errorbar(data = nonsynYNa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =nonsynYNa, aes('3',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(nonsynYNc)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynYNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =nonsynYNc, aes('11',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = nonsynYNc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =nonsynYNc, aes('11',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(nonsynYNg)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynYNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =nonsynYNg, aes('7',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = nonsynYNg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =nonsynYNg, aes('7',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(nonsynYNt)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynYNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =nonsynYNt, aes('15',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = nonsynYNt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =nonsynYNt, aes('15',median(c(median(lowerConf),median(upperConf)))))
     } 
     #
     if (nrow(nonsynYYa)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynYYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =nonsynYYa, aes('4',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = nonsynYYa, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+       # nightmare<- nightmare +geom_point(data =nonsynYYa, aes('4',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(nonsynYYc)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynYYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =nonsynYYc, aes('12',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = nonsynYYc, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =nonsynYYc, aes('12',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(nonsynYYg)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynYYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =nonsynYYg, aes('8',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = nonsynYYg, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+        #nightmare<- nightmare +geom_point(data =nonsynYYg, aes('8',median(c(median(lowerConf),median(upperConf)))))
     } 
     if (nrow(nonsynYYt)!=0) {
-        nightmare<- nightmare +geom_errorbar(data = nonsynYYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
-        nightmare<- nightmare +geom_point(data =nonsynYYt, aes('16',median(c(median(lowerConf),median(upperConf)))))
+        #nightmare<- nightmare +geom_errorbar(data = nonsynYYt, aes(ymin = median(lowerConf), ymax = median(upperConf), width = 0.2))
+       # nightmare<- nightmare +geom_point(data =nonsynYYt, aes('16',median(c(median(lowerConf),median(upperConf)))))
     } 
 nightmare <- nightmare +  theme_bw() +
     theme(axis.line = element_line(colour = "black"),
@@ -328,3 +328,6 @@ print(nightmare)
 }
 
 nightcrewgraph(data)
+
+
+
