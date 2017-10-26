@@ -1,15 +1,20 @@
-setwd("~/Dropbox/2015_fallBioinformatics/RTutorials/Influenza")
+setwd("~/bioinformatics/bioinformaticsproject")
 library(seqinr)
 library(ape)
 
-NAseqs<-read.fasta("NA_alignment.fasta") #NA stands for neuraminidase, the gene for which we have the sequences 
+bvseqs<-read.fasta("HumanBocavirus1_NS1.fasta_pruned.mu.trim05") 
+#bv stands for neuraminidase, the gene for which we have the sequences 
+bvseqs
 
 #How to get the consensus (= most common nucleotide for each position)
-NAseqsAli<-read.alignment("NA_alignment.fasta", format="fasta") #NA stands for neuraminidase, the gene for which we have the sequences 
-cons<-consensus(NAseqsAli)
+bvseqsAli<-read.alignment("HumanBocavirus1_NS1.fasta_pruned.mu.trim05", format="fasta") 
+bvseqsAli
+#consensus fxn to find the most common nucleotide
+cons<-consensus(bvseqsAli)
+cons
 
 #use read.dna to get the data in matrix form, this makes it easier to count
-NAseqsDNA<-read.dna("NA_alignment.fasta", format = "fasta",as.character=TRUE)
+bvseqsDNA<-read.dna("HumanBocavirus1_NS1.fasta_pruned.mu.trim05", format = "fasta",as.character=TRUE)
 
 #Now you can use length and which and the == operator to count the number of sequences with the consensus nucleotide
 numCons<-length(which(NAseqsDNA[,1]==cons[1]))
