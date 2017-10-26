@@ -79,8 +79,20 @@ for(j in 1:b){
    
   }
 
-# Let's pull up a different sequence for comparison
-df[,2]=seqs[89,]                                            # Picking the sequence, 89 is arbitrary
+# Let's Creates 
+  count <- 1
+    for(i in 1:length(curSeq)){ # Workspace for MutAA filling
+        for (j in i:3){
+            if(j == 1){                     #first codon
+                df[count, ]$MutAA <- translate(c(df[count,]$Mutseq, df[count + 1,]$WTseq, df[count +2,]$WTseq))
+            }elseif(j == 2){                #second codon
+                df[count, ]$MutAA <- translate(c(df[count - 1,]$WTseq, df[count,]$Mutseq, df[count +1,]$WTseq))
+            }elseif(j==3){                  #third codon
+                df[count, ]$MutAA <- translate(c(df[count - 2,]$WTseq, df[count - 1,]$WTseq, df[count,]$Mutseq))
+            }
+           count <- count + 1 
+        }
+    }                                           
 
 
 df[,4]=seqinr::translate(paste(df[,2], sep=" "),
