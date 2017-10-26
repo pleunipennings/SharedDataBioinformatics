@@ -63,7 +63,7 @@ for (i in 1:length(datatww$num)) {
         datatww$xvalue[i] <- 9
         datatww$color[i] <- "blue"
     } else if (datatww$bigAAChange[i] == 0 && datatww$makesCpG[i] == 1 && datatww$WTnt[i] == "c") {
-        datatww$xvalue[i] <- 10
+        datatww$xvalue[i] <- 10 
         datatww$color[i] <- "red"
     } else if (datatww$bigAAChange[i] == 1 && datatww$makesCpG[i] == 0 && datatww$WTnt[i] == "c") {
         datatww$xvalue[i] <- 11
