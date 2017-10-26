@@ -21,9 +21,9 @@
     df[i+1,1]=y
   }
 
-# Translate the WT RNA sequence to AA sequence
+# Translate the WT DNA sequence to AA sequence
 
-  curSeq <- translate(paste(df[,1], sep=" "),NAstring="X", ambiguous=FALSE, sens="F")
+  curSeq <- translate(paste(df[,1], sep=" "), NAstring="X", ambiguous = FALSE, sens="F")
   count <- 0
   
   for(i in 1:length(curSeq)){ # incrementing down sequence by 3 (needs work)
@@ -79,20 +79,37 @@ for(j in 1:b){
    
   }
 
-# Let's pull up a different sequence for comparison
-df[,2]=seqs[89,]                                            # Picking the sequence, 89 is arbitrary
+# Let's Creates 
+  count <- 1
+    for(i in 1:length(curSeq)){ # Workspace for MutAA filling
+        for (j in i:3){
+            if(j == 1){                     #first codon
+                df[count, ]$MutAA <- translate(c(df[count,]$Mutseq, df[count + 1,]$WTseq, df[count +2,]$WTseq))
+            }elseif(j == 2){                #second codon
+                df[count, ]$MutAA <- translate(c(df[count - 1,]$WTseq, df[count,]$Mutseq, df[count +1,]$WTseq))
+            }elseif(j==3){                  #third codon
+                df[count, ]$MutAA <- translate(c(df[count - 2,]$WTseq, df[count - 1,]$WTseq, df[count,]$Mutseq))
+            }
+           count <- count + 1 
+        }
+    }                                           
+
+
 df[,4]=seqinr::translate(paste(df[,2], sep=" "),
         NAstring="X", ambiguous=FALSE, sens="F")            # Translating from nucleic acid to AA
+
 for(j in 1:b){                                              
   df[j,6]=amCat(df[j,4])                                    # Categorizing the AA 
 }
 
-# Function to compare
-for(h in 1:b){
-  if (df[h,5]==df[h,6]){
-    df[h,7]= "0"                      # If WT AA category = Mut AA Category, no drastic change
-  }
-  if (df[h,5]!=df[h,6]){
-    df[h,7]= "X"                      # If WT AA category =/= Mut AA Category, yes drastic change
-  }
+# Function to compare DrasticAAChanges
+DrasticChange <- function(df){
+    for(h in 1:nrow(df)){
+      if (df[h,]$WTcat==df[h,]$Mutcat){
+        df[h,]$DrasticAA= "0"                      # If WT AA category = Mut AA Category, no drastic change
+      }
+      if (df[h,]$WTcat!=df[h,]$Mutcat){
+        df[h,]$DrasticAA= "X"                      # If WT AA category =/= Mut AA Category, yes drastic change
+      }
+    }
 }
