@@ -5,20 +5,15 @@ setwd("~/Desktop/Git")
 # freq calc v2 GL
 
 library(seqinr)
-library(scales)
-library(ggplot2)
 
 bk <- read.fasta("bk.txt")
-nightcrewbk = function(bkdata){
-    # reference sequence
-    ref <- bk[[1]]
-    
+
     # dataframe columns
     num <- c(1:1089)
     wtnt <- c()
-    freq <- c()
+    MeanFreq <- c()
     
-    # for freq calculation later
+    # for MeanFreq calculation later
     absfreq <- c(rep(0,1089))
     totalcount <- c(rep(0,1089))
     
@@ -96,15 +91,23 @@ nightcrewbk = function(bkdata){
     
     # calculates frequency as percentage
     for (i in 1:length(absfreq)) {
-        freq[i] <- absfreq[i] / totalcount[i]
+        MeanFreq[i] <- absfreq[i] / totalcount[i]
     }
     
+    
+    
     # creates dataframe containing all data
-    bk_datas <- data.frame(num,wtnt,freq)
-    save(bk_datas,file="bk_datas.Rda")
+    bk_data <- data.frame(num,wtnt,MeanFreq)
+    
     # outputs data to file
-    write.csv(bk_datas,"bk_data.csv")
-}
+    write.csv(bk_data,"bk_data.csv")
+    save(bk_data,file="bk_data.Rda")
+    load("bk_data.Rda")
+    
+    #check plot
+    plot(bk_data$MeanFreq + 0.01, log="y", col=c(1,2,3))
+    #1 black fist aa in codon, 2 red 2nd aa in codon, 3 green 3rd aa in codon
+
 
 nightcrewbk(bk)
 
