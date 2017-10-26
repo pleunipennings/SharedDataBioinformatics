@@ -41,26 +41,29 @@ V2 <- n$MeanFreq[NCpG] #create a Value that looks at mean frequency by no cpg
 
 plot.default(x = c(V1, V2), #plot it!
      xlab = "Location", ylab = "Frequency", main = "Location vs frequency CpG non-CpG Graph",
-     col =  c("blue","red")
+     col = (as.integer(n$makesCpG)),
+     log = "y"
 )
 
-# CpG graphing function()
+####### CpG graphing function() #########
 
 LvsF_CpG_Printer <- function(data_frame){
+  
   YCpG <- which(n$makesCpG=="1")
   NCpG <- which(n$makesCpG=="0")
   x1 <- n$MeanFreq[YCpG]
   x2 <- n$MeanFreq[NCpG]
+  plot.default(x = c(x1, x2), 
+               xlab = "Location", ylab = "Frequency", main = "Location vs frequency CpG non-CpG Graph",
+               col = (as.integer(n$makesCpG)),
+               log = "y"
+  )#close plot.default
   
-  return(plot.default(x = c(x1, x2), 
-                      xlab = "Location", ylab = "Frequency", main = "Location vs frequency CpG non-CpG Graph",
-                      col =  c("blue", "red")
-                      )#close plot.default
-         )#close return
+  return()#close return
 }#close function
 
 LvsF_CpG_Printer(n) #run function
-
+head(n)
 #notes for fucntion:
 # n = must be a data.frame
 # for our data:
