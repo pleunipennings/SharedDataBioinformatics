@@ -21,7 +21,7 @@
     df[i+1,1]=y
   }
 
-# Translate the WT RNA sequence to AA sequence
+# Translate the WT DNA sequence to AA sequence
 
   curSeq <- translate(paste(df[,1], sep=" "), NAstring="X", ambiguous = FALSE, sens="F")
   count <- 0
