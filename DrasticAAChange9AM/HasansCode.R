@@ -23,7 +23,7 @@
 
 # Translate the WT RNA sequence to AA sequence
 
-  curSeq <- translate(paste(df[,1], sep=" "),NAstring="X", ambiguous=FALSE, sens="F")
+  curSeq <- translate(paste(df[,1], sep=" "), NAstring="X", ambiguous=FALSE, sens="F")
   count <- 0
   
   for(i in 1:length(curSeq)){ # incrementing down sequence by 3 (needs work)
@@ -81,8 +81,11 @@ for(j in 1:b){
 
 # Let's pull up a different sequence for comparison
 df[,2]=seqs[89,]                                            # Picking the sequence, 89 is arbitrary
+
+
 df[,4]=seqinr::translate(paste(df[,2], sep=" "),
         NAstring="X", ambiguous=FALSE, sens="F")            # Translating from nucleic acid to AA
+
 for(j in 1:b){                                              
   df[j,6]=amCat(df[j,4])                                    # Categorizing the AA 
 }
