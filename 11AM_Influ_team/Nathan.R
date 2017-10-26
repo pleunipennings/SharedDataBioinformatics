@@ -301,63 +301,148 @@ public static List<Integer> finalCPGIslands(List<Integer> iList,
     ??consensus
     example(ape::consensus)
     seqinr::consensus(HPIV1a)
-    [1] "-" "g" "g" "a" "c" "a" "a" "g" "t" "c" "a" "c" "a" "g" "a" "c" "a" "t" "t"
-    [20] "t" "g" "a" "t" "c" "t" "t" "a" "g" "t" "t" "a" "a" "a" "a" "c" "c" "t" "t"
-    [39] "t" "a" "t" "a" "a" "t" "g" "g" "c" "t" "g" "g" "g" "c" "t" "a" "c" "t" "a"
-    [58] "a" "g" "t" "a" "c" "t" "t" "t" "t" "g" "a" "c" "a" "c" "a" "t" "t" "c" "a"
-    [77] "g" "c" "t" "c" "c" "a" "g" "g" "a" "g" "g" "a" "g" "t" "g" "a" "g" "a" "g"
-    [96] "c" "a" "t" "c" "a" "a" "t" "a" "a" "g" "t" "c" "t" "g" "g" "c" "g" "g" "a"
-    [115] "g" "g" "a" "g" "c" "a" "a" "t" "t" "a" "t" "a" "c" "c" "t" "g" "g" "t" "c"
-    [134] "a" "a" "a" "g" "a" "a" "g" "t" "a" "c" "c" "g" "t" "t" "t" "c" "t" "g" "t"
-    [153] "c" "t" "t" "c" "a" "c" "a" "t" "t" "a" "g" "g" "c" "c" "c" "g" "a" "g" "t"
-    [172] "g" "t" "g" "a" "c" "a" "g" "a" "t" "g" "a" "t" "g" "c" "a" "g" "a" "t" "a"
-    [191] "a" "a" "t" "t" "a" "t" "t" "a" "a" "t" "a" "g" "c" "a" "a" "c" "c" "a" "c"
-    [210] "t" "t" "t" "c" "t" "t" "a" "g" "c" "c" "c" "a" "c" "t" "c" "a" "c" "t" "g"
-    [229] "g" "a" "t" "a" "c" "a" "g" "a" "t" "a" "a" "a" "c" "a" "a" "c" "a" "c" "t"
-    [248] "c" "t" "c" "a" "a" "a" "g" "a" "g" "g" "a" "g" "g" "a" "t" "t" "t" "t" "t"
-    [267] "a" "g" "t" "a" "t" "c" "a" "c" "t" "c" "c" "t" "t" "g" "c" "a" "a" "t" "g"
-    [286] "g" "c" "t" "t" "a" "c" "a" "g" "t" "a" "g" "c" "c" "c" "g" "g" "a" "g" "t"
-    [305] "t" "a" "t" "a" "t" "c" "t" "c" "a" "c" "t" "a" "c" "a" "a" "a" "c" "g" "g"
-    [324] "t" "g" "t" "c" "a" "a" "t" "g" "c" "t" "g" "a" "t" "g" "t" "c" "a" "a" "g"
-    [343] "t" "a" "t" "g" "t" "g" "a" "t" "a" "t" "a" "c" "a" "g" "t" "a" "t" "a" "g"
-    [362] "a" "g" "a" "g" "a" "g" "a" "t" "c" "c" "t" "a" "a" "a" "a" "g" "g" "a" "c"
-    [381] "a" "a" "a" "a" "a" "c" "a" "g" "a" "t" "g" "g" "g" "t" "t" "c" "a" "t" "t"
-    [400] "g" "t" "c" "a" "a" "a" "a" "c" "a" "a" "g" "a" "g" "a" "c" "a" "t" "g" "g"
-    [419] "a" "g" "t" "a" "t" "g" "a" "a" "a" "g" "a" "a" "c" "a" "a" "c" "a" "g" "a"
-    [438] "g" "t" "g" "g" "t" "t" "g" "t" "t" "c" "g" "g" "a" "c" "c" "t" "a" "t" "g"
-    [457] "g" "t" "c" "a" "a" "c" "a" "a" "g" "a" "a" "c" "c" "c" "a" "t" "t" "g" "t"
-    [476] "t" "c" "c" "a" "a" "g" "g" "g" "c" "a" "a" "a" "g" "a" "g" "a" "g" "a" "a"
-    [495] "t" "g" "c" "g" "g" "a" "t" "c" "t" "a" "g" "a" "a" "g" "c" "a" "t" "t" "g"
-    [514] "c" "t" "t" "c" "a" "g" "a" "c" "a" "t" "a" "t" "g" "g" "a" "t" "a" "t" "c"
-    [533] "c" "t" "g" "c" "a" "t" "g" "t" "c" "t" "c" "g" "g" "a" "g" "c" "t" "a" "t"
-    [552] "a" "a" "t" "a" "g" "t" "t" "c" "a" "a" "g" "t" "t" "t" "g" "g" "a" "t" "a"
-    [571] "g" "t" "g" "c" "t" "g" "g" "t" "t" "a" "a" "g" "g" "c" "c" "a" "t" "a" "a"
-    [590] "c" "a" "a" "g" "t" "a" "g" "t" "g" "c" "t" "g" "g" "t" "c" "t" "a" "a" "g"
-    [609] "a" "a" "a" "a" "g" "g" "a" "t" "t" "c" "t" "t" "c" "a" "a" "t" "a" "g" "a"
-    [628] "t" "t" "a" "g" "a" "a" "g" "c" "a" "t" "t" "c" "a" "g" "a" "c" "a" "a" "g"
-    [647] "a" "t" "g" "g" "a" "a" "c" "c" "g" "t" "c" "a" "a" "a" "a" "g" "t" "g" "c"
-    [666] "t" "c" "t" "g" "g" "t" "c" "t" "t" "c" "a" "c" "a" "g" "g" "a" "g" "a" "c"
-    [685] "a" "c" "a" "g" "t" "t" "g" "a" "a" "g" "g" "c" "a" "t" "t" "g" "g" "t" "g"
-    [704] "c" "a" "g" "t" "g" "a" "t" "g" "a" "g" "g" "t" "c" "a" "c" "a" "a" "c" "a"
-    [723] "a" "a" "g" "c" "t" "t" "a" "g" "t" "a" "t" "c" "t" "c" "t" "t" "a" "t" "g"
-    [742] "g" "t" "a" "g" "a" "g" "a" "c" "t" "c" "t" "a" "g" "t" "g" "a" "c" "t" "a"
-    [761] "t" "g" "a" "a" "c" "a" "c" "a" "t" "c" "c" "a" "g" "g" "t" "c" "a" "g" "a"
-    [780] "t" "c" "t" "a" "a" "c" "t" "a" "c" "a" "t" "t" "a" "g" "a" "g" "a" "a" "g"
-    [799] "a" "a" "c" "a" "t" "t" "c" "a" "g" "a" "t" "t" "g" "t" "a" "g" "g" "a" "a"
-    [818] "a" "t" "t" "a" "c" "a" "t" "a" "a" "g" "a" "g" "a" "t" "g" "c" "a" "g" "g"
-    [837] "a" "t" "t" "a" "g" "c" "a" "t" "c" "t" "t" "t" "c" "a" "t" "g" "a" "a" "c"
-    [856] "a" "c" "c" "a" "t" "c" "a" "a" "g" "t" "a" "t" "g" "g" "t" "g" "t" "a" "g"
-    [875] "a" "a" "a" "c" "g" "a" "a" "g" "a" "t" "g" "g" "c" "c" "g" "c" "c" "t" "t"
-    [894] "g" "a" "c" "a" "c" "t" "a" "t" "c" "a" "a" "a" "c" "c" "t" "g" "a" "g" "a"
-    [913] "c" "c" "a" "g" "a" "t" "c" "t" "a" "a" "a" "c" "a" "a" "a" "c" "t" "g" "a"
-    [932] "g" "a" "a" "g" "c" "c" "t" "t" "g" "t" "t" "g" "a" "t" "a" "t" "c" "t" "a"
-    [951] "t" "c" "t" "a" "t" "c" "a" "a" "a" "g" "g" "g" "a" "g" "c" "c" "c" "g" "a"
-    [970] "g" "c" "c" "c" "c" "t" "t" "t" "t" "a" "t" "a" "t" "g" "t" "a" "t" "a" "c"
-    [989] "t" "c" "a" "g" "a" "g" "a" "c" "c" "c" "a" "g"
-    [ reached getOption("max.print") -- omitted 14473 entries ]
-    > length(seqinr::consensus(HPIV1a))
+    
+length(seqinr::consensus(HPIV1a))
     [1] 15473
     
+
+?plot.default
+
+
+plot.default(x = c(V1, V2), #plot it!
+             xlab = "Location", ylab = "Frequency", main = "Location vs frequency CpG non-CpG Graph",
+             col =  c("blue","red")
+)
+read.csv("OverviewSelCoeff_BachelerFilter.csv")->n
+head(n)
+
+#follows is reinterpretation of Pleuni's fig2 code
+#im trying to figure out how the plot is formatted....
+LvsF_CpG_Printer <- function(data_frame){
+  png("Location_vs_frequrency_CpG_non-CpG_Graph.png",width=12,height=7.5,units="in",res=100)
+  par(mfrow=c(1,1))
+  maxnuc=1000
+  par(mar = c(3,5,1,2))
+  plot(n$num[40:maxnuc],n$EstSelCoeff[40:maxnuc],
+       log="y", ylab="Frequrency",cex.lab=1.3,
+       xaxt="n",yaxt="n", xlab="",
+       col="darkgrey",t="n",pch=".", ylim=c(3.2*10^-4,1),xlim=c(40,979))
+        axis(1,at=c(3*seq(15,95,by=20)-1,296+30),labels=c(seq(15,95,by=20),""))
+        axis(1,at=3*seq(109,349,by=20)-1,labels=seq(109-99,349-99,by=20))
+        axis(2,at=c(10^-5,10^-4,10^-3,10^-2,10^-1,10^-0),labels=c(10^-5,10^-4,10^-3,10^-2,10^-1,10^-0),las=1,line=0,tick=FALSE)
+        eaxis(side = 2, at = 10^((-0):(-(5))),label=rep("",6))
+         rect(0, 0.00001, 297.5, 2, density = NULL, angle = 45,col="grey70",border = NA)
+          for(i in 1:5){abline(h = 1:10 * 10^(-i), col = "gray41")}
+         cols <- brewer.pal(6, "Set2")[c(1, 2, 3, 6)]
+          for (i in 40:maxnuc){
+            c=0; co = 1
+            if (n$TypeOfSite[i]=="stop"&n$WTnt[i]%in%c("g","c")) {c=1;p=21}
+            if (n$TypeOfSite[i]=="syn"&n$WTnt[i]%in%c("g","c")) {c=cols[1];p=21}
+            if (n$TypeOfSite[i]=="syn"&n$WTnt[i]%in%c("a","t")) {c=cols[1];p=21}
+            if (n$TypeOfSite[i]=="nonsyn"&n$WTnt[i]%in%c("c","g")) {c=cols[2];p=21}
+            if (n$TypeOfSite[i]=="nonsyn"&n$WTnt[i]%in%c("a","t")) {c=cols[4];p=21}
+            if (i %in% 73:81) {p = 22; co = 2} 
+            if (c!=0) points(n$num[i],n$EstSelCoeff[i],pch=p,col=co,
+                     bg=rgb(red=col2rgb(c)[1]/255,
+                            green=col2rgb(c)[2]/255,
+                            blue=col2rgb(c)[3]/255,
+                            maxColorValue = 1,alpha=0.8),
+                     cex=2)
+            }
+          rect(0, 0.000001, 1200, 3.5*10^-4, density = NULL, angle = 45,col=1,border = NA)
+          text(55*3,2.9*10^-4,"PROTEASE",col="white")
+          rect(297.5, 0.000001, 1200, 3.5*10^-4, density = NULL, angle = 45,col="grey40",border = NA)
+          text(220*3,2.9*10^-4,"REVERSE TRANSCRIPTASE",col="white")
+            legpos=296;legposV=0.4
+            rect(legpos*3, 0.4*legposV, (legpos+42.5)*3, 1.7*legposV, density = NULL, angle = 45,col=alpha("white",1))
+            points((legpos+5)*3,legposV/0.7,pch=21,bg=1,col=1,cex=2)
+            text((legpos+9)*3,legposV/0.7,"Nonsense",adj=0)
+            points((legpos+5)*3,legposV,pch=21,bg=cols[2],col=1,cex=2)
+            text((legpos+9)*3,legposV,"Non-syn, C/G",adj=0)
+            points((legpos+5)*3,legposV*0.7,pch=21,bg=cols[4],col=1,cex=2)
+            text((legpos+9)*3,legposV*0.7,"Non-syn, A/T",adj=0)
+            points((legpos+5)*3,legposV*0.49,pch=21,bg=cols[1],col=1,cex=2)
+            text((legpos+9)*3,legposV*0.49,"Synonymous",adj=0)
+dev.off()
+return()        
+}
+
+LvsF_CpG_Printer(n)
+
+
+
+
+FreqsSyn<-n$MeanFreq[n$TypeOfSite=="syn"]
+FreqsNonSyn<-n$MeanFreq[n$TypeOfSite=="nonsyn"]
+FreqsStop<-n$MeanFreq[n$TypeOfSite=="stop"]
+
+wilcox.test(FreqsSyn, FreqsNonSyn,alternative = "greater", paired = FALSE)
+wilcox.test(FreqsNonSyn,FreqsStop,alternative = "greater", paired = FALSE)
+
+if (TRUE){
+  #pdf("../Output/EstSelCoeffPRO_aug2017.pdf",width=12,height=8)
+  png("Location_vs_frequrency_CpG_non-CpG_Graph.png",width=12,height=7.5,units="in",res=100)
+  #?png #prints out the below plot as a png!
+  par(mfrow=c(1,1))
+  maxnuc=1000
+  #??maxnuc #maxnuc? maxnuc sets the maximum number of variables to be used in 
+  # the plot
+  par(mar = c(3,5,1,2))
+  #?par #what does par do?
+  plot(n$num[40:maxnuc],n$EstSelCoeff[40:maxnuc],
+       log="y", ylab="Frequrency",cex.lab=1.3,
+       xaxt="n",yaxt="n", xlab="",
+       col="darkgrey",t="n",pch=".", ylim=c(3.2*10^-4,1),xlim=c(40,979))
+  
+  axis(1,at=c(3*seq(15,95,by=20)-1,296+30),labels=c(seq(15,95,by=20),""))
+  axis(1,at=3*seq(109,349,by=20)-1,labels=seq(109-99,349-99,by=20))
+  axis(2,at=c(10^-5,10^-4,10^-3,10^-2,10^-1,10^-0),labels=c(10^-5,10^-4,10^-3,10^-2,10^-1,10^-0),las=1,line=0,tick=FALSE)
+  eaxis(side = 2, at = 10^((-0):(-(5))),label=rep("",6))
+  
+  #color Protease region grey
+  rect(0, 0.00001, 297.5, 2, density = NULL, angle = 45,col="grey70",border = NA)
+  for(i in 1:5){abline(h = 1:10 * 10^(-i), col = "gray41")}
+  
+  cols <- brewer.pal(6, "Set2")[c(1, 2, 3, 6)]
+  for (i in 40:maxnuc){
+    c=0; co = 1
+    if (n$TypeOfSite[i]=="stop"&n$WTnt[i]%in%c("g","c")) {c=1;p=21}
+    if (n$TypeOfSite[i]=="syn"&n$WTnt[i]%in%c("g","c")) {c=cols[1];p=21}
+    if (n$TypeOfSite[i]=="syn"&n$WTnt[i]%in%c("a","t")) {c=cols[1];p=21}
+    if (n$TypeOfSite[i]=="nonsyn"&n$WTnt[i]%in%c("c","g")) {c=cols[2];p=21}
+    if (n$TypeOfSite[i]=="nonsyn"&n$WTnt[i]%in%c("a","t")) {c=cols[4];p=21}
+    if (i %in% 73:81) {p = 22; co = 2} #for Active site Protease change pch
+    if (c!=0) points(n$num[i],n$EstSelCoeff[i],pch=p,col=co,
+                     bg=rgb(red=col2rgb(c)[1]/255,
+                            green=col2rgb(c)[2]/255,
+                            blue=col2rgb(c)[3]/255,
+                            maxColorValue = 1,alpha=0.8),
+                     cex=2)
+  }
+  
+  #Add "Protease" and "RT" words
+  rect(0, 0.000001, 1200, 3.5*10^-4, density = NULL, angle = 45,col=1,border = NA)
+  text(55*3,2.9*10^-4,"PROTEASE",col="white")
+  rect(297.5, 0.000001, 1200, 3.5*10^-4, density = NULL, angle = 45,col="grey40",border = NA)
+  text(220*3,2.9*10^-4,"REVERSE TRANSCRIPTASE",col="white")
+  
+  
+  
+  #Add legend
+  legpos=296;legposV=0.4
+  rect(legpos*3, 0.4*legposV, (legpos+42.5)*3, 1.7*legposV, density = NULL, angle = 45,col=alpha("white",1))
+  points((legpos+5)*3,legposV/0.7,pch=21,bg=1,col=1,cex=2)
+  text((legpos+9)*3,legposV/0.7,"Nonsense",adj=0)
+  points((legpos+5)*3,legposV,pch=21,bg=cols[2],col=1,cex=2)
+  text((legpos+9)*3,legposV,"Non-syn, C/G",adj=0)
+  points((legpos+5)*3,legposV*0.7,pch=21,bg=cols[4],col=1,cex=2)
+  text((legpos+9)*3,legposV*0.7,"Non-syn, A/T",adj=0)
+  points((legpos+5)*3,legposV*0.49,pch=21,bg=cols[1],col=1,cex=2)
+  text((legpos+9)*3,legposV*0.49,"Synonymous",adj=0)
+  
+  ?dev.off()
+}
+
   #  1/ make consensus data of our sample DNA (for one file only!)
 n <- data.frame(Pos = c(1:length(seqinr::consensus(HPIV1a))),
                 WTnt = (seqinr::consensus(HPIV1a)),
