@@ -7,7 +7,7 @@ bk <- read.fasta("bk.txt")
 
 # dataframe columns
 num <- c(1:1089)
-wtnt <- c()
+WTnt <- c()
 MeanFreq <- c()
 
 # for MeanFreq calculation later
@@ -36,10 +36,10 @@ for (i in 1:length(bk)) {
 # assigns wtnt based on most frequent nucleotide across all sequences per position
 for (j in 1:length(sequence)) {
     nuc[j] <- max(c(acount[j],gcount[j],ccount[j],tcount[j]))
-    if (max(nuc[j]) == acount[j]) {wtnt[j] <- 'a'}
-    if (max(nuc[j]) == gcount[j]) {wtnt[j] <- 'g'}
-    if (max(nuc[j]) == ccount[j]) {wtnt[j] <- 'c'}
-    if (max(nuc[j]) == tcount[j]) {wtnt[j] <- 't'}
+    if (max(nuc[j]) == acount[j]) {WTnt[j] <- 'a'}
+    if (max(nuc[j]) == gcount[j]) {WTnt[j] <- 'g'}
+    if (max(nuc[j]) == ccount[j]) {WTnt[j] <- 'c'}
+    if (max(nuc[j]) == tcount[j]) {WTnt[j] <- 't'}
     nuc <- c()
 }
 
@@ -47,7 +47,7 @@ for (j in 1:length(sequence)) {
 for (i in 1:length(bk)) {
     sequence <- bk[[i]]
     for (j in 1:length(sequence)){
-        if (wtnt[j] == 'a') {
+        if (WTnt[j] == 'a') {
             if (sequence[j] == 'g') {
                 absfreq[j] <- absfreq[j] + 1
                 totalcount[j] <- totalcount[j] + 1
@@ -56,7 +56,7 @@ for (i in 1:length(bk)) {
                 totalcount[j] <- totalcount[j] + 1
             }
         }
-        if (wtnt[j] == 'g') {
+        if (WTnt[j] == 'g') {
             if (sequence[j] == 'a') {
                 absfreq[j] <- absfreq[j] + 1
                 totalcount[j] <- totalcount[j] + 1
@@ -65,7 +65,7 @@ for (i in 1:length(bk)) {
                 totalcount[j] <- totalcount[j] + 1
             }
         }
-        if (wtnt[j] == 'c') {
+        if (WTnt[j] == 'c') {
             if (sequence[j] == 't') {
                 absfreq[j] <- absfreq[j] + 1
                 totalcount[j] <- totalcount[j] + 1
@@ -74,7 +74,7 @@ for (i in 1:length(bk)) {
                 totalcount[j] <- totalcount[j] + 1
             }
         }
-        if (wtnt[j] == 't') {
+        if (WTnt[j] == 't') {
             if (sequence[j] == 'c') {
                 absfreq[j] <- absfreq[j] + 1
                 totalcount[j] <- totalcount[j] + 1
@@ -90,11 +90,65 @@ for (i in 1:length(bk)) {
 for (i in 1:length(absfreq)) {
     MeanFreq[i] <- absfreq[i] / totalcount[i]
 }
+# translation and comparison setup
+TypeOfSite <- c()
+MUTAA <- c()
+WTAA <- translate(WTnt,NAstring="X")
+
+#figur out true WTAA
+library(stringi)
+WTAAs <- stri_dup(WTAA,3)
+WTAAt<-unlist(strsplit(WTAAs,""))
+   
+syn <- c(rep(0,1089))
+nonsyn <- c(rep(0,1089))
+overlap <- c(rep(0,1089))
+nonsense <- c(rep(0,1089))
+
+# finds type of site based on average type
+for (i in 1:length(bk)) {
+    seq <- bk[[i]]
+    mutated <- translate(seq,NAstring="X")
+    for (j in 1:length(seq)) {
+        if (WTnt[j] != seq[j] && WTAA[((j-1)%/%3)+1] != mutated[((j-1)%/%3)+1]) {
+            if (mutated[((j-1)%/%3)+1] != "*") {
+                nonsyn[j] <- nonsyn[j] + 1
+            } else {
+                nonsense[j] <- nonsense[j] + 1
+            }
+        } else if (WTnt[j] != seq[j] && WTAA[((j-1)%/%3)+1] == mutated[((j-1)%/%3)+1]) {
+            if (mutated[((j-1)%/%3)+1] != "*") {
+                syn[j] <- syn[j] + 1
+            } else {
+                nonsense[j] <- nonsense[j] + 1
+            }
+        } else if (WTnt[j] == seq[j]) {
+            if (mutated[((j-1)%/%3)+1] != "*") {
+                overlap[j] <- overlap[j] + 1
+            } else {
+                nonsense[j] <- nonsense[j] + 1
+            }
+        }
+    }
+}
+
+# determines typeofsite based on most appearances of type
+# problem: skews towards overlap
+type<-0
+for (j in 1:length(sequence)) {
+    type[j] <- max(c(nonsyn[j],syn[j],overlap[j],nonsense[j]))
+    if (max(type[j]) == nonsyn[j]) {TypeOfSite[j] <- 'nonsyn'}
+    if (max(type[j]) == syn[j]) {TypeOfSite[j] <- 'syn'}
+    if (max(type[j]) == overlap[j]) {TypeOfSite[j] <- 'overlap'}
+    if (max(type[j]) == nonsense[j]) {TypeOfSite[j] <- 'nonsense'}
+    nuc <- c()
+}
 
 
 
 # creates dataframe containing all data
-bk_data <- data.frame(num,wtnt,MeanFreq)
+bk_data <- data.frame(num,WTnt,MeanFreq,WTAAt)
+
 
 # outputs data to file
 write.csv(bk_data,"bk_data.csv")
