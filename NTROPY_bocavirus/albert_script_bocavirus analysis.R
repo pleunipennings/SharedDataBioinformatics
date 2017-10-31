@@ -35,10 +35,6 @@ for (i in 1:ncol(bocaNS1seqsDNA)){
     MeanFreq<-c(MeanFreq,(length(which(bocaNS1seqsDNA[,i]==transition(WTnt[i])))/ncol(bocaNS1seqsDNA)))
 }
 
-summary(MeanFreq)
-str(MeanFreq)
-length(MeanFreq)
-
 BoNS1df<-data.frame("num"=c(1:ncol(bocaNS1seqsDNA)),
                     WTnt,
                     MeanFreq)
