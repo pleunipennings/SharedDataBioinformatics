@@ -505,6 +505,32 @@ CpG_Finder(nuc,2,500)
 
 
 #### notes and comments section ####
+# CpG graphing function()
+n <- data.frame(read.csv("OverviewSelCoeff_BachelerFilter.csv"))
+
+LvsF_CpG_Printer <- function(data_frame){
+  maxnuc=1000
+  plot(n$makesCpG[40:maxnuc],n$MeanFreq[40:maxnuc],
+       log="y", ylab="frequency CpG non-CpG",cex.lab=1.3,
+       xlab="Location",
+       col="gray",t="n",pch=".", ylim=c(3.4*10^-4,1),xlim=c(40,979))
+  
+  points(c(n$MeanFreq[which(n$makesCpG=="1")],
+           n$MeanFreq[which(n$makesCpG=="0")]),pch=p,col=co,
+         bg=rgb(red=col2rgb(c)[1]/255,
+                green=col2rgb(c)[2]/255,
+                blue=col2rgb(c)[3]/255,
+                maxColorValue = 1,alpha=0.8),
+         cex=2)}#close for:
+legpos=293;legposV=0.4
+rect(legpos*3, 0.4*legposV, (legpos+42.5)*3, 1.7*legposV, density = NULL, angle = 45,col=alpha("white",1))
+
+
+return()
+}#close function
+
+LvsF_CpG_Printer(n) #run function
+
 #10-17-2017 nathan 12:53
 #Formatted the group master script
 # added sections
