@@ -1,6 +1,19 @@
 # to navigate this file, minimize all arrows first then run the section you want
-
-
+if (TRUE) {
+    library(ggplot2)
+    library(plyr)
+    library(grid)
+    library(scales)
+    library(gridExtra)
+    library(seqinr)
+}
+# if packages not present  run below stuff!
+install.packages("ggplot2")
+install.packages("plyr")
+install.packages("grid")
+install.packages("ape")
+install.packages("seqinr")
+install.packages("gridExtra")
 
 ###### CPG finder ######
 CpG_finder <- function(new_virus_data){
