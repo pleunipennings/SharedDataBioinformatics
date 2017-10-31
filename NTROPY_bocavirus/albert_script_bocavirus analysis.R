@@ -78,6 +78,5 @@ CpG_finder <- function(new_virus_data){
     #when the entire function is done, return the amended data file
     return(virus_data)
 }
-CpG_finder(BoNS1df)
-
+CpG_finder(BoNS1df)->BoNS1df
 
