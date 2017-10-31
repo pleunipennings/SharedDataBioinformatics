@@ -2,6 +2,9 @@ setwd("~/bioinformatics/bioinformaticsproject")
 library(seqinr)
 library(ape)
 
+#bi2sfsu@gmail.com
+#bi2sfsu!
+
 read.csv("OverviewSelCoeff_BachelerFilter(1).csv") -> sampledata
 head(sampledata)
 
@@ -16,8 +19,9 @@ bocaNS1seqsAli<-read.alignment("HumanBocavirus1_NS1.fasta_pruned.mu.trim05", for
 class(bocaNS1seqsAli)
 
 #works when using con() instead of consensus()
-cons<-con(bocaNS1seqsAli)
-cons
+seqinr::consensus(bocaNS1seqsAli)->WTnt
+
+WTnt
 str(cons)
 
 #use read.dna to get the data in matrix form, this makes it easier to count
@@ -29,23 +33,26 @@ summary(bocaNS1seqsDNA)
 
 #Now you can use length and which and the == operator to count the number of sequences with the consensus nucleotide
 
-BoNS1df<-data.frame("num"=c(1:5157), "WTnt"=cons)
+BoNS1df<-data.frame("num"=c(1:5157), WTnt)
 BoNS1df
 
-#use for loop to run through each location of 1 to 5157 nt
-numCons<-length(which(bocaNS1seqsDNA[,nt]==cons[,nt]))
 
-numCons
+# Writes new function to create transition mutations in nucleotides
+transition <- function(nt){
+    if(nt=="a") {return("g")}
+    if(nt=="g") {return("a")}
+    if(nt=="c") {return("t")}
+    if(nt=="t") {return("c")}}
 
-#Here you should use a function to determine the transition from the consensus. For now, I just put "g", but it's better to use a function! 
-numTrans<-length(which(bocaNS1seqsDNA[,1]=="g"))
-numTrans
-
-#function to run to see transition from consensus
-for (s in 1:5157){
-    BoNS1df$newcol<-cons
+# For-loop to calculate mean frequency of transition mutations for each nucleotide:
+MeanFreq<-c()
+for (i in 1:ncol(bocaNS1seqsDNA)){
+    MeanFreq<-c(MeanFreq,(length(
+        which(bocaNS1seqsDNA[,i]==transition(WTnt[i])
+                                       ))/ncol(bocaNS1seqsDNA)))
 }
-View(BoNS1df)
+
+MeanFreq
 
 meanfreq<-function(x){
     if (cons[,1]!=bocaNS1seqsDNA[,1]) {
