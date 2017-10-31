@@ -5,6 +5,7 @@
 #DUE DATES: 
 # functxn's done      12:45 Thursday 10/26/2017
 # Posters done        11:10 Tuesday 10/31/2017
+
 #----------------------------------------------
 #Fig 2: location vs frequency CpG non-CpG.
   #Plot num column vs MeanFreq column in a scatterplot. The points should be colored
