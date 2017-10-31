@@ -8,11 +8,15 @@
   seqs = read.dna("InfluenzaAvirus_HA_H1N1.fasta.mu.fasta", format = "fasta", as.character=TRUE)
   a=nrow(seqs)
   b=ncol(seqs)
+  
 
 # Let's establish the new data frame
 # Number of columns is arbitrary. I just want to print the WT sequence down a column
   df=data.frame(matrix(nrow=b, ncol=7)) 
   names(df)=c("WTseq", "Mutseq", "WTAA", "MutAA", "WTcat", "Mutcat", "DrasticAA")
+  
+#mean frequency
+  
 
 # We're defining the wild type sequence as the most common sequence
   for(i in 0:(b-1)){
@@ -80,17 +84,30 @@ for(j in 1:b){
   }
 
 # Let's Creates 
+  df$MutAA <-c(0)
+  
   count <- 1
-    for(i in 1:length(curSeq)){ # Workspace for MutAA filling
-        for (j in i:3){
-            if(j == 1){                     #first codon
-                df[count, ]$MutAA <- translate(c(df[count,]$Mutseq, df[count + 1,]$WTseq, df[count +2,]$WTseq))
-            }elseif(j == 2){                #second codon
-                df[count, ]$MutAA <- translate(c(df[count - 1,]$WTseq, df[count,]$Mutseq, df[count +1,]$WTseq))
-            }elseif(j==3){                  #third codon
-                df[count, ]$MutAA <- translate(c(df[count - 2,]$WTseq, df[count - 1,]$WTseq, df[count,]$Mutseq))
+  i = 1
+  j = 1
+    for(i in 1:(nrow(df)/3)){ # Workspace for MutAA filling don't run this loop
+        
+      for (j in 1:3){
+            
+        if(j == 1){                     #first codon
+
+              df[count, ]$MutAA <- translate(firstC <- c(as.character(df[count,]$Mutseq), as.character(df[count + 1,]$WTseq), as.character(df[count +2,]$WTseq)))
+            } 
+        if(j == 2){                #second codon
+                df[count, ]$MutAA <- translate(secondC <- c(as.character(df[count - 1,]$WTseq), as.character(df[count,]$Mutseq), as.character(df[count +1,]$WTseq)))
             }
-           count <- count + 1 
+        if(j == 3){                  #third codon
+                df[count, ]$MutAA <- translate(thirdC <- c(as.character(df[count - 2,]$WTseq), as.character(df[count - 1,]$WTseq), as.character(df[count,]$Mutseq)))
+             }
+           
+        count <- count + 1
+        print(j)
+        print(i)
+        print(count)
         }
     }                                           
 
@@ -106,10 +123,14 @@ for(j in 1:b){
 DrasticChange <- function(df){
     for(h in 1:nrow(df)){
       if (df[h,]$WTcat==df[h,]$Mutcat){
-        df[h,]$DrasticAA= "0"                      # If WT AA category = Mut AA Category, no drastic change
+        df[h,]$DrasticAA= 0                      # If WT AA category = Mut AA Category, no drastic change
       }
       if (df[h,]$WTcat!=df[h,]$Mutcat){
-        df[h,]$DrasticAA= "X"                      # If WT AA category =/= Mut AA Category, yes drastic change
+        df[h,]$DrasticAA= 1                      # If WT AA category =/= Mut AA Category, yes drastic change
       }
     }
+  return(df)
 }
+df <- DrasticChange(df)
+save(df,file="df.Rda")
+load("df.Rda")
