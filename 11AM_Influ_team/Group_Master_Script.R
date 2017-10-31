@@ -5,6 +5,7 @@
 #DUE DATES: 
 # functxn's done      12:45 Thursday 10/26/2017
 # Posters done        11:10 Tuesday 10/31/2017
+
 #----------------------------------------------
 #Fig 2: location vs frequency CpG non-CpG.
   #Plot num column vs MeanFreq column in a scatterplot. The points should be colored
@@ -48,9 +49,9 @@ plot.default(x = c(V1, V2), #plot it!
 ####### CpG graphing function() #########
 
 LvsF_CpG_Printer <- function(data_frame){
-  
-  YCpG <- which(n$makesCpG=="1")
-  NCpG <- which(n$makesCpG=="0")
+if (T) {n$makesCpG <- n$makesCpG+1}
+  YCpG <- which(n$makesCpG=="2")
+  NCpG <- which(n$makesCpG=="1")
   x1 <- n$MeanFreq[YCpG]
   x2 <- n$MeanFreq[NCpG]
   plot.default(x = c(x1, x2), 
