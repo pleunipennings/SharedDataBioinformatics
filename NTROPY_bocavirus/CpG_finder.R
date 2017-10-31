@@ -89,3 +89,22 @@ CpG_finder <- function(new_virus_data){
   return(virus_data)
 }
 CpG_finder(BoNS1df)
+
+#start of CpG Graph Function 
+LvsF_CpG_Printer <- function(data_frame){
+  if (T) {n$makesCpG <- n$makesCpG+1}
+  YCpG <- which(n$makesCpG=="2")
+  NCpG <- which(n$makesCpG=="1")
+  x1 <- n$MeanFreq[YCpG]
+  x2 <- n$MeanFreq[NCpG]
+  plot.default(x = c(x1, x2), 
+               xlab = "Location", ylab = "Frequency", main = "Location vs frequency CpG non-CpG Graph",
+               col = (as.integer(n$makesCpG)),
+               log = "y"
+  )#close plot.default
+  
+  return()#close return
+}#close function
+
+LvsF_CpG_Printer(data_frame) #run function
+head(data_frame)
