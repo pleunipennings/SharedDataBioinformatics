@@ -5,18 +5,18 @@
 
 library(seqinr)
 
-read.fasta("DengueVirus1.fasta") -> DEN
+read.fasta("DengueVirus1.fasta") -> VIRUS
 
 # reference sequence
 
-ref <- DEN[[1]]
+ref <- VIRUS[[1]]
 
-length(ref)->Seqlength
+length(ref)->Seqlenght
 
 
 # dataframe columns
 
-num <- c(1:Seqlength)
+num <- c(1:Seqlenght)
 
 wtnt <- c()
 
@@ -24,29 +24,29 @@ freq <- c()
 
 # for freq calculation later
 
-absfreq <- c(rep(0,Seqlength))
+absfreq <- c(rep(0,Seqlenght))
 
-totalcount <- c(rep(0,Seqlength))
+totalcount <- c(rep(0,Seqlenght))
 
 # average WT calculation
 
 # counts number of each nucleotide in each position
 
-acount <- c(rep(0,Seqlength))
+acount <- c(rep(0,Seqlenght))
 
-gcount <- c(rep(0,Seqlength))
+gcount <- c(rep(0,Seqlenght))
 
-ccount <- c(rep(0,Seqlength))
+ccount <- c(rep(0,Seqlenght))
 
-tcount <- c(rep(0,Seqlength))
+tcount <- c(rep(0,Seqlenght))
 
 nuc <- c()
 
 # same as line 20 comment
 
-for (i in 1:length(DEN)) {
+for (i in 1:length(VIRUS)) {
     
-    sequence <- DEN[[i]]
+    sequence <- VIRUS[[i]]
     
     for (j in 1:length(sequence)) {
         
@@ -84,9 +84,9 @@ for (j in 1:length(sequence)) {
 
 # gives absolute totals to be used for frequency calculation
 
-for (i in 1:length(DEN)) {
+for (i in 1:length(VIRUS)) {
     
-    sequence <- DEN[[i]]
+    sequence <- VIRUS[[i]]
     
     for (j in 1:length(sequence)){
         
@@ -180,16 +180,16 @@ for (i in 1:length(absfreq)) {
 
 # creates dataframe containing all data
 
-Dengue <- data.frame(num,wtnt,freq)
+VIRUS_DATA <- data.frame(num,wtnt,freq)
 
-View(Dengue)
+View(VIRUS_DATA)
 
 
 # Investigating CPG
 
 
 # Collapses data into a string and sets to variable STRING
-paste(Dengue$wtnt, collapse = '') -> STRING
+paste(VIRUS_DATA$wtnt, collapse = '') -> STRING
 STRING
 
 #Looks for pattern tg in the data STRING, sets location sites to variable TG
@@ -201,12 +201,12 @@ BELL <- data.frame(matrix(unlist(TG)))
 BELL
 
 # create new column name CPG with values zero
-Dengue$CPG<- 0
+VIRUS_DATA$CPG<- 0
 
 # Inserting value 1 in every TG site using BELL
-Dengue[BELL[,1],"CPG"] <- 1
+VIRUS_DATA[BELL[,1],"CPG"] <- 1
 
-View(Dengue)
+View(VIRUS_DATA)
 
 # For CA sites: 
 
@@ -219,7 +219,7 @@ CASITES <- data.frame(matrix(unlist(CA)))
 CASITES
 
 # Inserting value 1 in every CA site using CA
-Dengue[CASITES[,1]+1,"CPG"] <- 1
+VIRUS_DATA[CASITES[,1]+1,"CPG"] <- 1
 
 
 
