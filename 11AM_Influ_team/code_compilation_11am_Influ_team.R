@@ -128,8 +128,9 @@ cons<-seqinr::consensus(enteroaligned)
 
 #Insert concensus into dataframe
 enterodata$WtNt=cons
-WTAA<-list()
-MUTAA<-list()
+WTAA<- NULL
+MUTAA<-NULL
+#removes list data
 
 #Function to return transition mutation
 transition<-function(basepair){
