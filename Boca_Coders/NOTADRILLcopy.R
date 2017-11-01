@@ -348,6 +348,7 @@ virus_plot(VIRUS_DATA) #this didn't work yet
 
 
 #skeleton of the function -- so far i have the colors for the syn/ nonsyn
+#it's very wrong, i just have it for reference
 if_plot = function(typeofsite) {
     if(dataframe$TypeOfSite == "overlap") {
         col = "grey"
@@ -360,7 +361,7 @@ if_plot = function(typeofsite) {
     } else if(dataframe$TypeOfSite == "res") {
         col = "purple"
     }
-    return(dataframe)
+    return()
 }
 
 
