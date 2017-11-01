@@ -1,3 +1,20 @@
+pleuni
+Mordy
+=======
+krystal 
+Omar was here
+ANdrew 10/12
+Emily wuz here
+
+hey 
+=======
+=======
+#Will test
+
+Team Dengue Fever - 100% caffeinated
+#hi N is here
+# Fran was here :) 
+
 #Shannel was also here PLS WORK OMG
 
 #Ricky was here. Hi everyone! 
@@ -7,21 +24,24 @@
 #In this project the students in the bioinformatics class are going to collaborate on code and research. 
 #Ricky was here. Hi everyone! 
 
-<<<<<<< HEAD
+
 #Victoria
-<<<<<<< HEAD
+
 #Milo: "For what is man that he should live out the life time of his God?" -Moby Dick
 =======
 #Milo
 #kellenisgreatNOT
->>>>>>> 88842fb114da24992c261a1b4e1bc2c3873e91e1
+
 =======
 # hi, how is everyone - Hasan
->>>>>>> 7f2bbe0df5459fe241d598122b6931332dcc1590
+
 #Victoria was here
+
+#Adrienne needs help 
 
 #The 11 AM class is here too! 
 
+#Darryl
 
 #Yuri Nguyen
 
@@ -46,11 +66,12 @@ adding a line
 This is a line from RStudio
 Amir Jaberi
 amir jaberi
+
+TEST
+=======
 Testing--Liz W
 #Hi
 #Rima
-
-<<<<<<< HEAD
 
 
 Test
@@ -58,7 +79,7 @@ Test
 #jenn testing
 hello greetings how do ya do
 #Anjani P.
->>>>>>> 54fa84e441a329eceebe09a76c4e859af4c20970
+
 
 #Nicole Allen
 
@@ -66,3 +87,45 @@ hello greetings how do ya do
 
 #Avery has entered the matrix, file corrupted...Attack Commencing in 30 seconds (game refference)
 #Liana was here
+took long enough
+A line I wrote on my local computer
+A line from my local computer
+This is a line from R studio -Annie
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+Hey it's Annie
+=======
+=======
+>>>>>>> 5be4b36bcc5570828125c945c90793b2c2e2717d
+=======
+>>>>>>> ba421546c6dd4214b6dc4413d8f1e1d2aca5bf21
+
+#becs is lost AF, i hate this
+=======
+
+This is a line from R studio -Annie
+#This is Jesse
+#hmm
+
+
+
+
+hi
+<<<<<<< HEAD
+
+
+<<<<<<< HEAD
+>>>>>>> 54c909019f2f904d2084cd03c438fbbcb3060c28
+=======
+>>>>>>> 5be4b36bcc5570828125c945c90793b2c2e2717d
+=======
+#Hi!
+
+
+<<<<<<< HEAD
+# hi, how is everyone - Hsn
+=======
+>>>>>>> ba421546c6dd4214b6dc4413d8f1e1d2aca5bf21
+Annie
+>>>>>>> baa429ab827090aeb8c7aea50bdeb2c1948d45f9
