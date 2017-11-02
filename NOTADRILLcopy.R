@@ -302,7 +302,7 @@ for (h in 1:nrow(VIRUS_DATA)){
         if(VIRUS_DATA[h,"MutAA"]=="*"){
             VIRUS_DATA[h,"TypeOfSite"] = "nonsense"}
         else {
-            VIRUS_DATA[h,"TypeOfSite"] = "nonsyn"
+            VIRUS_DATA[h,"TypeOfSite"] = "nonsynonymous"
         }
     }
 }
@@ -329,6 +329,32 @@ load("final_BOCAdf.Rda")
 # MAKE THE DANG THING #
 
 
+#input should be dataframe?
+#the command should be something like the function pulls out information
+    #from the dataframe and uses that info to plot
+#output should be plot of Meanfreq vs. Position (num), colored by TypeofSite
+virus_plot = function(df) {
+    {
+    x <- df$num
+    y <- df$freq
+    v_plot <- plot(x,y, type = "p", main = "Nucleotide Positon (num) vs. Mean Frequency (freq) of Virus", 
+         log = "y", xlab = "num", ylab = "log of freq", col = df$TypeOfSite)
+    }
+    print(v_plot)
+    return(v_plot)
+}
+
+virus_plot(VIRUS_DATA)
+
+
+#skeleton of the function -- so far i have the colors for the syn/ nonsyn
+plot(hiv_csv$num, hiv_csv$MeanFreq, main = "Plot of Mean Frequency", log = "y", xlab = "Number", ylab = "log of Mean Frequency", col = hiv_csv$TypeOfSite)
+
+legend("topleft",
+       c("Syn", "Nonsyn", "Overlap", "Res", "Stop"),
+       lty = c(1,1), lwd=4,
+       col=c("darkolivegreen3", "red", "grey", "purple", "black"),
+       bty = "n")
 
 
 

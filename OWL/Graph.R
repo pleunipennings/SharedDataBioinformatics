@@ -15,11 +15,10 @@ HIVdata[CpG,"MeanFreq"]->Freq2
 
 
 #Making a plot of mean frequency vs. CpG/nonCpG location
-plot(noCpG, Freq, log="y",col="black",pch=21.25, bg=rgb(1,0,0,0.5), main="CpG/noCpG location vs. Mean Frequency", xlab = "Location", ylab = "Mean Frequency")
-
+plot(noCpG, Freq+0.0001, ylim=c(0.0001,0.5), log = "y", col="black",pch=21.25, bg=rgb(1,0,0,0.5), main="CpG/noCpG location vs. Mean Frequency", xlab = "Location", ylab = "Mean Frequency")
+ 
 #Overlapping the two graphs
-par(new = TRUE )
-plot(CpG, Freq2, col="black",pch=21.25, bg=rgb(0,0,1,0.5),xaxt='n',yaxt='n', ann = FALSE)
+points(CpG, Freq2+0.0001, col="black",pch=21.25, bg=rgb(0,0,1,0.5),xaxt='n',yaxt='n', ann = FALSE)
 
 
 
