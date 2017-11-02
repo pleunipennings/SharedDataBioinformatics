@@ -1,16 +1,20 @@
-setwd("~/bioinformatics/bioinformaticsproject")
+setwd("~/SharedDataBioinformatics/BioInfor11AMFunctions")
 library(seqinr)
 library(ape)
 
+#function broken
+#source("functionSynNonSyn.R")
+
 #bi2sfsu@gmail.com
 #bi2sfsu!
-
+setwd("~/bioinformatics/bioinformaticsproject")
 #boca NS1 stands for bocavirus NS1 gene
 bocaNS1seqs<-read.fasta("HumanBocavirus1_NS1.fasta_pruned.mu.trim05") 
 #How to get the consensus (= most common nucleotide for each position)
 bocaNS1seqsAli<-read.alignment("HumanBocavirus1_NS1.fasta_pruned.mu.trim05", format="fasta")
 #works when using con() instead of consensus()
-seqinr::consensus(bocaNS1seqsAli)->WTnt
+seqinr::consensus(bocaNS1seqsAli)->cons
+
 #use read.dna to get the data in matrix form, this makes it easier to count
 bocaNS1seqsDNA<-read.dna("HumanBocavirus1_NS1.fasta_pruned.mu.trim05", format = "fasta",as.character=TRUE)
 # Writes new function to create transition mutations in nucleotides
@@ -23,7 +27,9 @@ transition <- function(nt){
 MeanFreq<-c()
 for (i in 1:ncol(bocaNS1seqsDNA)){
     MeanFreq<-c(MeanFreq,(length(which(bocaNS1seqsDNA[,i]==transition(WTnt[i])))/ncol(bocaNS1seqsDNA)))}
-BoNS1df<-data.frame("num"=c(1:ncol(bocaNS1seqsDNA)),WTnt,MeanFreq)
+
+#basic data frame with mean freq
+BoNS1df<-data.frame("num"=c(1:ncol(bocaNS1seqsDNA)),"WTnt" = cons,MeanFreq)
 
 #CPG sites input
 CpG_finder <- function(new_virus_data){
@@ -80,3 +86,127 @@ CpG_finder <- function(new_virus_data){
 }
 CpG_finder(BoNS1df)->BoNS1df
 
+
+#make variables for for-loop for getting WTaa, wild type amino acid,  and MUTaa, mutated amino acid 
+
+    WTAA<-c()
+    MUTAA<-c()
+    #for loop for transition mutation at each position and translating it 
+    for(x in seq(1, length(cons), 3)){
+        codon <- c(cons[x], cons[x+1], cons[x+2])
+        mutated_codon <- codon
+        if(codon[1] == "a"){
+            mutated_codon <- replace(x=mutated_codon, values=c("g", codon[2], codon[3]))
+        }
+        if(codon[1] == "g"){
+            mutated_codon <- replace(x=mutated_codon, values=c("a", codon[2], codon[3]))
+        }
+        if(codon[1] == "c"){
+            mutated_codon <- replace(x=mutated_codon, values=c("t", codon[2], codon[3]))
+        }
+        if(codon[1] == "t"){
+            mutated_codon <- replace(x=mutated_codon, values=c("c", codon[2], codon[3]))
+        }
+        MUTAA[x] <- translate(mutated_codon)
+        
+        if(codon[2] == "a"){
+            mutated_codon <- replace(x=mutated_codon, values=c(codon[1], "g", codon[3]))
+        }
+        if(codon[2] == "g"){
+            mutated_codon <- replace(x=mutated_codon, values=c(codon[1], "a", codon[3]))
+        }
+        if(codon[2] == "c"){
+            mutated_codon <- replace(x=mutated_codon, values=c(codon[1], "t", codon[3]))
+        }
+        if(codon[2] == "t"){
+            mutated_codon <- replace(x=mutated_codon, values=c(codon[1], "c", codon[3]))
+        }
+        MUTAA[x+1] <- translate(mutated_codon)
+        
+        if(codon[3] == "a"){
+            mutated_codon <- replace(x=mutated_codon, values=c(codon[1], codon[2], "g"))
+        }
+        if(codon[3] == "g"){
+            mutated_codon <- replace(x=mutated_codon, values=c(codon[1], codon[2], "a"))
+        }
+        if(codon[3] == "c"){
+            mutated_codon <- replace(x=mutated_codon, values=c(codon[1], codon[2], "t"))
+        }
+        if(codon[3] == "t"){
+            mutated_codon <- replace(x=mutated_codon, values=c(codon[1], codon[2], "c"))
+        }
+        MUTAA[x+2] <- translate(mutated_codon)
+    }
+    
+    for(x in seq(1, length(cons) - 2, 3)){
+        codon <- c(cons[x], cons[x+1], cons[x+2])
+        new_AA <- translate(codon)
+        WTAA[x] <- new_AA
+        WTAA[x+1] <- new_AA
+        WTAA[x+2] <- new_AA
+    }
+    #Insert WTaa and MTaa into dataframe
+    WTAA->BoNS1df$WTAA
+    MUTAA->BoNS1df$MUTAA
+
+#  Note that this depends on the columns MUTAA and WTAA being already complete!
+
+functionSynNonSyn<-function(DF){
+    DF$TypeofSite<-c()
+    for (h in 1:nrow(DF)){
+        if(DF[h,"MUTAA"]== DF[h,"WTAA"]){
+            DF[h,"TypeOfSite"] = "syn"
+        }
+        if(DF[h,"MUTAA"] != DF[h,"WTAA"]){
+            if(DF[h,"MUTAA"]=="*"){
+                DF[h,"TypeOfSite"] = "nonsense"}
+            else {
+                DF[h,"TypeOfSite"] = "nonsyn"
+            }
+        }
+    }
+    DF$TypeOfSite<-as.factor(DF$TypeOfSite)
+}
+
+#gets syn and nonsyn into TypeOfSite Column
+functionSynNonSyn(BoNS1df) ->BoNS1df$TypeOfSite
+
+#function to find drastic AA
+drasticAA<-function(DF){
+    #Amino Acid Changes 
+    pos <- "R|H|K"
+    neg <- "D|E"
+    unc <- "S|T|N|Q"
+    spe <- "C|U|G|P"
+    hyd <- "A|I|L|F|M|W|Y|V"
+    amCat <- function(AA){
+        if(regexpr(pos, AA) > 0){ return(0) }
+        if(regexpr(neg, AA) > 0){ return(1) }
+        if(regexpr(unc, AA) > 0){ return(2) }
+        if(regexpr(spe, AA) > 0){ return(3) }
+        if(regexpr(hyd, AA) > 0){ return(4) }
+        return(5)
+    }
+    
+    #for loop to categorize WTAA
+    for(i in 1:nrow(DF)){                                              
+        DF[i,7]=amCat(DF[i,4])                                    
+    }
+    
+    #for loop to categorize MUTAA
+    for(i in 1:nrow(DF)){                                              
+        DF[i,8]=amCat(DF[i,5])                                 
+    }
+    
+    
+    #for loop to determine drastic change or not
+    for(i in 1:nrow(DF)){
+        if (DF$WTAAcat[i]==DF$MUTAAcat[i]){
+            DF$bigAAchange[i]= "conserved"
+        }
+        if (DF$WTAAcat[i]!=DF$MUTAAcat[i]){
+            DF$bigAAchange[i] = "drastic"
+        }
+    }
+}
+drasticAA(BoNS1df)
