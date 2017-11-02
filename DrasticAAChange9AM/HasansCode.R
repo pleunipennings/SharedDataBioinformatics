@@ -105,9 +105,7 @@ for(j in 1:b){
              }
            
         count <- count + 1
-        print(j)
-        print(i)
-        print(count)
+      
         }
     }                                           
 
@@ -132,5 +130,7 @@ DrasticChange <- function(df){
   return(df)
 }
 df <- DrasticChange(df)
+
+#run this to save/load dataframe file
 save(df,file="df.Rda")
 load("df.Rda")
