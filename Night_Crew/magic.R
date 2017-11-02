@@ -370,7 +370,7 @@ for (x in 1:nrow(bk_dataY)) {
     }
     if (bk_dataY$WTnt[x] == "t") {
         bk_dataY$A[x] <- "c"
-    }
+    } 
 }
 
 x=1
