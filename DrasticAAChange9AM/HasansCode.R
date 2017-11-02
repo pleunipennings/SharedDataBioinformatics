@@ -145,10 +145,10 @@ TG = gregexpr(pattern ='tg', paste(df$WTseq, collapse = ''))
 BELL = data.frame(matrix(unlist(TG)))
 
 # create new column name CPG with values zero
-df$CPG <- 0
+df$CpG <- 0
 
 # Inserting value 1 in every TG site using BELL
-df[BELL[,1],"CPG"] <- 1
+df[BELL[,1],"CpG"] <- 1
 
 # For CA sites: 
 
@@ -157,7 +157,7 @@ CA = gregexpr(pattern ='ca', paste(df$WTseq, collapse = ''))
 CASITES = data.frame(matrix(unlist(CA)))
 
 # Inserting value 1 in every CA site using CA
-df[CASITES[,1]+1,"CPG"] <- 1
+df[CASITES[,1]+1,"CpG"] <- 1
 View(df)
 
 plot(
@@ -170,7 +170,7 @@ plot(
   #make outline of symbol black
   col= "black",
   #fill inside of point with color by factor category "TypeOfSite" bg=
-  bg=df[,8],
+  bg=df[,9],
   #Title label
   main = "HIV Practice Data",
   #x axis label
