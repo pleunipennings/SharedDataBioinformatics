@@ -396,7 +396,7 @@ for (x in 1:(nrow(bk_data)/3)) {
     
     }
 
-
+ 
 }
 
     # outputs data to file
