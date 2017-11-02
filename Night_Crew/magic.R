@@ -7,20 +7,20 @@ bk <- read.fasta("bk.txt")
 bk<-read.fasta("DengueVirus1.txt")
 nightcrewBK= function(data) {
 # dataframe columns
-num <- c(1:10689)
+num <- c(1:1089)
 WTnt <- c()
 MeanFreq <- c()
 #ours 1089
 # for MeanFreq calculation later
-absfreq <- c(rep(0, 10689))
-totalcount <- c(rep(0, 10689))
+absfreq <- c(rep(0, 1089))
+totalcount <- c(rep(0, 1089))
 
 # average WT calculation
 # counts number of each nucleotide in each position
-acount <- c(rep(0, 10689))
-gcount <- c(rep(0, 10689))
-ccount <- c(rep(0, 10689))
-tcount <- c(rep(0, 10689))
+acount <- c(rep(0, 1089))
+gcount <- c(rep(0, 1089))
+ccount <- c(rep(0, 1089))
+tcount <- c(rep(0, 1089))
 nuc <- c()
 
 # same as line 20 comment
@@ -110,7 +110,7 @@ for (i in 1:length(absfreq)) {
 # translation and comparison setup
 TypeOfSite <- c()
 MUTAA <- c()
-WTAAp <- seqinr::translate(WTnt)
+WTAAp <- translate(WTnt)
 
 #fig out true WTAA
 WTAAs <- stri_dup(WTAAp, 3)
