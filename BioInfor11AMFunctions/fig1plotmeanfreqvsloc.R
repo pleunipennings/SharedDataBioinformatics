@@ -12,9 +12,11 @@ data<-read.csv("OverviewSelCoeff_BachelerFilter.csv")
 #   x axis is location of nucleotide
 #   y axis is log of mean frequency
 # will have error message to ignore 0's in data because y axis will be translated as logrithmic scale
-
-summary(data$MeanFreq)
-summary(log(data$MeanFreq))
+plotmeanfreqloc<-function(DF){
+    if (length(which(names(DF))=="MUTAA")==0){
+        print("Oh oh there is a problem. No MUTAA column!")
+        return(0)}
+    
 plot(
     #x vector
     data$num,
