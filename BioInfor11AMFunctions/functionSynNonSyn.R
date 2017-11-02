@@ -1,7 +1,7 @@
 #  Note that this depends on the columns MUTAA and WTAA being already complete!
 
 functionSynNonSyn<-function(DF){
-    if (length(which(names(DF))=="MUTAA")==0){
+    if (length(which(names(DF)=="MUTAA"))==0){
         print("Oh oh there is a problem. No MUTAA column!")
         return(0)}
     for (h in 1:nrow(DF)){
@@ -19,3 +19,5 @@ functionSynNonSyn<-function(DF){
     }
     DF$TypeOfSite<-as.factor(DF$TypeOfSite)
 }
+
+functionSynNonSyn(EnteroData)
