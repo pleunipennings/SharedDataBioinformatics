@@ -13,21 +13,25 @@ data<-read.csv("OverviewSelCoeff_BachelerFilter.csv")
 #   y axis is log of mean frequency
 # will have error message to ignore 0's in data because y axis will be translated as logrithmic scale
 plotmeanfreqloc<-function(DF){
-    if (length(which(names(DF))=="MUTAA")==0){
-        print("Oh oh there is a problem. No MUTAA column!")
+    if (which(names(DF)=="MeanFreq")==0){
+        print("Oh oh there is a problem. No MeanFreq column!")
         return(0)}
+    if (which(names(DF)=="Num")==0){
+        print("No Num column!")}
+    if (which(names(DF)=="TypeOfSite")==0){
+        print("No "TypeOfSite" column! ")    }
     
 plot(
     #x vector
-    data$num,
+    DF$num,
     #y vector
-    data$MeanFreq,
+    DF$MeanFreq,
     #make black empty circles as symbol
     pch=21,
     #make outline of symbol black
     col= "black",
     #fill inside of point with color by factor category "TypeOfSite" bg=
-    bg=data$TypeOfSite,
+    bg=DF$TypeOfSite,
     #Title label
     main = "HIV Practice Data",
     #x axis label

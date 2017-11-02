@@ -4,23 +4,27 @@ library(seqinr)
 library(stringi)
 
 bk <- read.fasta("bk.txt")
+<<<<<<< HEAD
 bk<-read.fasta("InfluenzaAvirus_HA_H1N1.txt")
+=======
+bk<-read.fasta("DengueVirus1.txt")
+>>>>>>> 92263dd95301c435bc46a2d1fe1055acc8d2ce69
 nightcrewBK= function(data) {
 # dataframe columns
-num <- c(1:1089)
+num <- c(1:10689)
 WTnt <- c()
 MeanFreq <- c()
-
+#ours 1089
 # for MeanFreq calculation later
-absfreq <- c(rep(0, 1089))
-totalcount <- c(rep(0, 1089))
+absfreq <- c(rep(0, 10689))
+totalcount <- c(rep(0, 10689))
 
 # average WT calculation
 # counts number of each nucleotide in each position
-acount <- c(rep(0, 1089))
-gcount <- c(rep(0, 1089))
-ccount <- c(rep(0, 1089))
-tcount <- c(rep(0, 1089))
+acount <- c(rep(0, 10689))
+gcount <- c(rep(0, 10689))
+ccount <- c(rep(0, 10689))
+tcount <- c(rep(0, 10689))
 nuc <- c()
 
 # same as line 20 comment
@@ -110,7 +114,11 @@ for (i in 1:length(absfreq)) {
 # translation and comparison setup
 TypeOfSite <- c()
 MUTAA <- c()
-WTAAp <- translate(WTnt, NAstring = "X")
+<<<<<<< HEAD
+WTAAp <- seqinr::translate(WTnt)
+=======
+WTAAp <- translate(WTnt)
+>>>>>>> d95552cf7a0c78826f09083f512c8298c6ca528e
 
 #fig out true WTAA
 WTAAs <- stri_dup(WTAAp, 3)
@@ -118,7 +126,7 @@ WTAA <- unlist(strsplit(WTAAs, ""))
 
 WTAA <- as.character(WTAA)
 # creates dataframe containing all data
-bk_data <- data.frame(num, WTnt, MeanFreq, WTAA)
+bk_dataY <- data.frame(num, WTnt, MeanFreq, WTAA)
 
 }
 
@@ -184,7 +192,7 @@ bk_data<-nightcrewBK(bk)
 # creates dataframe containing all data
 #bk_data <- data.frame(num, WTnt, MeanFreq, WTAA)
 
-
+bk_data<- bk_dataY
 
 #finding the MUTAA
 nightcrewMUTAA = function(data) {
@@ -215,7 +223,7 @@ nightcrewMUTAA = function(data) {
             a = 3 + a
         }
     }
-    
+
     x = 0
     a = 2
     bk_data$WTnt -> bk_data$B
@@ -264,22 +272,22 @@ nightcrewMUTAA = function(data) {
             a = 3 + a
         }
     }
-    
-    
-    
-    
-    MUTAA1 <- translate(as.character(bk_data$A), NAstring = "X")
+
+
+
+
+    MUTAA1 <- seqinr::translate(as.character(bk_data$A), NAstring = "X")
     MUTAA1 <- stri_dup(MUTAA1, 3)
     MUTAA1 <- unlist(strsplit(MUTAA1, ""))
-    
-    MUTAA2 <- translate(as.character(bk_data$B), NAstring = "X")
+
+    MUTAA2 <- seqinr::translate(as.character(bk_data$B), NAstring = "X")
     MUTAA2 <- stri_dup(MUTAA2, 3)
     MUTAA2 <- unlist(strsplit(MUTAA2, ""))
-    
-    MUTAA3 <- translate(as.character(bk_data$C), NAstring = "X")
+
+    MUTAA3 <- seqinr::translate(as.character(bk_data$C), NAstring = "X")
     MUTAA3 <- stri_dup(MUTAA3, 3)
     MUTAA3 <- unlist(strsplit(MUTAA3, ""))
-    
+
     bk_data$MUTAA1 <- MUTAA1
     bk_data$MUTAA2 <- MUTAA2
     bk_data$MUTAA3 <- MUTAA3
@@ -303,12 +311,12 @@ nightcrewMUTAA = function(data) {
         }
         if (bk_data$WTnt[v] == "c" && bk_data$A[v] == "t") {
             bk_data$MUTAA[v] = as.character(bk_data$MUTAA1[v])
-            w = 3 + w
+            w = 3 + w 
         }
     }
     for (i in 1:363) {
         r <- e
-        
+
         if (bk_data$WTnt[r] == "a" && bk_data$B[r] == "g") {
             bk_data$MUTAA[r] = as.character(bk_data$MUTAA2[r])
             e = 3 + e
@@ -345,6 +353,7 @@ nightcrewMUTAA = function(data) {
             t = 3 + t
         }
     }
+<<<<<<< HEAD
     
     bk_data <-subset(bk_data, select = -c(MUTAA1, MUTAA2, MUTAA3, A, B, C))
     return(bk_data)
@@ -354,10 +363,23 @@ bk_data<-nightcrewMUTAA(bk_data)
 #simple version 
 x=1
 for (x in 1:nrow(bk_data)) {
+=======
+
+    bk_data <-subset(bk_data, select = -c(MUTAA1, MUTAA2, MUTAA3, A, B, C))
+    return(bk_data)
+}
+bk_dataY<-nightcrewMUTAA(bk_dataY)
+
+#simple version of MUTAA
+MUTTA= function(bk_data){
+x=1
+for (x in 1:nrow(bk_dataY)) {
+>>>>>>> 92263dd95301c435bc46a2d1fe1055acc8d2ce69
     
     #print(x)
     # print(a)
     #print(i)
+<<<<<<< HEAD
     if (bk_data$WTnt[x] == "a") {
         bk_data$A[x] <- "g"
     }
@@ -370,17 +392,36 @@ for (x in 1:nrow(bk_data)) {
     if (bk_data$WTnt[x] == "t") {
         bk_data$A[x] <- "c"
     }
+=======
+    if (bk_dataY$WTnt[x] == "a") {
+        bk_dataY$A[x] <- "g"
+    }
+    if (bk_dataY$WTnt[x] == "g") {
+        bk_dataY$A[x] <- "a"
+    }
+    if (bk_dataY$WTnt[x] == "c") {
+        bk_dataY$A[x] <- "t"
+    }
+    if (bk_dataY$WTnt[x] == "t") {
+        bk_dataY$A[x] <- "c"
+    } 
+>>>>>>> 92263dd95301c435bc46a2d1fe1055acc8d2ce69
 }
 
 x=1
 y=1
 count<-1
+<<<<<<< HEAD
 bk_data$MA<-c(0)
+=======
+bk_dataY$MUTTA<-c(0)
+>>>>>>> 92263dd95301c435bc46a2d1fe1055acc8d2ce69
 for (x in 1:(nrow(bk_data)/3)) {
     #print(x)
     #print(y)
     for(y in 1:3){
         if(y==1){
+<<<<<<< HEAD
             bk_data$MA[count]<-translate(r<-c(bk_data$A[count],as.character(bk_data$WTnt[count+1]),as.character(bk_data$WTnt[count+2])))
         }
         if(y==2){
@@ -388,15 +429,31 @@ for (x in 1:(nrow(bk_data)/3)) {
         }
         if(y==3){
             bk_data$MA[count]<-translate(p<-c(as.character(bk_data$WTnt[count-2]),as.character(bk_data$WTnt[count-1]),as.character(bk_data$A[count])))
+=======
+            bk_dataY$MUTTA[count]<-seqinr::translate(r<-c(bk_dataY$A[count],as.character(bk_dataY$WTnt[count+1]),as.character(bk_dataY$WTnt[count+2])))
+        }
+        if(y==2){
+            bk_dataY$MUTTA[count]<-seqinr::translate(a<-c(as.character(bk_dataY$WTnt[count-1]),as.character(bk_dataY$A[count]),as.character(bk_dataY$WTnt[count+1])))
+        }
+        if(y==3){
+            bk_dataY$MUTTA[count]<-seqinr::translate(p<-c(as.character(bk_dataY$WTnt[count-2]),as.character(bk_dataY$WTnt[count-1]),as.character(bk_dataY$A[count])))
+>>>>>>> 92263dd95301c435bc46a2d1fe1055acc8d2ce69
         }
         count<-count+1
        
     }
     
     }
+<<<<<<< HEAD
 
 
 
+=======
+return(bk_data)
+ 
+}
+bk_dataY<-MUTTA(bk_dataY)
+>>>>>>> 92263dd95301c435bc46a2d1fe1055acc8d2ce69
 
     # outputs data to file
     write.csv(bk_data, "bk_data.csv")
