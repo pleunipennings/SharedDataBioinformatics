@@ -4,7 +4,7 @@ library(seqinr)
 library(stringi)
 
 bk <- read.fasta("bk.txt")
-
+bk<-read.fasta("InfluenzaAvirus_HA_H1N1.txt")
 nightcrewBK= function(data) {
 # dataframe columns
 num <- c(1:1089)
@@ -346,11 +346,58 @@ nightcrewMUTAA = function(data) {
         }
     }
     
-    bk_data <-
-        subset(bk_data, select = -c(MUTAA1, MUTAA2, MUTAA3, A, B, C))
+    bk_data <-subset(bk_data, select = -c(MUTAA1, MUTAA2, MUTAA3, A, B, C))
     return(bk_data)
 }
 bk_data<-nightcrewMUTAA(bk_data)
+
+#simple version 
+x=1
+for (x in 1:nrow(bk_data)) {
+    
+    #print(x)
+    # print(a)
+    #print(i)
+    if (bk_data$WTnt[x] == "a") {
+        bk_data$A[x] <- "g"
+    }
+    if (bk_data$WTnt[x] == "g") {
+        bk_data$A[x] <- "a"
+    }
+    if (bk_data$WTnt[x] == "c") {
+        bk_data$A[x] <- "t"
+    }
+    if (bk_data$WTnt[x] == "t") {
+        bk_data$A[x] <- "c"
+    }
+}
+
+x=1
+y=1
+count<-1
+bk_data$MA<-c(0)
+for (x in 1:(nrow(bk_data)/3)) {
+    #print(x)
+    #print(y)
+    for(y in 1:3){
+        if(y==1){
+            bk_data$MA[count]<-translate(r<-c(bk_data$A[count],as.character(bk_data$WTnt[count+1]),as.character(bk_data$WTnt[count+2])))
+        }
+        if(y==2){
+            bk_data$MA[count]<-translate(a<-c(as.character(bk_data$WTnt[count-1]),as.character(bk_data$A[count]),as.character(bk_data$WTnt[count+1])))
+        }
+        if(y==3){
+            bk_data$MA[count]<-translate(p<-c(as.character(bk_data$WTnt[count-2]),as.character(bk_data$WTnt[count-1]),as.character(bk_data$A[count])))
+        }
+        count<-count+1
+       
+    }
+    
+    }
+
+
+
+
     # outputs data to file
     write.csv(bk_data, "bk_data.csv")
     save(bk_data, file = "bk_data.Rda")
