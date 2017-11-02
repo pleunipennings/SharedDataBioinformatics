@@ -110,7 +110,11 @@ for (i in 1:length(absfreq)) {
 # translation and comparison setup
 TypeOfSite <- c()
 MUTAA <- c()
+<<<<<<< HEAD
 WTAAp <- seqinr::translate(WTnt)
+=======
+WTAAp <- translate(WTnt)
+>>>>>>> d95552cf7a0c78826f09083f512c8298c6ca528e
 
 #fig out true WTAA
 WTAAs <- stri_dup(WTAAp, 3)
