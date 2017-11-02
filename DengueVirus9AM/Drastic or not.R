@@ -2,6 +2,7 @@
 
 library(seqinr)
 
+#reading the data
 read.fasta("DengueVirus1.fasta") -> VIRUS
 
 # reference sequence
