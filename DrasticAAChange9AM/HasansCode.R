@@ -5,15 +5,15 @@
   library(ape)
 
 #reading files and setting data  
-  seqs = read.dna("InfluenzaAvirus_HA_H1N1.fasta.mu.fasta", format = "fasta", as.character=TRUE)
+  seqs = read.dna("InfluenzaAvirus_HA_H1N1.fasta", format = "fasta", as.character=TRUE)
   a=nrow(seqs)
   b=ncol(seqs)
   
 
 # Let's establish the new data frame
 # Number of columns is arbitrary. I just want to print the WT sequence down a column
-  df=data.frame(matrix(nrow=b, ncol=7)) 
-  names(df)=c("WTseq", "Mutseq", "WTAA", "MutAA", "WTcat", "Mutcat", "DrasticAA")
+  df=data.frame(matrix(nrow=b, ncol=8)) 
+  names(df)=c("WTseq", "Mutseq", "WTAA", "MutAA", "WTcat", "Mutcat", "DrasticAA", "Syn/NonSyn/Nonsense")
   
 #mean frequency
   
@@ -83,31 +83,28 @@ for(j in 1:b){
    
   }
 
-# Let's Creates 
+# Let's make a column where the WT AA is printed three times over their codons 
   df$MutAA <-c(0)
-  
   count <- 1
   i = 1
   j = 1
-    for(i in 1:(nrow(df)/3)){ # Workspace for MutAA filling don't run this loop
-        
-      for (j in 1:3){
-            
-        if(j == 1){                     #first codon
-
-              df[count, ]$MutAA <- translate(firstC <- c(as.character(df[count,]$Mutseq), as.character(df[count + 1,]$WTseq), as.character(df[count +2,]$WTseq)))
-            } 
-        if(j == 2){                #second codon
-                df[count, ]$MutAA <- translate(secondC <- c(as.character(df[count - 1,]$WTseq), as.character(df[count,]$Mutseq), as.character(df[count +1,]$WTseq)))
-            }
-        if(j == 3){                  #third codon
-                df[count, ]$MutAA <- translate(thirdC <- c(as.character(df[count - 2,]$WTseq), as.character(df[count - 1,]$WTseq), as.character(df[count,]$Mutseq)))
-             }
-           
-        count <- count + 1
-      
-        }
-    }                                           
+  for(i in 1:(nrow(df)/3)){ # Workspace for MutAA filling don't run this loop
+    for (j in 1:3){
+      if(j == 1){                #first nucleotide in codon
+           df[count,]$MutAA <- translate(firstC <- c(as.character(df[count,]$Mutseq), as.character(df[count + 1,]$WTseq), as.character(df[count +2,]$WTseq)))
+      } 
+      if(j == 2){                #second nucleotide in codon
+           df[count,]$MutAA <- translate(secondC <- c(as.character(df[count - 1,]$WTseq), as.character(df[count,]$Mutseq), as.character(df[count +1,]$WTseq)))
+      }
+      if(j == 3){                #third nucleotide in codon
+           df[count, ]$MutAA <- translate(thirdC <- c(as.character(df[count - 2,]$WTseq), as.character(df[count - 1,]$WTseq), as.character(df[count,]$Mutseq)))
+      }
+     count <- count + 1
+     print(j)
+     print(i)
+     print(count)
+      }
+  }                                           
 
 
 df[,4]=seqinr::translate(paste(df[,2], sep=" "),
@@ -115,6 +112,21 @@ df[,4]=seqinr::translate(paste(df[,2], sep=" "),
 
 for(j in 1:b){                                              
   df[j,6]=amCat(df[j,4])                                    # Categorizing the AA 
+}
+
+#function for syn/non/nonsence
+for (h in 1:b){
+  if(df[h,7]== 0){
+    df[h,8] = "syn"
+  }
+  if(df[h,7]==1){
+    if(df[h,4]=="X"){
+      df[h,8] = "non-sense"
+    }
+    else{
+      df[h,8] = "non-syn"
+    }
+  }
 }
 
 # Function to compare DrasticAAChanges
@@ -129,8 +141,22 @@ DrasticChange <- function(df){
     }
   return(df)
 }
-df <- DrasticChange(df)
 
-#run this to save/load dataframe file
+#function for syn/non/nonsence
+for (h in 1:b){
+  if(df[h,7]== 0){
+    df[h,8] = "syn"
+  }
+  if(df[h,7]==1){
+    if(df[h,4]=="X"){
+      df[h,8] = "non-sense"
+    }
+    else{
+      df[h,8] = "non-syn"
+    }
+  }
+}
+
+df <- DrasticChange(df)
 save(df,file="df.Rda")
 load("df.Rda")
