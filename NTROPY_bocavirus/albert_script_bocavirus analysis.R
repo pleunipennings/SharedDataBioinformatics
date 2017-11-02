@@ -84,7 +84,7 @@ CpG_finder <- function(new_virus_data){
 CpG_finder(BoNS1df)->BoNS1df
 
 #make variables for for-loop for getting WTaa, wild type amino acid,  and MUTaa, mutated amino acid 
-WtAA<-list()
+WTAA<-list()
 MUTAA<-list()
 #for loop for transition mutation at each position and translating it 
 for(x in seq(1, length(cons), 3)){
@@ -136,11 +136,35 @@ for(x in seq(1, length(cons), 3)){
 for(x in seq(1, length(cons) - 2, 3)){
     codon <- c(cons[x], cons[x+1], cons[x+2])
     new_AA <- translate(codon)
-    WtAA[x] <- new_AA
-    WtAA[x+1] <- new_AA
-    WtAA[x+2] <- new_AA
+    WTAA[x] <- new_AA
+    WTAA[x+1] <- new_AA
+    WTAA[x+2] <- new_AA
 }
 #Insert WTaa and MTaa into dataframe
-View(BoNS1df)
-WtAA->BoNS1df$WtAA
+WTAA->BoNS1df$WTAA
 MUTAA->BoNS1df$MUTAA
+
+#  Note that this depends on the columns MUTAA and WTAA being already complete!
+
+
+funcsynnonsyn<-function(DF){
+    if (length(which(names(DF))=="MUTAA")==0){
+        print("Oh oh there is a problem. No MUTAA column!")
+        return(0)}
+
+    for (h in 1:nrow(DF)){
+        if(DF$MUTAA[h]== DF$WTAA[h]){
+            DF[h,"TypeOfSite"] = "syn"
+        }
+        if(DF$MUTAA[h] != DF$WTAA[h]){
+            if(DF[h,"MUTAA"]=="*"){
+                DF[h,"TypeOfSite"] = "nonsense"}
+            else {
+                DF[h,"TypeOfSite"] = "nonsyn"
+             }
+         }
+        }
+        #redo character column into factors
+    DF$TypeOfSite<-as.factor(DF$TypeOfSite)
+}
+
