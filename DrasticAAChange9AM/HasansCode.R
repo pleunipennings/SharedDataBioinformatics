@@ -141,6 +141,8 @@ DrasticChange <- function(df){
     }
   return(df)
 }
+df <- DrasticChange(df) #runs the Drastic Change Function
+
 
 #function for syn/non/nonsence
 for (h in 1:b){
@@ -157,6 +159,8 @@ for (h in 1:b){
   }
 }
 
-df <- DrasticChange(df)
+
+#Load/Save Workspace 
+
 save(df,file="df.Rda")
 load("df.Rda")
