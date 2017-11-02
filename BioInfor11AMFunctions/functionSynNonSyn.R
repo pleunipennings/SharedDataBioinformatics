@@ -22,4 +22,3 @@ functionSynNonSyn<-function(DF){
     DF$TypeOfSite<-as.factor(DF$TypeOfSite)
 }
 
-functionSynNonSyn(EnteroData)
