@@ -187,171 +187,172 @@ bk_data<-nightcrewBK(bk)
 
 
 #finding the MUTAA
-nightcrewMUTAA = function(data) {
-    bk_data$MUTAA <- c(0)
-    #MUTAA
-    x = 0
-    a = 1
-    bk_data$WTnt -> bk_data$A
-    for (i in 1:363) {
-        x <- a
-        #print(x)
-       # print(a)
-        #print(i)
-        if (bk_data$WTnt[x] == "a") {
-            bk_data$A[x] <- "g"
-            a = 3 + a
-        }
-        if (bk_data$WTnt[x] == "g") {
-            bk_data$A[x] <- "a"
-            a = 3 + a
-        }
-        if (bk_data$WTnt[x] == "c") {
-            bk_data$A[x] <- "t"
-            a = 3 + a
-        }
-        if (bk_data$WTnt[x] == "t") {
-            bk_data$A[x] <- "c"
-            a = 3 + a
-        }
-    }
-    
-    x = 0
-    a = 2
-    bk_data$WTnt -> bk_data$B
-    for (i in 1:363) {
-        x <- a
-        #print(x)
-        #print(a)
-        if (bk_data$WTnt[x] == "a") {
-            bk_data$B[x] <- "g"
-            a = 3 + a
-        }
-        if (bk_data$WTnt[x] == "g") {
-            bk_data$B[x] <- "a"
-            a = 3 + a
-        }
-        if (bk_data$WTnt[x] == "c") {
-            bk_data$B[x] <- "t"
-            a = 3 + a
-        }
-        if (bk_data$WTnt[x] == "t") {
-            bk_data$B[x] <- "c"
-            a = 3 + a
-        }
-    }
-    x = 0
-    a = 3
-    bk_data$WTnt -> bk_data$C
-    for (i in 1:363) {
-        x <- a
-        #print(x)
-        #print(a)
-        if (bk_data$WTnt[x] == "a") {
-            bk_data$C[x] <- "g"
-            a = 3 + a
-        }
-        if (bk_data$WTnt[x] == "g") {
-            bk_data$C[x] <- "a"
-            a = 3 + a
-        }
-        if (bk_data$WTnt[x] == "c") {
-            bk_data$C[x] <- "t"
-            a = 3 + a
-        }
-        if (bk_data$WTnt[x] == "t") {
-            bk_data$C[x] <- "c"
-            a = 3 + a
-        }
-    }
-    
-    
-    
-    
-    MUTAA1 <- translate(as.character(bk_data$A), NAstring = "X")
-    MUTAA1 <- stri_dup(MUTAA1, 3)
-    MUTAA1 <- unlist(strsplit(MUTAA1, ""))
-    
-    MUTAA2 <- translate(as.character(bk_data$B), NAstring = "X")
-    MUTAA2 <- stri_dup(MUTAA2, 3)
-    MUTAA2 <- unlist(strsplit(MUTAA2, ""))
-    
-    MUTAA3 <- translate(as.character(bk_data$C), NAstring = "X")
-    MUTAA3 <- stri_dup(MUTAA3, 3)
-    MUTAA3 <- unlist(strsplit(MUTAA3, ""))
-    
-    bk_data$MUTAA1 <- MUTAA1
-    bk_data$MUTAA2 <- MUTAA2
-    bk_data$MUTAA3 <- MUTAA3
-    w = 1
-    e = 2
-    t = 3
-    bk_data$MUTAA = c(0)
-    for (i in 1:363) {
-        v <- w
-        if (bk_data$WTnt[v] == "a" && bk_data$A[v] == "g") {
-            bk_data$MUTAA[v] = as.character(bk_data$MUTAA1[v])
-            w = 3 + w
-        }
-        if (bk_data$WTnt[v] == "g" && bk_data$A[v] == "a") {
-            bk_data$MUTAA[v] = as.character(bk_data$MUTAA1[v])
-            w = 3 + w
-        }
-        if (bk_data$WTnt[v] == "t" && bk_data$A[v] == "c") {
-            bk_data$MUTAA[v] = as.character(bk_data$MUTAA1[v])
-            w = 3 + w
-        }
-        if (bk_data$WTnt[v] == "c" && bk_data$A[v] == "t") {
-            bk_data$MUTAA[v] = as.character(bk_data$MUTAA1[v])
-            w = 3 + w
-        }
-    }
-    for (i in 1:363) {
-        r <- e
-        
-        if (bk_data$WTnt[r] == "a" && bk_data$B[r] == "g") {
-            bk_data$MUTAA[r] = as.character(bk_data$MUTAA2[r])
-            e = 3 + e
-        }
-        if (bk_data$WTnt[r] == "g" && bk_data$B[r] == "a") {
-            bk_data$MUTAA[r] = as.character(bk_data$MUTAA2[r])
-            e = 3 + e
-        }
-        if (bk_data$WTnt[r] == "t" && bk_data$B[r] == "c") {
-            bk_data$MUTAA[r] = as.character(bk_data$MUTAA2[r])
-            e = 3 + e
-        }
-        if (bk_data$WTnt[r] == "c" && bk_data$B[r] == "t") {
-            bk_data$MUTAA[r] = as.character(bk_data$MUTAA2[r])
-            e = 3 + e
-        }
-    }
-    for (i in 1:363) {
-        c <- t
-        if (bk_data$WTnt[c] == "a" && bk_data$C[c] == "g") {
-            bk_data$MUTAA[c] = as.character(bk_data$MUTAA3[c])
-            t = 3 + t
-        }
-        if (bk_data$WTnt[c] == "g" && bk_data$C[c] == "a") {
-            bk_data$MUTAA[c] = as.character(bk_data$MUTAA3[c])
-            t = 3 + t
-        }
-        if (bk_data$WTnt[c] == "t" && bk_data$C[c] == "c") {
-            bk_data$MUTAA[c] = as.character(bk_data$MUTAA3[c])
-            t = 3 + t
-        }
-        if (bk_data$WTnt[c] == "c" && bk_data$C[c] == "t") {
-            bk_data$MUTAA[c] = as.character(bk_data$MUTAA3[c])
-            t = 3 + t
-        }
-    }
-    
-    bk_data <-subset(bk_data, select = -c(MUTAA1, MUTAA2, MUTAA3, A, B, C))
-    return(bk_data)
-}
-bk_data<-nightcrewMUTAA(bk_data)
+# nightcrewMUTAA = function(data) {
+#     bk_data$MUTAA <- c(0)
+#     #MUTAA
+#     x = 0
+#     a = 1
+#     bk_data$WTnt -> bk_data$A
+#     for (i in 1:363) {
+#         x <- a
+#         #print(x)
+#        # print(a)
+#         #print(i)
+#         if (bk_data$WTnt[x] == "a") {
+#             bk_data$A[x] <- "g"
+#             a = 3 + a
+#         }
+#         if (bk_data$WTnt[x] == "g") {
+#             bk_data$A[x] <- "a"
+#             a = 3 + a
+#         }
+#         if (bk_data$WTnt[x] == "c") {
+#             bk_data$A[x] <- "t"
+#             a = 3 + a
+#         }
+#         if (bk_data$WTnt[x] == "t") {
+#             bk_data$A[x] <- "c"
+#             a = 3 + a
+#         }
+#     }
+#     
+#     x = 0
+#     a = 2
+#     bk_data$WTnt -> bk_data$B
+#     for (i in 1:363) {
+#         x <- a
+#         #print(x)
+#         #print(a)
+#         if (bk_data$WTnt[x] == "a") {
+#             bk_data$B[x] <- "g"
+#             a = 3 + a
+#         }
+#         if (bk_data$WTnt[x] == "g") {
+#             bk_data$B[x] <- "a"
+#             a = 3 + a
+#         }
+#         if (bk_data$WTnt[x] == "c") {
+#             bk_data$B[x] <- "t"
+#             a = 3 + a
+#         }
+#         if (bk_data$WTnt[x] == "t") {
+#             bk_data$B[x] <- "c"
+#             a = 3 + a
+#         }
+#     }
+#     x = 0
+#     a = 3
+#     bk_data$WTnt -> bk_data$C
+#     for (i in 1:363) {
+#         x <- a
+#         #print(x)
+#         #print(a)
+#         if (bk_data$WTnt[x] == "a") {
+#             bk_data$C[x] <- "g"
+#             a = 3 + a
+#         }
+#         if (bk_data$WTnt[x] == "g") {
+#             bk_data$C[x] <- "a"
+#             a = 3 + a
+#         }
+#         if (bk_data$WTnt[x] == "c") {
+#             bk_data$C[x] <- "t"
+#             a = 3 + a
+#         }
+#         if (bk_data$WTnt[x] == "t") {
+#             bk_data$C[x] <- "c"
+#             a = 3 + a
+#         }
+#     }
+#     
+#     
+#     
+#     
+#     MUTAA1 <- translate(as.character(bk_data$A), NAstring = "X")
+#     MUTAA1 <- stri_dup(MUTAA1, 3)
+#     MUTAA1 <- unlist(strsplit(MUTAA1, ""))
+#     
+#     MUTAA2 <- translate(as.character(bk_data$B), NAstring = "X")
+#     MUTAA2 <- stri_dup(MUTAA2, 3)
+#     MUTAA2 <- unlist(strsplit(MUTAA2, ""))
+#     
+#     MUTAA3 <- translate(as.character(bk_data$C), NAstring = "X")
+#     MUTAA3 <- stri_dup(MUTAA3, 3)
+#     MUTAA3 <- unlist(strsplit(MUTAA3, ""))
+#     
+#     bk_data$MUTAA1 <- MUTAA1
+#     bk_data$MUTAA2 <- MUTAA2
+#     bk_data$MUTAA3 <- MUTAA3
+#     w = 1
+#     e = 2
+#     t = 3
+#     bk_data$MUTAA = c(0)
+#     for (i in 1:363) {
+#         v <- w
+#         if (bk_data$WTnt[v] == "a" && bk_data$A[v] == "g") {
+#             bk_data$MUTAA[v] = as.character(bk_data$MUTAA1[v])
+#             w = 3 + w
+#         }
+#         if (bk_data$WTnt[v] == "g" && bk_data$A[v] == "a") {
+#             bk_data$MUTAA[v] = as.character(bk_data$MUTAA1[v])
+#             w = 3 + w
+#         }
+#         if (bk_data$WTnt[v] == "t" && bk_data$A[v] == "c") {
+#             bk_data$MUTAA[v] = as.character(bk_data$MUTAA1[v])
+#             w = 3 + w
+#         }
+#         if (bk_data$WTnt[v] == "c" && bk_data$A[v] == "t") {
+#             bk_data$MUTAA[v] = as.character(bk_data$MUTAA1[v])
+#             w = 3 + w
+#         }
+#     }
+#     for (i in 1:363) {
+#         r <- e
+#         
+#         if (bk_data$WTnt[r] == "a" && bk_data$B[r] == "g") {
+#             bk_data$MUTAA[r] = as.character(bk_data$MUTAA2[r])
+#             e = 3 + e
+#         }
+#         if (bk_data$WTnt[r] == "g" && bk_data$B[r] == "a") {
+#             bk_data$MUTAA[r] = as.character(bk_data$MUTAA2[r])
+#             e = 3 + e
+#         }
+#         if (bk_data$WTnt[r] == "t" && bk_data$B[r] == "c") {
+#             bk_data$MUTAA[r] = as.character(bk_data$MUTAA2[r])
+#             e = 3 + e
+#         }
+#         if (bk_data$WTnt[r] == "c" && bk_data$B[r] == "t") {
+#             bk_data$MUTAA[r] = as.character(bk_data$MUTAA2[r])
+#             e = 3 + e
+#         }
+#     }
+#     for (i in 1:363) {
+#         c <- t
+#         if (bk_data$WTnt[c] == "a" && bk_data$C[c] == "g") {
+#             bk_data$MUTAA[c] = as.character(bk_data$MUTAA3[c])
+#             t = 3 + t
+#         }
+#         if (bk_data$WTnt[c] == "g" && bk_data$C[c] == "a") {
+#             bk_data$MUTAA[c] = as.character(bk_data$MUTAA3[c])
+#             t = 3 + t
+#         }
+#         if (bk_data$WTnt[c] == "t" && bk_data$C[c] == "c") {
+#             bk_data$MUTAA[c] = as.character(bk_data$MUTAA3[c])
+#             t = 3 + t
+#         }
+#         if (bk_data$WTnt[c] == "c" && bk_data$C[c] == "t") {
+#             bk_data$MUTAA[c] = as.character(bk_data$MUTAA3[c])
+#             t = 3 + t
+#         }
+#     }
+#     
+#     bk_data <-subset(bk_data, select = -c(MUTAA1, MUTAA2, MUTAA3, A, B, C))
+#     return(bk_data)
+# }
+# bk_data<-nightcrewMUTAA(bk_data)
 
-#simple version 
+#simple version of MUTAA
+MUTTA= function(bk_data){
 x=1
 for (x in 1:nrow(bk_data)) {
     
@@ -396,7 +397,7 @@ for (x in 1:(nrow(bk_data)/3)) {
     }
 
 
-
+}
 
     # outputs data to file
     write.csv(bk_data, "bk_data.csv")
