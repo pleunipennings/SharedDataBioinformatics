@@ -14,12 +14,12 @@ data<-read.csv("OverviewSelCoeff_BachelerFilter.csv")
 # will have error message to ignore 0's in data because y axis will be translated as logrithmic scale
 plotmeanfreqloc<-function(DF){
     if (which(names(DF)=="MeanFreq")==0){
-        print("Oh oh there is a problem. No MeanFreq column!")
+        print("No MeanFreq column! Meanfreq has to be a number")
         return(0)}
     if (which(names(DF)=="Num")==0){
-        print("No Num column!")}
+        print("No Num column! Num has to be an integer")}
     if (which(names(DF)=="TypeOfSite")==0){
-        print("No "TypeOfSite" column! ")    }
+        print("No TypeOfSite column! Has to be a factor ")}
     
 plot(
     #x vector
@@ -90,4 +90,4 @@ legend("topright",
        #justify text legend, xjust=0 is left justified, xjust=1 means right justified
        xjust=1
 )
-
+}

@@ -209,4 +209,7 @@ drasticAA<-function(DF){
         }
     }
 }
-drasticAA(BoNS1df)
+drasticAA(BoNS1df)->BoNS1df
+
+#To save data frame onto a file: 
+#write.csv(BoNS1df,"BoNS1df_MUTAA_Syn.csv")
