@@ -314,109 +314,93 @@ a=nrow(seqs)
 b=ncol(seqs)
 
 
-
-
-##### Stuck HERE NOW 
-
-
 # Categorizing the WT amino acids
 
 for(j in 1:b){
     
-    VIRUS_DATA[j,5]=amCat(VIRUS_DATA[j,2])
+    VIRUS_DATA[j,9]=amCat(VIRUS_DATA[j,7])
     
 }
 
-
-
 #creates Mut strain of current WTseq enters it into 
-
 for (i in 1:b){
-    
-    curNuc <-  VIRUS_DATA[i,1]
-    
-    
+    curNuc <-  VIRUS_DATA[i,2]
     
     if(curNuc == "a" || curNuc == "g"){
         
-        
-        
         if(curNuc == "a"){
-            
-            VIRUS_DATA [i, 2] = "g"
-            
+            VIRUS_DATA [i, 6] = "g"
         }else{
-            
-            VIRUS_DATA [i, 2] = "a"
-            
+            VIRUS_DATA [i, 6] = "a"
         }
-        
-        
         
     }else{
         
-        
-        
         if(curNuc == "t"){
-            
-            VIRUS_DATA [i, 2] = "c"
-            
+            VIRUS_DATA [i, 6] = "c"
         }else{
-            
-            VIRUS_DATA [i, 2] = "t"
-            
+            VIRUS_DATA [i, 6] = "t"
         }
         
-        
-        
     }
-    
-    
     
 }
 
 
-
-# Let's pull up a different sequence for comparison
-
-VIRUS_DATA[,2]=seqs[89,]                                            # Picking the sequence, 89 is arbitrary
+########## WORKED UNTIL HERE ####
 
 
+# Let's Creates 
+
+VIRUS_DATA$WTseq = VIRUS_DATA$wtnt
+
+VIRUS_DATA$MutAA <-c(0)
+
+count <- 1
+i = 1
+j = 1
+for(i in 1:(nrow(VIRUS_DATA)/3)){ # Workspace for MutAA filling don't run this loop
+    
+    for (j in 1:3){
+        
+        if(j == 1){                     #first codon
+            
+            VIRUS_DATA[count, ]$MutAA <- translate(firstC <- c(as.character(VIRUS_DATA[count,]$Mutseq), as.character(VIRUS_DATA[count + 1,]$WTseq), as.character(VIRUS_DATA[count +2,]$WTseq)))
+        } 
+        if(j == 2){                #second codon
+            VIRUS_DATA[count, ]$MutAA <- translate(secondC <- c(as.character(VIRUS_DATA[count - 1,]$WTseq), as.character(VIRUS_DATA[count,]$Mutseq), as.character(VIRUS_DATA[count +1,]$WTseq)))
+        }
+        if(j == 3){                  #third codon
+            VIRUS_DATA[count, ]$MutAA <- translate(thirdC <- c(as.character(VIRUS_DATA[count - 2,]$WTseq), as.character(VIRUS_DATA[count - 1,]$WTseq), as.character(VIRUS_DATA[count,]$Mutseq)))
+        }
+        
+        count <- count + 1
+        print(j)
+        print(i)
+        print(count)
+    }
+}                                           
 
 
-
-VIRUS_DATA[,4]=seqinr::translate(paste(VIRUS_DATA[,2], sep=" "),
-                         
+VIRUS_DATA[,8]=seqinr::translate(paste(VIRUS_DATA[,6], sep=" "),
                          NAstring="X", ambiguous=FALSE, sens="F")            # Translating from nucleic acid to AA
 
-
-
 for(j in 1:b){                                              
-    
-    VIRUS_DATA[j,6]=amCat(VIRUS_DATA[j,4])                                    # Categorizing the AA 
-    
+    VIRUS_DATA[j,10]=amCat(VIRUS_DATA[j,8])                                    # Categorizing the AA 
 }
-
-
 
 # Function to compare DrasticAAChanges
-
 DrasticChange <- function(VIRUS_DATA){
-    
     for(h in 1:nrow(VIRUS_DATA)){
-        
         if (VIRUS_DATA[h,]$WTcat==VIRUS_DATA[h,]$Mutcat){
-            
-            VIRUS_DATA[h,]$DrasticAA= "0"                      # If WT AA category = Mut AA Category, no drastic change
-            
+            VIRUS_DATA[h,]$DrasticAA= 0                      # If WT AA category = Mut AA Category, no drastic change
         }
-        
         if (VIRUS_DATA[h,]$WTcat!=VIRUS_DATA[h,]$Mutcat){
-            
-            VIRUS_DATA[h,]$DrasticAA= "X"                      # If WT AA category =/= Mut AA Category, yes drastic change
-            
+            VIRUS_DATA[h,]$DrasticAA= 1                      # If WT AA category =/= Mut AA Category, yes drastic change
         }
-        
     }
-    
+    return(VIRUS_DATA)
 }
+VIRUS_DATA <- DrasticChange(VIRUS_DATA)
+save(VIRUS_DATA,file="VIRUS_DATA.Rda")
+load("VIRUS_DATA.Rda")
