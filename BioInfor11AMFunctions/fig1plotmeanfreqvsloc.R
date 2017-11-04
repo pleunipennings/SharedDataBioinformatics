@@ -1,59 +1,90 @@
-#script for Team NTROPY's function graphing Frequency of synonymous/nonsynonmous/other mutation vs location
+#11AM function to plot mean freq vs location with synoymous and non synonmous Type of Sites
+#   Liana, Alejandro, Albert
 
-#plot data mut freq vs location and legend
-#   Assumptions: plot based on column names, "num", "MeanFreq", "TypeOfSite".
-#   Your data must be in these columns! 
-#   x axis is location of nucleotide
-#   y axis is log of mean frequency
-# will have error message to ignore 0's in data because y axis will be translated as logrithmic scale
-plotmeanfreqloc<-function(DF, Title){
-    
-    plot(
-        #x vector
-        DF$num,
-        #y vector
-        DF$MeanFreq,
-        #make black empty circles as symbol
-        pch=21,
-        #make outline of symbol black
-        col= "black",
-        #fill inside of point with color by factor category "TypeOfSite" bg=
-        bg=DF$TypeOfSite,
-        #Title label
-        main = Title,
-        #x axis label
-        xlab ="Nucleotide Location on Sequence", 
-        #y axis label
-        ylab ="Mean Frequency of Mutation",
-        #cex changes point size
-        cex=2,
-        #grid superimposes grid onto plot 
-        #nx and ny describes x and y axis 
-        #NA will automatically set x-axis to default plot ticks 
-        grid(nx = NA, ny = NULL, col = "black", lty = "dotted",
-             lwd = par("lwd"), equilogs = TRUE),
-        #supress y axis drawing by plot fxn, put # in front to not supress
-        #yaxt="n"
-        # or do log of y axis, delete # symbol
-        log="y"
-    )
-    
-    #axis function to write y axis with only scale by 10s. 
-    #USE YOUR OWN APPROPRIATE NUMBERS
-    #axis(2, at=c(0.0001,0.001,0.01,0.1) , labels=aty, tck=-0.01)
+#HOW TO USE: 
+#  plotsyn(DF, "yourtitlehere", logy)
+#   1st argument, DF is your dataframe 
+#   2nd argument, Insert the title you want in "Title." Make sure to use quotes!
+#       e.g. plotmeanfreqloc(DF, "your title here")
+#   3rd argument, type "logy" no quotes if you want y axis to be logrithmic
+#       e.g. plotmeanfreqloc(dataframe, "your graph title", logy)
+#There will be an error message about infinite axis limits but it will still work.
+#ASSUMPTIONS: plot based on column names, "num", "MeanFreq", "TypeOfSite".
+#       num and MeanFreq column have to be numbers
+#        TypeOfSite has to be factors
+#NOTE: Code will omit 0's in MeanFreq. Presumably, the 0's do not have 
+#   biological significance for this figure
+
+plotsyn<-function(DF, Title, logy){
+    #code to ignore any 0's in MeanFreq column
+    DF->df
+    df1<-data.frame("num"=df$num, "MeanFreq"=df$MeanFreq, "TypeOfSite"=df$TypeOfSite)
+    NA->df1[df1==0]
+    na.omit(df1)->df2
+#set xy window to fit data from 0 to its max
+        plot.window(c(0,nrow(DF)), c(0,max(DF$MeanFreq)))
+    if(missing(logy)){
+        plot(
+             #x vector
+            df2$num,
+            #y vector
+            df2$MeanFreq,
+            #make symbols to each factor of TypeOfSite
+            pch=c(df2$TypeOfSite),
+            #make symbol colors to each factor of Type Of Site
+            col=df2$TypeOfSite,
+            #Title label
+            main = Title,
+            #x axis label
+            xlab ="Nucleotide Location on Sequence", 
+            #y axis label
+            ylab ="Mean Frequency of Mutation",
+            #cex changes overall magnification
+            cex=2,
+            #grid superimposes gridlines onto plot 
+            #nx and ny describes x and y axis 
+            #NA will automatically set x-axis to default plot ticks 
+            grid(nx = NA, ny = NULL, col = "black", lty = "dotted",
+                 lwd = par("lwd"), equilogs = TRUE)
+         )
+    }
+    else {
+        plot(
+            #x vector
+            df2$num,
+            #y vector
+            df2$MeanFreq,
+            #make symbols to each factor of TypeOfSite
+            pch=c(df2$TypeOfSite),
+            #make symbol colors to each factor of Type Of Site
+            col=df2$TypeOfSite,
+            #Title label
+            main = Title,
+            #x axis label
+            xlab ="Nucleotide Location on Sequence", 
+            #y axis label
+            ylab ="Mean Frequency of Mutation",
+            #cex changes overall magnification
+            cex=2,
+            #grid superimposes gridlines onto plot 
+            #nx and ny describes x and y axis 
+            #NA will automatically set x-axis to default plot ticks 
+            grid(nx = NA, ny = NULL, col = "black", lty = "dotted",
+                 lwd = par("lwd"), equilogs = TRUE),
+            log="y"
+        )
+    }
     
     #add legend in top right corner
     legend("topright", 
            #inset legend off from border
            inset= 0.01,
            #names of each category based on factors, alphabetical order of category 1-5 of TypeOfSites
-           legend = levels(DF$TypeOfSite), 
+           legend = levels(df2$TypeOfSite), 
            #symbols matching dataframe's factors 1:5 of DF$TypeOfSite
-           pch=21,
+           pch=c(1:5),
            #colors matching dataframe's factors 1:5 of DF$TypeOfSite
-           col="black",
-           #fill colors of circle matching points of plot
-           pt.bg=c(1:5),
+           col=c(1:5),
            #specify scale of whole box of legend to not block data
            cex=.75,
            #specify point size in legend
@@ -62,13 +93,9 @@ plotmeanfreqloc<-function(DF, Title){
            bty="o",
            #specific box border thickness/width
            box.lwd=2,
-           #specify box border type
-           #box.lty=,
            #text.width change
-           #text.width=10,
+           text.width=120,
            #justify text legend, xjust=0 is left justified, xjust=1 means right justified
-           xjust=1
+           xjust=0
     )
 }
-#run fuction
-plotmeanfreqloc(BoNS1df, "Bocavirus Mean Frequeny vs Location")
