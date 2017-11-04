@@ -6,10 +6,10 @@
 #   1st argument, DF is your dataframe 
 #   2nd argument, Insert the title you want in "Title." Make sure to use quotes!
 #       e.g. plotmeanfreqloc(DF, "your title here")
-#   3rd argument, type "logy" no quotes if you want y axis to be logrithmic
+#   3rd argument, type logy no quotes if you want y axis to be logrithmic
 #       e.g. plotmeanfreqloc(dataframe, "your graph title", logy)
 #There will be an error message about infinite axis limits but it will still work.
-#ASSUMPTIONS: plot based on column names, "num", "MeanFreq", "TypeOfSite".
+#ASSUMPTIONS: requires dataframe column names, "num", "MeanFreq", "TypeOfSite".
 #       num and MeanFreq column have to be numbers
 #        TypeOfSite has to be factors
 #NOTE: Code will omit 0's in MeanFreq. Presumably, the 0's do not have 
@@ -23,7 +23,7 @@ plotsyn<-function(DF, Title, logy){
     na.omit(df1)->df2
 #set xy window to fit data from 0 to its max
         plot.window(c(0,nrow(DF)), c(0,max(DF$MeanFreq)))
-    if(missing(logy)){
+    if(missing("logy")){
         plot(
              #x vector
             df2$num,
