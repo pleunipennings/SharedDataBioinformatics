@@ -1,6 +1,6 @@
 
 ## Group # 1 ( 9am) - CPG Sites Function
-## Contributior - Jacky 
+## Contributior - Jacky, Sarina
 
 
 ######## Investigating CPG sites: 
@@ -8,7 +8,8 @@
 ## Note : this function assumes that wtnt column is present in the 
 ##        dataframe and your dataframe is set as df
 
-
+# Runs CPG_site function which takes in the arguement/input dataframe
+CPG_site<-function(df){
 # Collapses wtnt vector sequence into a character string and sets to variable STRING
 paste(df$wtnt, collapse = '') -> STRING
 STRING
@@ -40,6 +41,11 @@ CASITES
 
 # Inserting value 1 in the column "CPG" and using the values found dataframe BELL as the row #
 df[CASITES[,1]+1,"CPG"] <- 1
+}
+
+# Calls the CPG_site function with the dataframe as the argument
+CPG_site(df)
+
 
 
 
