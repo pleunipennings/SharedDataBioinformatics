@@ -1,11 +1,12 @@
 
-## Group # 1 - CPG Sites Function
-## Contributior - Jacky, Sarina, Preeti, Andrea
+## Group # 1 ( 9am) - CPG Sites Function
+## Contributior - Jacky 
 
 
 ######## Investigating CPG sites: 
 
-read.fasta(" ") -> df
+## Note : this function assumes that wtnt column is present in the 
+##        dataframe and your dataframe is set as df
 
 
 # Collapses wtnt vector sequence into a character string and sets to variable STRING
