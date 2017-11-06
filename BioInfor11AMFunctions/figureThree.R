@@ -1,8 +1,18 @@
-figureThree <-function(dfx){
-  
+figureThree<-function(dfx){
+  #begin plot func tion for figure 3; ends on line 651
+ # df<-dffin3
+  library(ggplot2)
+  library(plyr)
+  library(grid)
+  library(scales)
+  library(gridExtra)
   CSV<-dfx
   
-  class(CSV)
+  
+  #This portion establishes plotting order => ggplot will plot things in aplhabetic order. The selections of data from the incoming data.frame will be tagged a thru r.
+  
+  ##SYN SITES (LEFT GRAPH)
+  #all green points for the left synonomous site grapha
   
   ##SYN SITES (LEFT GRAPH)
   #all green points for the left synonomous site graphs
@@ -37,200 +47,288 @@ figureThree <-function(dfx){
   #red points on the right
   j <- frequenciesOfNONSynAmutsCPDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "a" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "1"))),"MeanFreq"]
   n <- frequenciesOfNONSynTmutsCPDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "t" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "1"))),"MeanFreq"]
+  
+  #Since the results of the data selections are all vectors of differing lengths, they are collected into a list with tags according to plotting order
   mylist <- list (a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r) 
+  k
   mylist
+  namvec<-c("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r") 
+  names(mylist)<-namvec
+  (mylist)
+  #The list has some NULL elements; these must be replaced with NA since the rest of the code requires values in all lettered locations
+  mylistvec<-c()
+  for (i in 1:length(mylist)){
+    if (length(mylist[[i]])==0){mylist[[i]] = NA}
+    mylistvec<-c(mylistvec,mylist[i])
+  }
   
-  # Finding maximum row length and filling empty space with "NA"
-  llngths<-lapply(mylist, function(x) length(x))
-  vlngths<-unlist(llngths)
-  maxlngth <- max(vlngths)
+  #ggplot requires that data be in a data.frame and to make most effective use of the plotting functions, data will be arranged in to a column of values 
+  #and a column of plotting order identifiers (refvec)
+  dfmylist<-data.frame(mylistvec[1])
+  dfmylist$refvec<-names(mylistvec[1])
+  colnames(dfmylist)<-c("values","refvec")
+  for (i in 2:length(mylist)){
+    dfwkg<-data.frame((mylistvec[i]))
+    dfwkg$refvec<-names(mylistvec[i])
+    colnames(dfwkg)<-c("values","refvec")
+    dfmylist<-rbind(dfmylist,dfwkg)
+  }
+  #View (dfmylist)
   
-  myfn<-function(x,maxlngth){
-    length(x)<-maxlngth
-    return (x)}
-  mtxmylst <-sapply(mylist, myfn, maxlngth)
-  mtxmylst
   
-  rm (mxstats)
-  fnclcls<-function(x){
-    if(mean(x, na.rm = TRUE) - 0.3*sd(x, na.rm = TRUE)<0){
-      return (mean(x, na.rm = TRUE) - 0.001)}
-    return(mean(x, na.rm = TRUE) - 0.3*sd(x, na.rm = TRUE))}
-  means<-sapply(mylist, function(x) mean(x,na.rm = TRUE))
-  ucls<-sapply(mylist, function(x) (0.3*sd(x, na.rm = TRUE) + mean(x, na.rm = TRUE)))
-  lcls <- sapply (mylist, fnclcls)
-  mxstats<-rbind(means,ucls)
-  mxstats<-rbind(mxstats,lcls)
-  mxstats
   
-  # Constructing the data frame
-  dfval<-data.frame(mtxmylst)
-  names<-c("means","ucls","lcls")
-  dfstats<-data.frame(mxstats,row.names = names)
-  dfstats
+  #Now add a column for AA_Category and a column for colors so tha ggplot can pull colors and legend from data.frame 
+  dfmylist[which(dfmylist$refvec == "a"),"AA_category"]<-"Non-drastic, non-CpG" 
+  dfmylist[which(dfmylist$refvec == "b"),"AA_category"]<-"Non-drastic, CpG" 
+  dfmylist[which(dfmylist$refvec == "a"),"AA_category"]<-"Non-drastic, non-CpG" 
+  dfmylist[which(dfmylist$refvec == "b"),"AA_category"]<-"Non-drastic, CpG" 
+  dfmylist[which(dfmylist$refvec == "c"),"AA_category"]<-"Non-drastic, non-CpG" 
+  dfmylist[which(dfmylist$refvec == "d"),"AA_category"]<-"Non-drastic, CpG" 
+  dfmylist[which(dfmylist$refvec == "e"),"AA_category"]<-"Non-drastic, non-CpG" 
+  dfmylist[which(dfmylist$refvec == "f"),"AA_category"]<-"Non-drastic, non-CpG" 
   
-  # Labelling/Naming
-  rename
-  dfval<-rename(dfval,c("X1"="val_a","X2"="val_b","X3"="val_c","X4"="val_d","X5"="val_e","X6"="val_f","X7"="val_g","X8"="val_h","X9"="val_i","X10"="val_j","X11"="val_k","X12"="val_l","X13"="val_m","X14"="val_n","X15"="val_o","X16"="val_p","X17"="val_q", "X18"= "val_r"))
-  dfstats<-rename(dfstats,c("X1"="mut_a","X2"="mut_b","X3"="mut_c","X4"="mut_d","X5"="mut_e","X6"="mut_f","X7"="mut_g","X8"="mut_h","X9"="mut_i","X10"="mut_j","X11"="mut_k","X12"="mut_l","X13"="mut_m","X14"="mut_n","X15"="mut_o","X16"="mut_p","X17"="mut_q", "X18"= "mut_r"))
-  dfval[,"val_m"]
-  mean(dfval[,"val_m"])
-  dfstats
-  sink("Routput(sap).txt")
-  print(dfstats)
-  sink()
+  dfmylist[which(dfmylist$refvec == "g"),"AA_category"]<-"Non-drastic, non-CpG" 
+  dfmylist[which(dfmylist$refvec == "h"),"AA_category"]<-"Non-drastic, CpG" 
+  dfmylist[which(dfmylist$refvec == "i"),"AA_category"]<-"Drastic, non-CpG" 
+  dfmylist[which(dfmylist$refvec == "j"),"AA_category"]<-"Drastic, CpG" 
   
-  class(dfval[,2])
-  class(dfstats[,2])
+  dfmylist[which(dfmylist$refvec == "k"),"AA_category"]<-"Non-drastic, non-CpG" 
+  dfmylist[which(dfmylist$refvec == "l"),"AA_category"]<-"Non-drastic, CpG" 
+  dfmylist[which(dfmylist$refvec == "m"),"AA_category"]<-"Drastic, non-CpG" 
+  dfmylist[which(dfmylist$refvec == "n"),"AA_category"]<-"Drastic, CpG"
   
-  # Creating Synonymous Plot
-  Synplt <- ggplot() +
+  
+  dfmylist[which(dfmylist$refvec == "o"),"AA_category"]<-"Non-drastic, non-CpG" 
+  dfmylist[which(dfmylist$refvec == "p"),"AA_category"]<-"Drastic, non-CpG" 
+  
+  
+  dfmylist[which(dfmylist$refvec == "q"),"AA_category"]<-"Non-drastic, non-CpG" 
+  dfmylist[which(dfmylist$refvec == "r"),"AA_category"]<-"Drastic, non-CpG" 
+  
+  
+  dfmylist[which(dfmylist$refvec == "a"),"color"]<-"green" 
+  dfmylist[which(dfmylist$refvec == "b"),"color"]<-"blue" 
+  dfmylist[which(dfmylist$refvec == "a"),"color"]<-"green" 
+  dfmylist[which(dfmylist$refvec == "b"),"color"]<-"blue" 
+  dfmylist[which(dfmylist$refvec == "c"),"color"]<-"green" 
+  dfmylist[which(dfmylist$refvec == "d"),"color"]<-"blue" 
+  dfmylist[which(dfmylist$refvec == "e"),"color"]<-"green" 
+  dfmylist[which(dfmylist$refvec == "f"),"color"]<-"green" 
+  
+  dfmylist[which(dfmylist$refvec == "g"),"color"]<-"green" 
+  dfmylist[which(dfmylist$refvec == "h"),"color"]<-"blue" 
+  dfmylist[which(dfmylist$refvec == "i"),"color"]<-"orange" 
+  dfmylist[which(dfmylist$refvec == "j"),"color"]<-"red" 
+  
+  dfmylist[which(dfmylist$refvec == "k"),"color"]<-"green" 
+  dfmylist[which(dfmylist$refvec == "l"),"color"]<-"blue" 
+  dfmylist[which(dfmylist$refvec == "m"),"color"]<-"orange" 
+  dfmylist[which(dfmylist$refvec == "n"),"color"]<-"red"
+  
+  
+  dfmylist[which(dfmylist$refvec == "o"),"color"]<-"green" 
+  dfmylist[which(dfmylist$refvec == "p"),"color"]<-"orange" 
+  
+  
+  dfmylist[which(dfmylist$refvec == "q"),"color"]<-"green" 
+  dfmylist[which(dfmylist$refvec == "r"),"color"]<-"orange" 
+  
+  #View(dfmylist)
+  #the plot will have a log y scale so all zero y values must go away.
+  
+  dfmylist <-dfmylist[which((dfmylist$values != 0)|(is.na(dfmylist$values))),]
+  
+  
+  
+  #split the data as there will be two plots one for "Synonomous" & one for "Non-synonomous" sites
+  vec1<-c("a","b","c","d","e","f")
+  dfmylist1<-dfmylist[which((dfmylist$refvec=="a")|(dfmylist$refvec=="b")|(dfmylist$refvec=="c")
+                            |(dfmylist$refvec=="d")|(dfmylist$refvec=="e")|(dfmylist$refvec=="f")),]
+  
+  dfmylist2<-dfmylist[-which((dfmylist$refvec=="a")|(dfmylist$refvec=="b")|(dfmylist$refvec=="c")
+                             |(dfmylist$refvec=="d")|(dfmylist$refvec=="e")|(dfmylist$refvec=="f")),]
+  
+  
+  
+  
+  #prepare mean & error values for synonomous plot
+  
+  sem<-function(x){
+    return(sd(x,na.rm = FALSE)/sqrt(length(x)))
+  }
+  
+  dfmylist1$mean_vals = 0.0001
+  dfmylist1$mean_vals[(which(dfmylist1$refvec == "a"))]<-mean(dfmylist1$values[(which(dfmylist1$refvec == "a"))], na.rm = FALSE)
+  dfmylist1$mean_vals[(which(dfmylist1$refvec == "b"))]<-mean(dfmylist1$values[(which(dfmylist1$refvec == "b"))], na.rm = FALSE)
+  dfmylist1$mean_vals[(which(dfmylist1$refvec == "c"))]<-mean(dfmylist1$values[(which(dfmylist1$refvec == "c"))], na.rm = FALSE)
+  dfmylist1$mean_vals[(which(dfmylist1$refvec == "d"))]<-mean(dfmylist1$values[(which(dfmylist1$refvec == "d"))], na.rm = FALSE)
+  dfmylist1$mean_vals[(which(dfmylist1$refvec == "e"))]<-mean(dfmylist1$values[(which(dfmylist1$refvec == "e"))], na.rm = FALSE)
+  dfmylist1$mean_vals[(which(dfmylist1$refvec == "f"))]<-mean(dfmylist1$values[(which(dfmylist1$refvec == "f"))], na.rm = FALSE)
+  
+  dfmylist1$sem_vals = 0.0001
+  dfmylist1$sem_vals[(which(dfmylist1$refvec == "a"))]<-sem(dfmylist1$values[(which(dfmylist1$refvec == "a"))])
+  dfmylist1$sem_vals[(which(dfmylist1$refvec == "b"))]<-sem(dfmylist1$values[(which(dfmylist1$refvec == "b"))])
+  dfmylist1$sem_vals[(which(dfmylist1$refvec == "c"))]<-sem(dfmylist1$values[(which(dfmylist1$refvec == "c"))])
+  dfmylist1$sem_vals[(which(dfmylist1$refvec == "d"))]<-sem(dfmylist1$values[(which(dfmylist1$refvec == "d"))])
+  dfmylist1$sem_vals[(which(dfmylist1$refvec == "e"))]<-sem(dfmylist1$values[(which(dfmylist1$refvec == "e"))])
+  dfmylist1$sem_vals[(which(dfmylist1$refvec == "f"))]<-sem(dfmylist1$values[(which(dfmylist1$refvec == "f"))])
+  
+  sem(dfmylist1$values[(which(dfmylist1$refvec == "a"))])
+  dfmylist1$UCLS = 0.0001
+  dfmylist1$LCLS = 0.0001
+  
+  
+  dfmylist1$LCLS = dfmylist1$mean_vals - dfmylist1$sem_vals
+  dfmylist1$UCLS = dfmylist1$mean_vals + dfmylist1$sem_vals
+  
+  
+  
+  
+  #create vector with named elements for ggplot to use to generate colors and legend
+  col <- as.character(dfmylist1$color)
+  col
+  names(col) <- as.character(dfmylist1$AA_category)
+  
+  
+  #plot synonomous points
+  Synplot<-ggplot() +
     
-    geom_point( data = dfval, mapping = aes(x="a", y= val_a), colour = "green", size = 0.1) +xlab(" Basepair") + ylab(" Frequencies of Mutations") +
-    geom_point(data = dfstats, mapping = aes (x = "a", y = dfstats["means","mut_a"]), colour = "green",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "a", ymin= dfstats["lcls","mut_a"], ymax= dfstats["ucls","mut_a"]), color = "green",width=.5) +
+    geom_point( data = dfmylist1, mapping = aes(x=refvec, y= values, colour = AA_category), size = 0.1,show.legend = FALSE) +
+    xlab("Mutation Type") + ylab("Samples' Average Frequencies of Mutations") +
+    geom_point(data = dfmylist1, mapping = aes (x = refvec, y = mean_vals, colour = AA_category),size = 5.0) +
+    geom_errorbar(data = dfmylist1,aes(x = refvec, ymin= LCLS, ymax= UCLS, color = AA_category),width=.5) +
+    scale_color_manual(values=col) +
+    theme(legend.text=element_text(size=7),legend.title = element_text(size=10)) +
+    
+    
+    
     
     annotate("text", x  = 1.5, y = 0.00001, label = "A -> G") +
     
-    geom_point( data = dfval, mapping = aes(x="b", y= val_b), colour = "blue", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "b", y = dfstats["means","mut_b"]), colour = "blue",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "b", ymin= dfstats["lcls","mut_b"], ymax= dfstats["ucls","mut_b"]), color = "blue",width=.5) +
-    
     geom_vline(aes(linetype=1, colour="black"),xintercept =c(2.5)) +
-    
-    geom_point( data = dfval, mapping = aes(x="c", y= val_c), colour = "green", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "c", y = dfstats["means","mut_c"]), colour = "green",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "c", ymin= dfstats["lcls","mut_c"], ymax= dfstats["ucls","mut_c"]), color = "green",width=.5) +
     
     annotate("text", x  = 3.5, y = 0.00001, label = "T -> C") +
     
-    geom_point( data = dfval, mapping = aes(x="d", y= val_d), colour = "blue", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "d", y = dfstats["means","mut_d"]), colour = "blue",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "d", ymin= dfstats["lcls","mut_d"], ymax= dfstats["ucls","mut_d"]), color = "blue",width=.5) +
-    
     geom_vline(aes(linetype=1, colour="black"),xintercept =c(4.5)) +
     
-    geom_point( data = dfval, mapping = aes(x="e", y= val_e), colour = "green", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "e", y = dfstats["means","mut_e"]), colour = "green",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "e", ymin= dfstats["lcls","mut_e"], ymax= dfstats["ucls","mut_e"]), color = "green",width=.5) +
+    geom_point(data = dfmylist1, mapping = aes (x = "e1", y = 0.0), colour = "red",size = 0.0) +
     
-    geom_point(data = dfstats, mapping = aes (x = "e1", y = 0.0), colour = "red",size = 0.0) +
+    geom_point(data = dfmylist1, mapping = aes (x = "f1", y = 0.0), colour = "red",size = 0.0) +
     
     annotate("text", x  = 5.5, y = 0.00001, label = "C -> T") +
     
     geom_vline(aes(linetype=1, colour="black"),xintercept =c(6.5)) +
     
-    geom_point( data = dfval, mapping = aes(x="f", y= val_f), colour = "green", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "f", y = dfstats["means","mut_f"]), colour = "green",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "f", ymin= dfstats["lcls","mut_f"], ymax= dfstats["ucls","mut_f"]), color = "green",width=.5) +
-    
-    geom_point(data = dfstats, mapping = aes (x = "f1", y = 0.0), colour = "red",size = 0.0) +
-    
     annotate("text", x  = 7.5, y = 0.00001, label = "G -> A") +
     
     scale_x_discrete(labels=c("a" = "", "b" = "", "c" = "", "d" = "","e" = "", "e1" = "","f" ="", "f1" = "")) +
     
-    #ggtitle("HIV Genetic Mutations Study - Frequency vs Type") +
     scale_y_log10(labels = comma) +
     theme(legend.position="none") +
     expand_limits(y = c(0.00001, 0.1)) +
     theme(plot.margin = unit(c(1,1,3.0,1), "cm")) +
     theme (panel.border = element_rect(colour = "black", fill=NA, size=3),plot.title = element_text(hjust = 0.5))
   
-  # Creating nonsynonymous Plot
-  NonSynplt <- ggplot() +
+  
+  
+  
+  
+  
+  #prepare mean & error values for nonsynonomous plot
+  
+  dfmylist2$mean_vals = 0.0001
+  dfmylist2$mean_vals[(which(dfmylist2$refvec == "g"))]<-mean(dfmylist2$values[(which(dfmylist2$refvec == "g"))], na.rm = FALSE)
+  dfmylist2$mean_vals[(which(dfmylist2$refvec == "h"))]<-mean(dfmylist2$values[(which(dfmylist2$refvec == "h"))],na.rm = FALSE)
+  dfmylist2$mean_vals[(which(dfmylist2$refvec == "i"))]<-mean(dfmylist2$values[(which(dfmylist2$refvec == "i"))], na.rm = FALSE)
+  dfmylist2$mean_vals[(which(dfmylist2$refvec == "j"))]<-mean(dfmylist2$values[(which(dfmylist2$refvec == "j"))], na.rm = FALSE)
+  dfmylist2$mean_vals[(which(dfmylist2$refvec == "k"))]<-mean(dfmylist2$values[(which(dfmylist2$refvec == "k"))], na.rm = FALSE)
+  dfmylist2$mean_vals[(which(dfmylist2$refvec == "l"))]<-mean(dfmylist2$values[(which(dfmylist2$refvec == "l"))], na.rm = FALSE)
+  dfmylist2$mean_vals[(which(dfmylist2$refvec == "m"))]<-mean(dfmylist2$values[(which(dfmylist2$refvec == "m"))], na.rm = FALSE)
+  dfmylist2$mean_vals[(which(dfmylist2$refvec == "n"))]<-mean(dfmylist2$values[(which(dfmylist2$refvec == "n"))], na.rm = FALSE)
+  dfmylist2$mean_vals[(which(dfmylist2$refvec == "o"))]<-mean(dfmylist2$values[(which(dfmylist2$refvec == "o"))], na.rm = FALSE)
+  dfmylist2$mean_vals[(which(dfmylist2$refvec == "p"))]<-mean(dfmylist2$values[(which(dfmylist2$refvec == "p"))], na.rm = FALSE)
+  dfmylist2$mean_vals[(which(dfmylist2$refvec == "q"))]<-mean(dfmylist2$values[(which(dfmylist2$refvec == "q"))], na.rm = FALSE)
+  dfmylist2$mean_vals[(which(dfmylist2$refvec == "r"))]<-mean(dfmylist2$values[(which(dfmylist2$refvec == "r"))], na.rm = FALSE)
+  
+  
+  dfmylist2$sem_vals = 0.0001
+  
+  
+  
+  sem(dfmylist2$values) 
+  sem(dfmylist2$values[(which(dfmylist2$refvec == "g"))])
+  dfmylist2$sem_vals[(which(dfmylist2$refvec == "g"))]<-sem(dfmylist2$values[(which(dfmylist2$refvec == "g"))])
+  dfmylist2$sem_vals[(which(dfmylist2$refvec == "h"))]<-sem(dfmylist2$values[(which(dfmylist2$refvec == "h"))])
+  dfmylist2$sem_vals[(which(dfmylist2$refvec == "i"))]<-sem(dfmylist2$values[(which(dfmylist2$refvec == "i"))])
+  dfmylist2$sem_vals[(which(dfmylist2$refvec == "j"))]<-sem(dfmylist2$values[(which(dfmylist2$refvec == "j"))])
+  dfmylist2$sem_vals[(which(dfmylist2$refvec == "k"))]<-sem(dfmylist2$values[(which(dfmylist2$refvec == "k"))])
+  dfmylist2$sem_vals[(which(dfmylist2$refvec == "l"))]<-sem(dfmylist2$values[(which(dfmylist2$refvec == "l"))])
+  dfmylist2$sem_vals[(which(dfmylist2$refvec == "m"))]<-sem(dfmylist2$values[(which(dfmylist2$refvec == "m"))])
+  dfmylist2$sem_vals[(which(dfmylist2$refvec == "n"))]<-sem(dfmylist2$values[(which(dfmylist2$refvec == "n"))])
+  dfmylist2$sem_vals[(which(dfmylist2$refvec == "o"))]<-sem(dfmylist2$values[(which(dfmylist2$refvec == "o"))])
+  dfmylist2$sem_vals[(which(dfmylist2$refvec == "p"))]<-sem(dfmylist2$values[(which(dfmylist2$refvec == "p"))])
+  dfmylist2$sem_vals[(which(dfmylist2$refvec == "q"))]<-sem(dfmylist2$values[(which(dfmylist2$refvec == "q"))])
+  dfmylist2$sem_vals[(which(dfmylist2$refvec == "r"))]<-sem(dfmylist2$values[(which(dfmylist2$refvec == "r"))])
+  
+  dfmylist2$UCLS = 0.0001
+  dfmylist2$LCLS = 0.0001
+  
+  
+  dfmylist2$LCLS = dfmylist2$mean_vals -dfmylist2$sem_vals
+  dfmylist2$UCLS = dfmylist2$mean_vals + dfmylist2$sem_vals
+  
+  
+  
+  
+  
+  #create vector with named elements for ggplot to use to generate colors and legend
+  col <- as.character(dfmylist2$color)
+  col
+  names(col) <- as.character(dfmylist2$AA_category)
+  
+  #plot synonomous points
+  NonSynplt<-ggplot() +
     
-    geom_point( data = dfval, mapping = aes(x="g", y= val_g), colour = "green", size = 0.1) +xlab(" Basepair") + ylab(" Frequencies of Mutations") +
-    geom_point(data = dfstats, mapping = aes (x = "g", y = dfstats["means","mut_g"]), colour = "green",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "g", ymin= dfstats["lcls","mut_g"], ymax= dfstats["ucls","mut_g"]), color = "green",width=.5) +
+    #plot points
+    geom_point( data = dfmylist2, mapping = aes(x=refvec, y= values, colour = AA_category), size = 0.1,show.legend = TRUE) +
+    xlab("Mutation Type") + ylab("Samples' Average Frequencies of Mutations") +
+    geom_point(data = dfmylist2, mapping = aes (x = refvec, y = mean_vals, colour = AA_category),size = 5.0) +
+    geom_errorbar(data = dfmylist2,aes(x = refvec, ymin= LCLS, ymax= UCLS, color = AA_category),width=.5) +
+    scale_color_manual(values=col) +
+    theme(legend.text=element_text(size=7),legend.title = element_text(size=10)) +
     
+    #set up graph background
     annotate("text", x  = 2.5, y = 0.00001, label = "A -> G") +
-    
-    geom_point( data = dfval, mapping = aes(x="h", y= val_h), colour = "blue", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "h", y = dfstats["means","mut_h"]), colour = "blue",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "h", ymin= dfstats["lcls","mut_h"], ymax= dfstats["ucls","mut_h"]), color = "blue",width=.5) +
-    
-    
-    geom_point( data = dfval, mapping = aes(x="i", y= val_i), colour = "orange", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "i", y = dfstats["means","mut_i"]), colour = "orange",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "i", ymin= dfstats["lcls","mut_i"], ymax= dfstats["ucls","mut_i"]), color = "orange",width=.5) +
-    
-    geom_point( data = dfval, mapping = aes(x="j", y= val_j), colour = "red", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "j", y = dfstats["means","mut_j"]), colour = "red",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "j", ymin= dfstats["lcls","mut_j"], ymax= dfstats["ucls","mut_j"]), color = "red",width=.5) +
-    
-    
     geom_vline(aes(linetype=1, colour="black"),xintercept =c(4.5)) +
-    
-    
     annotate("text", x  = 6.5, y = 0.00001, label = "T -> C") +
-    
-    geom_point( data = dfval, mapping = aes(x="k", y= val_k), colour = "green", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "k", y = dfstats["means","mut_k"]), colour = "green",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "k", ymin= dfstats["lcls","mut_k"], ymax= dfstats["ucls","mut_k"]), color = "green",width=.5) +
-    
-    
-    geom_point( data = dfval, mapping = aes(x="l", y= val_l), colour = "blue", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "l", y = dfstats["means","mut_l"]), colour = "blue",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "l", ymin= dfstats["lcls","mut_l"], ymax= dfstats["ucls","mut_l"]), color = "blue",width=.5) +
-    
     geom_vline(aes(linetype=1, colour="black"),xintercept =c(8.5)) +
-    
-    geom_point( data = dfval, mapping = aes(x="m", y= val_m), colour = "orange", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "m", y = dfstats["means","mut_m"]), colour = "orange",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "m", ymin= dfstats["lcls","mut_m"], ymax= dfstats["ucls","mut_m"]), color = "orange",width=.5) +
-    
     annotate("text", x  = 9.5, y = 0.00001, label = "C -> T") +
-    
-    geom_point( data = dfval, mapping = aes(x="n", y= val_n), colour = "red", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "n", y = dfstats["means","mut_n"]), colour = "red",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "n", ymin= dfstats["lcls","mut_n"], ymax= dfstats["ucls","mut_n"]), color = "red",width=.5) +
-    
     geom_vline(aes(linetype=1, colour="black"),xintercept =c(10.5)) +
-    
-    geom_point( data = dfval, mapping = aes(x="o", y= val_o), colour = "green", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "o", y = dfstats["means","mut_o"]), colour = "green",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "o", ymin= dfstats["lcls","mut_o"], ymax= dfstats["ucls","mut_o"]), color = "green",width=.5) +
-    
     annotate("text", x  = 11.5, y = 0.00001, label = "G -> A") +
-    
-    
-    geom_point( data = dfval, mapping = aes(x="p", y= val_p), colour = "orange", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "p", y = dfstats["means","mut_p"]), colour = "orange",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "p", ymin= dfstats["lcls","mut_p"], ymax= dfstats["ucls","mut_p"]), color = "orange",width=.5) +
-    
-    
-    geom_point( data = dfval, mapping = aes(x="q", y= val_q), colour = "green", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "q", y = dfstats["means","mut_q"]), colour = "green",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "q", ymin= dfstats["lcls","mut_q"], ymax= dfstats["ucls","mut_q"]), color = "green",width=.5) +
-    
-    
-    geom_point( data = dfval, mapping = aes(x="r", y= val_r), colour = "orange", size = 0.1) +
-    geom_point(data = dfstats, mapping = aes (x = "r", y = dfstats["means","mut_r"]), colour = "orange",size = 5.0) +
-    geom_errorbar(data = dfstats,aes(x = "r", ymin= dfstats["lcls","mut_r"], ymax= dfstats["ucls","mut_r"]), color = "orange",width=.5) +
-    
     scale_x_discrete(labels=c("g" = "", "h" = "", "i" = "", "j" = "","k" = "","l" ="","m" ="", "n"="","o" = "","p" = "","q"="","r"="")) +
     
-    #ggtitle("HIV Genetic Mutations Study - Frequency vs Type") +
+    #scales, margins, border
     scale_y_log10(labels = comma) +
-    theme(legend.position="none") +
     expand_limits(y = c(0.00001, 0.1)) +
     theme(plot.margin = unit(c(1,1,3.0,1), "cm")) +
     theme (panel.border = element_rect(colour = "black", fill=NA, size=3),plot.title = element_text(hjust = 0.5))
+  NonSynplt
   
-  #, vp=viewport(width=1.0, height=0.97)
-  require(grid)
-  require(gridExtra)
-  title1=textGrob("
-                  Fig. 3: type of site vs frequency", gp=gpar(fontface="bold", fontsize = 16, cex = 1))
-  grid.arrange( top =title1,Synplt + ggtitle('Synonymous Plots'), NonSynplt + ggtitle('nonsynonymous Plots'),  nrow=1)
+  Synplot
+  #two graphs on one page
+  #library(gridExtra)
+ # require(grid)
+#  require(gridExtra)
+ # gs<-list(Synplot,NonSynplt)
+ # lay<-matrix(c(1,1,2,2,2), nrow = 1)
+#  title1=textGrob("
+   #               Fig. 3: type of site vs frequency", gp=gpar(fontface="bold", fontsize = 16, cex = 1))
   
-  # Creating the plot keys
-  grid.text("KEY:
-            Color Green = Non Drastic AA change, non-CpG forming
-            Color Blue = Non Drastic AA change, CpG forming
-            Color Orange = Drastic AA change, non-CpG-forming
-            Color Red = Drastic AA change, CpG forming ", 
-            x = unit(2, "cm"), y = unit(0.25,"cm"), just = "left", vjust = unit(0.0,"cm"))
+ # grid.arrange(top =title1, grobs = gs, layout_matrix = lay)
+  
+  
+  #end plot function for figure 3; begins on line 327
+
+
 }
 figureThree(yourDF)
