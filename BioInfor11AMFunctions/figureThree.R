@@ -1,5 +1,5 @@
-figureThree<-function(dfx){
-  #begin plot func tion for figure 3; ends on line 651
+Fig3<-function(dfx){
+  #begin plot function for figure 3; ends on line 651
  # df<-dffin3
   library(ggplot2)
   library(plyr)
@@ -193,7 +193,7 @@ figureThree<-function(dfx){
   #plot synonomous points
   Synplot<-ggplot() +
     
-    geom_point( data = dfmylist1, mapping = aes(x=refvec, y= values, colour = AA_category), size = 0.1,show.legend = FALSE) +
+    geom_point( data = dfmylist1, mapping = aes(x=refvec, y= values, colour = AA_category), size = 10,show.legend = FALSE) +
     xlab("Mutation Type") + ylab("Samples' Average Frequencies of Mutations") +
     geom_point(data = dfmylist1, mapping = aes (x = refvec, y = mean_vals, colour = AA_category),size = 5.0) +
     geom_errorbar(data = dfmylist1,aes(x = refvec, ymin= LCLS, ymax= UCLS, color = AA_category),width=.5) +
@@ -312,23 +312,19 @@ figureThree<-function(dfx){
     expand_limits(y = c(0.00001, 0.1)) +
     theme(plot.margin = unit(c(1,1,3.0,1), "cm")) +
     theme (panel.border = element_rect(colour = "black", fill=NA, size=3),plot.title = element_text(hjust = 0.5))
-  NonSynplt
-  
-  Synplot
-  #two graphs on one page
-  #library(gridExtra)
- # require(grid)
-#  require(gridExtra)
- # gs<-list(Synplot,NonSynplt)
- # lay<-matrix(c(1,1,2,2,2), nrow = 1)
-#  title1=textGrob("
-   #               Fig. 3: type of site vs frequency", gp=gpar(fontface="bold", fontsize = 16, cex = 1))
-  
- # grid.arrange(top =title1, grobs = gs, layout_matrix = lay)
   
   
-  #end plot function for figure 3; begins on line 327
+  
+ # prints both graphs seperately 
+  
+  
+  print(NonSynplt)
+  
+ print(Synplot)
 
 
 }
-figureThree(yourDF)
+
+
+Fig3(dfx)
+
