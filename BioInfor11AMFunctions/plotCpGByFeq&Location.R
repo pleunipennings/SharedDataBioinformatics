@@ -14,6 +14,9 @@
     # the function when run looks at which values that make a cpg vs those that dont.
     # then it looks at the  mean freqency of CpG formation at these values in the dataframe.
     # this is then plotted in a log scale.
+    # values that make CpG's are listed as 2
+    # values that do not make CpG's are listed as 1
+    # these are color coded as well!
 
 ##### following packages are required #####
 
