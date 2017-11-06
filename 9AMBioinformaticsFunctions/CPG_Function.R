@@ -1,6 +1,6 @@
 
 ## Group # 1 ( 9am) - CPG Sites Function
-## Contributior - Jacky, Sarina
+## Contributior - Jacky, Sarina, Preeti
 
 
 ######## Investigating CPG sites: 
