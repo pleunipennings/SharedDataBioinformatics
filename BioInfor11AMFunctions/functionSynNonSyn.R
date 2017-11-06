@@ -1,21 +1,21 @@
 #  Note that this depends on the columns MUTAA and WTAA being already complete!
 
-functionSynNonSyn<-function(DF){
-    if (length(which(names(DF))=="MUTAA")==0){
+functionSynNonSyn<-function(dengue_df){
+    if (length(which(names(dengue_df))=="MUTAA")==0){
         print("Oh oh there is a problem. No MUTAA column!")
         return(0)}
-    for (h in 1:nrow(DF)){
-        if(DF$MUTAA[h]== DF$WTAA[h]){
-            #   if(DF[h,"MUTAA"]== DF[h,"WTAA"]){
-            DF[h,"TypeOfSite"] = "syn"
+    for (h in 1:nrow(dengue_df)){
+        if(dengue_df$MUTAA[h]== dengue_df$WTAA[h]){
+            #   if(dengue_df[h,"MUTAA"]== dengue_df[h,"WTAA"]){
+            dengue_df[h,"TypeOfSite"] = "syn"
         }
-        if(DF[h,"MUTAA"] != DF[h,"WTAA"]){
-            if(DF[h,"MUTAA"]=="*"){
-                DF[h,"TypeOfSite"] = "nonsense"}
+        if(dengue_df[h,"MUTAA"] != dengue_df[h,"WTAA"]){
+            if(dengue_df[h,"MUTAA"]=="*"){
+                dengue_df[h,"TypeOfSite"] = "nonsense"}
             else {
-                DF[h,"TypeOfSite"] = "nonsyn"
+                dengue_df[h,"TypeOfSite"] = "nonsyn"
             }
         }
     }
-    DF$TypeOfSite<-as.factor(DF$TypeOfSite)
+    dengue_df$TypeOfSite<-as.factor(dengue_df$TypeOfSite)
 }
