@@ -1,4 +1,5 @@
 
+
 ## Group # 1 ( 9am) - CPG Sites Function
 ## Contributior - Jacky, Sarina, Preeti, Andrea
 
@@ -42,10 +43,12 @@ CASITES
 
 # Inserting value 1 in the column "CPG" and using the values found dataframe BELL as the row #
 df[CASITES[,1]+1,"CPG"] <- 1
+#returns new dataframe
+return(df)
 }
 
-# Calls the CPG_site function with the dataframe as the argument
-CPG_site(df)
+# Calls the CPG_site function with the dataframe as the argument Old dataframe becomes the new dataframe
+df<-CPG_site(df)
 
 
 
