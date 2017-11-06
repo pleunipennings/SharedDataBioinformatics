@@ -31,9 +31,9 @@ comparing_mutation_graph = function(data){
     
     #gives values to each nucecotide and if they have a cetain combo
     #first need to introduce new columes for collecting the xvalue and the color
-    datatww$xvalue<- 0
-    datatww$color <- 0
-    
+    datatww$xvalue<- 0 #giving each nucecotide a value depending on whether or not there is an AA change a CpG site and the nucecotide
+    datatww$color <- 0 # four colors for the four combos: Blue = no bigAAChange/no makesCpG, Red = no bigAAChange/yes makesCpG, Green = yes bigAAChange/no makesCpG, Purple = yes bigAAChange/yes makesCpG 
+    #for loop adds color and a xvalue to the dataset, for all nucecotides
     for (i in 1:length(datatww$num)) {
         if (datatww$bigAAChange[i] == 0 && datatww$makesCpG[i] == 0 && datatww$WTnt[i] == "a") {
             datatww$xvalue[i] <- 1
