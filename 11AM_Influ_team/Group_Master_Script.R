@@ -48,7 +48,7 @@ plot.default(x = c(V1, V2), #plot it!
 
 ####### CpG graphing function() #########
 
-LvsF_CpG_Printer <- function(data_frame){
+LvsF_CpG_Printer <- function(n){
 if (T) {n$makesCpG <- n$makesCpG+1}
   YCpG <- which(n$makesCpG=="2")
   NCpG <- which(n$makesCpG=="1")
@@ -59,6 +59,8 @@ if (T) {n$makesCpG <- n$makesCpG+1}
                col = (as.integer(n$makesCpG)),
                log = "y"
   )#close plot.default
+  
+  legend("topright",legend=levels(n$makesCpG), inset= 0)
   
   return()#close return
 }#close function

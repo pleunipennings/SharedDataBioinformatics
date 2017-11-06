@@ -8,6 +8,7 @@ if (TRUE) {
     library(seqinr)
 }
 
+#### group function for submission ####
 HPIV1a
 seqinr::consensus(HPIV1a)
 length(seqinr::consensus(HPIV1a))
@@ -30,10 +31,58 @@ HPIVdf$MUTAAcat=""
 HPIVdf$bigAAchange=""
 HPIVdf$MakesCpG=""
 HPIVdf$TypeOfSite=""
+
 head(HPIVdf)
 tail(HPIVdf)
+HPIVdf$MeanFreq
 
 HPIVdf$WtNt<- seqinr::consensus(HPIV1a)
+#current function as is 
+# need to get legend to work
+####### CpG graphing function() #########
+
+LvsF_CpG_Printer <- function(n){ # value "n" will represent our data.frame of use
+    if (T) {n$makesCpG <- n$makesCpG+1} #this adds one value in "n" data.frame to the "0" and "1" boolian values to "1" and "2" this is for the as.integer condition to work
+    YCpG <- which(n$makesCpG=="2") #lists which variables return a "2" these make a CpG island when mutated "yes cpg or Y"
+    NCpG <- which(n$makesCpG=="1") #lists which variables return a "1" these do not make a CpG island when mutated "No cpg or N"
+    x1 <- n$MeanFreq[YCpG] #create a Value that looks at mean frequency by yes cpg
+    x2 <- n$MeanFreq[NCpG] #create a Value that looks at mean frequency by no cpg
+    plot.default(x = c(x1, x2), #y values not listed this is intended
+                 xlab = "Position Location", ylab = "Frequency", main = "Location vs frequency CpG non-CpG Graph",
+                 col = (as.integer(n$makesCpG)), #colors the values by their integer, using default association. 
+                 log = "y" #the plot is put into a log scale 
+    )#close plot.default
+    legend('topright', #add legend in top right corner
+           legend = c(unique(n$makesCpG)), #names of each category based on the factors in n$makesCpG
+           col=unique(as.integer(n$makesCpG)), #colors the factors as is found by integers in n$makeCpG
+           pch=21 #symbols matching dataframe's factors
+           ) #close legend
+  
+    return()# prints out plot with legend 
+}#close function
+
+LvsF_CpG_Printer(n) #run function
+
+NULL
+?month.abb
+legend("topright", 
+       inset= 0.01, #inset legend off from border
+       c("YesCpG", "NoCpG"),
+       legend = c(makesCpG == 2, makesCpG == 1), #names of each category based on factors, alphabetical order of category 1-5 of TypeOfSites
+       pch= (1), 
+       col= c(as.integer(n$makesCpG)),  #colors matching dataframe's factors 1:5 of DF$TypeOfSite
+       cex=.75,   #specify scale of whole box of legend to not block data
+       pt.cex=3,  #specify point size in legend
+       #remove legend border if "n" is specificed. "o" displays border
+       bty="o",
+       #specific box border thickness/width
+       box.lwd=2,
+       #text.width change
+       text.width=120,
+       #justify text legend, xjust=0 is left justified, xjust=1 means right justified
+       xjust=0
+)
+
 #### in class coursework stuff! ####
 h1 <- read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05",format="fasta")
 h1
@@ -733,3 +782,6 @@ pug<-function(dfx){
 ### ENTER IN WHATEVER YOU NAMED THE PRACTICE DATA ###
 anything<-read.csv("HIV practice data.csv")
 pug(anything)
+#######
+
+source("functionWTAA.R")
