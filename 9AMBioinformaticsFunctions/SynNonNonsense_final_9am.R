@@ -1,6 +1,6 @@
 #9am
 #function for syn/non/nonsence
-#function for syn/non/nonsence
+#This function intakes a dataframe with the columns MUTAA, WTAA, and TypeOfSite created. Then evaluates the values in the WTAA and MUTAA columns to determine the value for the TypeOfSite column
 for (h in nrow(df)){ #looks at each row in the dataframe df
   if(df[h,"MUTAA"]== df[h,"WTAA"]){ #if the value in the MUTAA column for the row of interest is equal to the value in the WTAA of the same row
     df[h,"TypeOfSite"] = "syn" #then insert "syn" for the value in the TypeOfSite column for this row
