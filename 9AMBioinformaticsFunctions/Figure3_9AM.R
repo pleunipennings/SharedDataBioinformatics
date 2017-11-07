@@ -85,7 +85,7 @@ comparing_mutation_graph = function(data){
             datatww$color[i] <- "purple"
         }
     }
-    #subsetiing all the data by amino acid, drastic AA, and CpG forming 
+    #subsetiing all the data by amino acid, drastic AA, and CpG forming: Helps with analyst 
     #syn subset 
     syndata <- subset(datatww, TypeOfSite=="Synonymous Sites")
     #syn subset for no AA and no CPG
@@ -152,24 +152,27 @@ comparing_mutation_graph = function(data){
     
     #the actual graph is here.
     graph <-ggplot(aes(factor(xvalue), MeanFreq), data = datatww)+
+        #log scale to make the data eaisier to see
         scale_y_log10() +
+        #scale_x_discrete makes a point at each number, breaks lets us seperate into sections for each nucecotide
         scale_x_discrete(limits=c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16),breaks=c("2","6","10", "14"), labels=c("a -> g", "g -> a", "c -> t","t -> c"))+
-        #syn data
+        #syn data, jitter seperates the points
         geom_jitter(data= syndata,aes(colour = syndata$color, x = factor(xvalue)),position = position_jitter(width = .2), alpha = 0.5) +
-       #splits graph between syn and nonsyn
+        #facet_wrap splits graph between syn and nonsyn
         facet_wrap(~ TypeOfSite)+
-        #nonsyn data
+        #nonsyn data, jitter seperates the points
         geom_jitter(data= nonsyndata,aes(colour = nonsyndata$color, x = factor(xvalue)),position = position_jitter(width = .2), alpha = 0.5) +
         #draws lines between the nucelotides 
         geom_vline(xintercept = 4.5, linetype="solid", color = "black", size=0.9) +
         geom_vline(xintercept = 8.1, linetype="solid", color = "black", size=0.9) +
         geom_vline(xintercept = 12, linetype="solid", color = "black", size=0.9)+
-        #give points colors and lables the colors
+        #give points new colors and lables the colors
         scale_color_manual(labels = c("No drastic AA change (non-Cpg-forming)","Drastic AA change (non-Cpg-forming)","Drastic AA change (Cpg-forming)", "No drastic AA change (Cpg-forming)"), values = c("firebrick", "darkolivegreen","goldenrod3", "royalblue3")) +
         #labels X and Y axis
         labs(x="Mutation Type", y="Mutation Frquency",col=" ")
     
     #graphing other info basied on conditions, used as a check to see if data is being read corectly
+    #if statments checks to see if the dataset exist. If things that should exist show up on the graph you would be able to determine what subset of data needs to be checked
     if (nrow(synNNa)!=0) {
         synNNaconf <- t.test(synNNa$MeanFreq)$conf.int
         graph<- graph + geom_errorbar(data = synNNa, aes(ymin = synNNaconf[[1]], ymax = synNNaconf[[2]], width = 0.2))
@@ -272,7 +275,6 @@ comparing_mutation_graph = function(data){
         graph<- graph +geom_errorbar(data = nonsynNNt, aes(ymin = nonsynNNtconf[[1]], ymax = nonsynNNtconf[[2]], width = 0.2))
         graph<- graph +geom_point(data =nonsynNNt, aes('13',mean(nonsynNNt$MeanFreq)))
     } 
-    
     if (nrow(nonsynNYa)!=0) {
         nonsynNYaconf <- t.test(nonsynNYa$MeanFreq)$conf.int
         graph<- graph +geom_errorbar(data = nonsynNYa, aes(ymin = nonsynNYaconf[[1]], ymax = nonsynNYaconf[[2]], width = 0.2))
@@ -293,7 +295,6 @@ comparing_mutation_graph = function(data){
         graph<- graph +geom_errorbar(data = nonsynNYt, aes(ymin = nonsynNYtconf[[1]], ymax = nonsynNYtconf[[2]], width = 0.2))
         graph<- graph +geom_point(data =nonsynNYt, aes('14',mean(nonsynNYt$MeanFreq)))
     } 
-    #
     if (nrow(nonsynYNa)!=0) {
         nonsynYNaconf <- t.test(nonsynYNa$MeanFreq)$conf.int
         graph<- graph +geom_errorbar(data = nonsynYNa, aes(ymin = nonsynYNaconf[[1]], ymax = nonsynYNaconf[[2]], width = 0.2))
@@ -314,7 +315,6 @@ comparing_mutation_graph = function(data){
         graph<- graph +geom_errorbar(data = nonsynYNt, aes(ymin = nonsynYNgconf[[1]], ymax = nonsynYNtconf[[2]], width = 0.2))
         graph<- graph +geom_point(data =nonsynYNt, aes('15',mean(nonsynYNt$MeanFreq)))
     } 
-    #
     if (nrow(nonsynYYa)!=0) {
         nonsynYYaconf <- t.test(nonsynYYa$MeanFreq)$conf.int
         graph<- graph +geom_errorbar(data = nonsynYYa, aes(ymin = nonsynYYaconf[[1]], ymax = nonsynYYaconf[[2]], width = 0.2))
