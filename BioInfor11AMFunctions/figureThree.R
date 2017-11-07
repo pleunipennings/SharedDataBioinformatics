@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-=======
-### The "Fig3" function takes your dataframe as an input and creates a plot comparing the frequencies of synonymous and non-synonymous mutations for your virus sequence data.
-
-### Our function assumes the dataframe contains the agreed-upon column names and corresponding data beforehand.
->>>>>>> f16c557ecb46489c6509718532f0f5af14da8f07
 Fig3<-function(dfx){
-  #begin plot function for figure 3; ends on line 651
- # df<-dffin3
+  #begin plot func tion for figure 3; ends on line 651
+  df<-dffin3
   library(ggplot2)
   library(plyr)
   library(grid)
@@ -22,44 +16,37 @@ Fig3<-function(dfx){
   
   ##SYN SITES (LEFT GRAPH)
   #all green points for the left synonomous site graphs
-<<<<<<< HEAD
   a <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "a" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
   summary(a)
   c <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "t" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
   e <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "c" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
   f <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "g" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
-=======
-  a <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$wtnt == "a" & (CSV$bigAAchange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
-  c <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$wtnt == "t" & (CSV$bigAAchange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
-  e <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$wtnt == "c" & (CSV$bigAAchange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
-  f <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$wtnt == "g" & (CSV$bigAAchange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
->>>>>>> f16c557ecb46489c6509718532f0f5af14da8f07
   
   #blue dots of left graph that show a CpG-forming mutation
-  b <- frequenciesOfSynAmutsCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$wtnt == "a") & (CSV$bigAAchange == "0") & (CSV$makesCpG == "1")),"MeanFreq"]
-  d <- frequenciesOfSynTmutsCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$wtnt == "t") & (CSV$bigAAchange == "0") & (CSV$makesCpG == "1")),"MeanFreq"]
+  b <- frequenciesOfSynAmutsCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "a") & (CSV$bigAAChange == "0") & (CSV$makesCpG == "1")),"MeanFreq"]
+  d <- frequenciesOfSynTmutsCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "t") & (CSV$bigAAChange == "0") & (CSV$makesCpG == "1")),"MeanFreq"]
   
   #NON SYNONYMOUS SITES (RIGHT GRAPH)
   #all green points for the right nonsynonomous site graph
-  g <- frequenciesOfNONSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$wtnt == "a" & (CSV$bigAAchange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
-  k <- frequenciesOfNONSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$wtnt == "t" & (CSV$bigAAchange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
-  o <- frequenciesOfNONSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$wtnt == "c" & (CSV$bigAAchange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
-  q <- frequenciesOfNONSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$wtnt == "g" & (CSV$bigAAchange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
+  g <- frequenciesOfNONSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "a" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
+  k <- frequenciesOfNONSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "t" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
+  o <- frequenciesOfNONSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "c" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
+  q <- frequenciesOfNONSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "g" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
   
   #blue dots of right graph that show a CpG-forming mutation
-  h <- frequenciesOfNONSynAmutsCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$wtnt == "a") & (CSV$bigAAchange == "0") & (CSV$makesCpG == "1")),"MeanFreq"]
-  l <- frequenciesOfNONSynTmutsCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$wtnt == "t") & (CSV$bigAAchange == "0") & (CSV$makesCpG == "1")),"MeanFreq"]
+  h <- frequenciesOfNONSynAmutsCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "a") & (CSV$bigAAChange == "0") & (CSV$makesCpG == "1")),"MeanFreq"]
+  l <- frequenciesOfNONSynTmutsCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "t") & (CSV$bigAAChange == "0") & (CSV$makesCpG == "1")),"MeanFreq"]
   
   #all yellow points for the right nonsyn site graph
-  i <- frequenciesOfNONSynAmutsDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$wtnt == "a" & (CSV$bigAAchange == "1") &(CSV$makesCpG == "0"))),"MeanFreq"]
-  m <- frequenciesOfNONSynTmutsDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$wtnt == "t" & (CSV$bigAAchange == "1") &(CSV$makesCpG == "0"))),"MeanFreq"]
-  p <- frequenciesOfNONSynGmutsDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$wtnt == "c" & (CSV$bigAAchange == "1") &(CSV$makesCpG == "0"))),"MeanFreq"]
-  r <- frequenciesOfNONSynCmutsDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$wtnt == "g" & (CSV$bigAAchange == "1") &(CSV$makesCpG == "0"))),"MeanFreq"]
+  i <- frequenciesOfNONSynAmutsDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "a" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "0"))),"MeanFreq"]
+  m <- frequenciesOfNONSynTmutsDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "t" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "0"))),"MeanFreq"]
+  p <- frequenciesOfNONSynGmutsDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "c" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "0"))),"MeanFreq"]
+  r <- frequenciesOfNONSynCmutsDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "g" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "0"))),"MeanFreq"]
   
   
   #red points on the right
-  j <- frequenciesOfNONSynAmutsCPDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$wtnt == "a" & (CSV$bigAAchange == "1") &(CSV$makesCpG == "1"))),"MeanFreq"]
-  n <- frequenciesOfNONSynTmutsCPDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$wtnt == "t" & (CSV$bigAAchange == "1") &(CSV$makesCpG == "1"))),"MeanFreq"]
+  j <- frequenciesOfNONSynAmutsCPDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "a" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "1"))),"MeanFreq"]
+  n <- frequenciesOfNONSynTmutsCPDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "t" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "1"))),"MeanFreq"]
   
   #Since the results of the data selections are all vectors of differing lengths, they are collected into a list with tags according to plotting order
   mylist <- list (a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r) 
@@ -146,10 +133,7 @@ Fig3<-function(dfx){
   dfmylist[which(dfmylist$refvec == "q"),"color"]<-"green" 
   dfmylist[which(dfmylist$refvec == "r"),"color"]<-"orange" 
   
-<<<<<<< HEAD
   #View(dfmylist)
-=======
->>>>>>> f16c557ecb46489c6509718532f0f5af14da8f07
   #the plot will have a log y scale so all zero y values must go away.
   
   dfmylist <-dfmylist[which((dfmylist$values != 0)|(is.na(dfmylist$values))),]
@@ -209,9 +193,9 @@ Fig3<-function(dfx){
   #plot synonomous points
   Synplot<-ggplot() +
     
-    geom_point( data = dfmylist1, mapping = aes(x=refvec, y= values, colour = AA_category), size = 10,show.legend = FALSE) +
+    geom_point( data = dfmylist1, mapping = aes(x=refvec, y= values, colour = AA_category), size = 5,show.legend = FALSE) +
     xlab("Mutation Type") + ylab("Samples' Average Frequencies of Mutations") +
-    geom_point(data = dfmylist1, mapping = aes (x = refvec, y = mean_vals, colour = AA_category),size = 5.0) +
+    geom_point(data = dfmylist1, mapping = aes (x = refvec, y = mean_vals, colour = AA_category),size = 10.0) +
     geom_errorbar(data = dfmylist1,aes(x = refvec, ymin= LCLS, ymax= UCLS, color = AA_category),width=.5) +
     scale_color_manual(values=col) +
     theme(legend.text=element_text(size=7),legend.title = element_text(size=10)) +
@@ -243,9 +227,7 @@ Fig3<-function(dfx){
     theme(legend.position="none") +
     expand_limits(y = c(0.00001, 0.1)) +
     theme(plot.margin = unit(c(1,1,3.0,1), "cm")) +
-    theme (panel.border = element_rect(colour = "black", fill=NA, size=3),plot.title = element_text(hjust = 0.5))
-  
-  
+    theme (panel.border = element_rect(colour = "black", fill=NA, 4),plot.title = element_text(hjust = 0.5))
   
   
   
@@ -269,11 +251,8 @@ Fig3<-function(dfx){
   
   dfmylist2$sem_vals = 0.0001
   
-<<<<<<< HEAD
   
   
-=======
->>>>>>> f16c557ecb46489c6509718532f0f5af14da8f07
   sem(dfmylist2$values) 
   sem(dfmylist2$values[(which(dfmylist2$refvec == "g"))])
   dfmylist2$sem_vals[(which(dfmylist2$refvec == "g"))]<-sem(dfmylist2$values[(which(dfmylist2$refvec == "g"))])
@@ -296,13 +275,10 @@ Fig3<-function(dfx){
   dfmylist2$LCLS = dfmylist2$mean_vals -dfmylist2$sem_vals
   dfmylist2$UCLS = dfmylist2$mean_vals + dfmylist2$sem_vals
   
-<<<<<<< HEAD
   
   
   
   
-=======
->>>>>>> f16c557ecb46489c6509718532f0f5af14da8f07
   #create vector with named elements for ggplot to use to generate colors and legend
   col <- as.character(dfmylist2$color)
   col
@@ -312,12 +288,12 @@ Fig3<-function(dfx){
   NonSynplt<-ggplot() +
     
     #plot points
-    geom_point( data = dfmylist2, mapping = aes(x=refvec, y= values, colour = AA_category), size = 0.1,show.legend = TRUE) +
+    geom_point( data = dfmylist2, mapping = aes(x=refvec, y= values, colour = AA_category), size = 5,show.legend = TRUE) +
     xlab("Mutation Type") + ylab("Samples' Average Frequencies of Mutations") +
-    geom_point(data = dfmylist2, mapping = aes (x = refvec, y = mean_vals, colour = AA_category),size = 5.0) +
+    geom_point(data = dfmylist2, mapping = aes (x = refvec, y = mean_vals, colour = AA_category),size = 10) +
     geom_errorbar(data = dfmylist2,aes(x = refvec, ymin= LCLS, ymax= UCLS, color = AA_category),width=.5) +
     scale_color_manual(values=col) +
-    theme(legend.text=element_text(size=7),legend.title = element_text(size=10)) +
+    theme(legend.text=element_text(size=7),legend.title = element_text(size=10),legend.box.background = element_rect(size = 1)) +
     
     #set up graph background
     annotate("text", x  = 2.5, y = 0.00001, label = "A -> G") +
@@ -333,30 +309,23 @@ Fig3<-function(dfx){
     scale_y_log10(labels = comma) +
     expand_limits(y = c(0.00001, 0.1)) +
     theme(plot.margin = unit(c(1,1,3.0,1), "cm")) +
-    theme (panel.border = element_rect(colour = "black", fill=NA, size=3),plot.title = element_text(hjust = 0.5))
+    theme (panel.border = element_rect(colour = "black", fill=NA, size=4),plot.title = element_text(hjust = 0.5))
   
-<<<<<<< HEAD
-=======
-  #prints both graphs seperately 
-  print(NonSynplt)
+  #two graphs on one page
+  #library("gridExtra", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.4")
+ # require(grid)
+  #require(gridExtra)
+ # gs<-list(Synplot,NonSynplt)
+ # lay<-matrix(c(1,1,2,2,2), nrow = 1)
+ # title1=textGrob("
+ #                Fig. 3: type of site vs frequency", gp=gpar(fontface="bold", fontsize = 16, cex = 1))
+  
+  #grid.arrange(top =title1, grobs = gs, layout_matrix = lay)
+  
   print(Synplot)
->>>>>>> f16c557ecb46489c6509718532f0f5af14da8f07
-  
-  
- # prints both graphs seperately 
-  
-  
   print(NonSynplt)
-  
- print(Synplot)
-
-
+  #end plot function for figure 3; begins on line 327
 }
 
 
-Fig3(dfx)
 
-<<<<<<< HEAD
-=======
-### This function was written by Jennifer Kim, Omar Mendoza, Nicole Allen, and Jacob Elliott.
->>>>>>> f16c557ecb46489c6509718532f0f5af14da8f07
