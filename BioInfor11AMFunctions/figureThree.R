@@ -1,6 +1,4 @@
 Fig3<-function(dfx){
-  #begin plot function for figure 3; ends on line 651
- # df<-dffin3
   library(ggplot2)
   library(plyr)
   library(grid)
@@ -9,8 +7,7 @@ Fig3<-function(dfx){
   CSV<-dfx
   
   
-  #This portion establishes plotting order => ggplot will plot things in aplhabetic order. The selections of data from the incoming data.frame will be tagged a thru r.
-  
+  #assumes df with proper column names and corresponding data
   ##SYN SITES (LEFT GRAPH)
   #all green points for the left synonomous site grapha
   
@@ -315,16 +312,10 @@ Fig3<-function(dfx){
   
   
   
- # prints both graphs seperately 
-  
-  
-  print(NonSynplt)
-  
+ #prints both graphs seperately 
+ print(NonSynplt)
  print(Synplot)
-
-
 }
-
-
 Fig3(dfx)
 
+#written by jenn, omar, nicole + jacob
