@@ -22,6 +22,8 @@ big_aa_change <- function(df){
     WTAAcategory <- c()
     MUTAAcategory <- c()
     bigAAchange <- c()
+    WTAA<-df$WTAA
+    MUTAA<-df$MUTAA
     
     #Assign wild type AA category
     for(j in 1:nrow(df)){

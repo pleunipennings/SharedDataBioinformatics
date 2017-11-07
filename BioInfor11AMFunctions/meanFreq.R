@@ -26,6 +26,7 @@ meanFreq <- function(fasta_file){
     }
     Dengue_DF[x, 2] <- ts_count/number_of_seqs
   }
+  Dengue_DF$wtnt<-as.character(Dengue_DF$wtnt)
   return(Dengue_DF)
 }
 
