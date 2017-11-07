@@ -1,5 +1,5 @@
 # Drastic Amino Acid change function
-# Contributors: Hassan, Avery, Emily, Angeline and Fran
+# Contributors: Hassan, Avery, Emily, Angeline, Edgar and Fran
 # We would also like to give Dwayne Evans a shout-out for helping us with a for loop!
 
 # Our function takes in FASTA files as input. It finds the most frequent occurance of nucleotides at each site and uses
