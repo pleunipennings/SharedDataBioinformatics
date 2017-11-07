@@ -1,4 +1,6 @@
- #assumes df with proper column names and corresponding data
+### The "Fig3" function takes your dataframe as an input and creates a plot comparing the frequencies of synonymous and non-synonymous mutations for your virus sequence data.
+
+### Our function assumes the dataframe contains the agreed-upon column names and corresponding data beforehand.
 Fig3<-function(dfx){
   library(ggplot2)
   library(plyr)
@@ -284,4 +286,4 @@ Fig3<-function(dfx){
 
 Fig3(dfx)
 
-#written by jenn, omar, nicole + jacob
+### This function was written by Jennifer Kim, Omar Mendoza, Nicole Allen, and Jacob Elliott.
