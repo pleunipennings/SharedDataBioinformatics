@@ -1,4 +1,88 @@
 #Nathan
+if (TRUE) {
+    library(ggplot2)
+    library(plyr)
+    library(grid)
+    library(scales)
+    library(gridExtra)
+    library(seqinr)
+}
+
+#### group function for submission ####
+HPIV1a
+seqinr::consensus(HPIV1a)
+length(seqinr::consensus(HPIV1a))
+DF <- data.frame(WTAA = (seqinr::consensus(HPIV1a)), 
+                 MUTAA(), 
+                 TypeOfSite(),
+                 MakesCpG(), 
+                 bigAAchange()
+)
+
+HPIV1a = read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format = "fasta")
+Pos<-c(1:15473)
+HPIVdf<-data.frame(Pos)
+HPIVdf$WtNt=""
+HPIVdf$MeanFreq=""
+HPIVdf$WTAA=""
+HPIVdf$MUTAA=""
+HPIVdf$WTAAcat=""
+HPIVdf$MUTAAcat=""
+HPIVdf$bigAAchange=""
+HPIVdf$MakesCpG=""
+HPIVdf$TypeOfSite=""
+
+head(HPIVdf)
+tail(HPIVdf)
+HPIVdf$MeanFreq
+
+HPIVdf$WtNt<- seqinr::consensus(HPIV1a)
+#current function as is 
+# need to get legend to work
+####### CpG graphing function() #########
+
+LvsF_CpG_Printer <- function(n){ # value "n" will represent our data.frame of use
+    if (T) {n$makesCpG <- n$makesCpG+1} #this adds one value in "n" data.frame to the "0" and "1" boolian values to "1" and "2" this is for the as.integer condition to work
+    YCpG <- which(n$makesCpG=="2") #lists which variables return a "2" these make a CpG island when mutated "yes cpg or Y"
+    NCpG <- which(n$makesCpG=="1") #lists which variables return a "1" these do not make a CpG island when mutated "No cpg or N"
+    x1 <- n$MeanFreq[YCpG] #create a Value that looks at mean frequency by yes cpg
+    x2 <- n$MeanFreq[NCpG] #create a Value that looks at mean frequency by no cpg
+    plot.default(x = c(x1, x2), #y values not listed this is intended
+                 xlab = "Position Location", ylab = "Frequency", main = "Location vs frequency CpG non-CpG Graph",
+                 col = (as.integer(n$makesCpG)), #colors the values by their integer, using default association. 
+                 log = "y" #the plot is put into a log scale 
+    )#close plot.default
+    legend('topright', #add legend in top right corner
+           legend = c(unique(n$makesCpG)), #names of each category based on the factors in n$makesCpG
+           col=unique(as.integer(n$makesCpG)), #colors the factors as is found by integers in n$makeCpG
+           pch=21 #symbols matching dataframe's factors
+           ) #close legend
+  
+    return()# prints out plot with legend 
+}#close function
+
+LvsF_CpG_Printer(n) #run function
+
+NULL
+?month.abb
+legend("topright", 
+       inset= 0.01, #inset legend off from border
+       c("YesCpG", "NoCpG"),
+       legend = c(makesCpG == 2, makesCpG == 1), #names of each category based on factors, alphabetical order of category 1-5 of TypeOfSites
+       pch= (1), 
+       col= c(as.integer(n$makesCpG)),  #colors matching dataframe's factors 1:5 of DF$TypeOfSite
+       cex=.75,   #specify scale of whole box of legend to not block data
+       pt.cex=3,  #specify point size in legend
+       #remove legend border if "n" is specificed. "o" displays border
+       bty="o",
+       #specific box border thickness/width
+       box.lwd=2,
+       #text.width change
+       text.width=120,
+       #justify text legend, xjust=0 is left justified, xjust=1 means right justified
+       xjust=0
+)
+
 #### in class coursework stuff! ####
 h1 <- read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05",format="fasta")
 h1
@@ -31,6 +115,20 @@ library(help = "ape")
 
 ahub <- AnnotationHub()
 ahub["AH5086"]
+
+functionSynNonSyn <- function(DF){
+    if(length(which(names(DF))=="MUTAA")==0)
+for (h in 1:nrow(DF)){
+    if(DF$MUTAA[h]== DF$WTAA[h]){
+   #if(DF[h,"MUTAA"]== DF[h,"WTAA"]){
+        DF[h, "TypeOfSite"] = "syn"
+    }
+    if(df)
+    }
+}
+
+
+
 
 #### group notes ####
 
@@ -113,424 +211,577 @@ slide_function <- function(data, window, step){
 }
 slide_function(seqT,2,500)
 ?seq.default
-#### from divergence class data ####
-as.table(HPIV1a, stringsAsFactors=FALSE)
-M <- as.data.frame(read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format = "fasta"))
-# Here's a function that we've coded that will calculate divergence for basepair windows 
-#   across the chromosome. We create it using a function called "function", and assign it to 
-#   it's own function named "div.by.window".
-#   The output is a dataframe with 5 columns, 
-#     1) the number of the window (in sequential order)
-#     2) the starting chromosomal position
-#     3) the ending chromosomal position
-#     4) the number of bps in the window
-#     5) the proportion of diverged sites in the window
-#   Run this code in order to use the function.
-div.by.window = function(x, window_size){
-    # window_size = number of bp per window
-    # x = dataframe, with a column, "div" with a TRUE value for a diverged site and FALSE for non-diverged
-    window_start = seq(from=1, to=nrow(x), by=window_size)
-    diverged.window = data.frame(window=1:length(window_start), start.pos=NA, end.pos=NA, length=NA, p.diverged=NA)
-    for (i in 1:length(window_start) ){
-        focal_start = window_start[i]
-        if (i == length(window_start) ){
-            focal_end = nrow(x)
-        } else {
-            focal_end = focal_start + window_size  
+###### CPG finder ######
+CpG_finder <- function(new_virus_data){
+    #reads data into function as CSV file
+    virus_data <- read.csv(new_virus_data)
+    
+    #singles out column of nucleotides -- this assumes that the new datafile has the same column headers such as WTnt as the HIV file does
+    WTnt <- virus_data$WTnt
+    
+    #gets the length of the data file for use in a loop
+    data_length <- nrow(virus_data)
+    
+    #creates an empty vector (like a list) of the same length as the data file to be used to record the results of the loop below
+    makesCpG <- vector(mode = "numeric", length = data_length)
+    
+    #loop that determines if a CpG could occur due to mutation at each spot in the list of nucleotides (WTnt)
+    #loops from row 1 to the the last row of the column WTnt
+    for(x in 1:data_length){
+        
+        #assigns a name (current_nuc) to the nucleotide at row x in WTnt and makes the nucleotide capitalized, in case the data uses lower case letters
+        current_nuc <- toupper(WTnt[x])
+        
+        #assigns a name (current_neighbor) to the nucleotide in the next row down in WTnt and makes the nucleotide capitalized, in case the data uses lower case letters
+        current_neighbor <- toupper(WTnt[x + 1])
+        
+        #begins a loop that compares the two nucleotides that were just isolated
+        #this if statement is only evaluated if the current nucleotide is a T
+        if(current_nuc == "T"){
+            #this if statement is only evaluated if the neighbor is a G
+            if(current_neighbor == "G"){
+                #if the current nucleotide is a T and the neighbor is a G (thus a mutation can cause a CpG), then the of the current nucleotide in the list of 0s we made is changed to a 1
+                makesCpG[x] = 1
+            }
+            #otherwise, nothing is changed
+            else{}
         }
-        focal = x[focal_start:focal_end, ]
-        diverged.window[i,2] = focal[1,1]
-        diverged.window[i,3] = focal[nrow(focal),1]
-        diverged.window[i,4] = diverged.window[i,3]-diverged.window[i,2]
-        if ( nrow(focal) <= 0 ) {next}
-        diverged.window[i,5] = mean(focal$div)  
+        #repeat the same loop as before, but modified slightly to look for CA pairs
+        if(current_nuc == "C"){
+            if(current_neighbor == "A"){
+                #here, instead of changing the position of the current nuc to a 1, we change the neighbor's position because that is where the mutation would be, hence x+1
+                makesCpG[x+1] = 1
+            }
+            else{}
+        }
+        else{}
+        #print(c("Data length is ", nrow(virus_data), "List length is ", length(makesCpG)))
     }
-    diverged.window
+    
+    #append the list of 0s and 1s we created to the end of the data file we imported
+    virus_data$makesCpG <- makesCpG
+    
+    #when the entire function is done, return the amended data file
+    return(virus_data)
 }
 
-# Use this new function "div.by.window". It takes two arguments, "x" (your humanchimp data object)
-#   and "window_size" (the number of bp that you want per window). For now, use 5000 bp, 
-#   which is the approximate size of a small gene. 
-#   Assign the output to the object "diverged.window".
-diverged.window <- div.by.window(x = humanchimp,
-                                 window_size = 5000
-)
-mean(diverged.window$p.diverged)
-#### python not R code does not work for us ####
-# below is a non R code for a CPG Island Finder with Sliding Window Algorithm: 
-    #String Index Out of Bound Exception intermittently
+##### Function that makes synonymous/nonsynonymous column for data frame ######
+#  Note that this depends on the columns MUTAA and WTAA being already complete!
 
-public static List<Integer> finalCPGIslands(List<Integer> iList,
-                                            String iSeq, int width) {
-    # Declare output list that contains final list of start and end
-    # intervals
-    List<Integer> oList = new ArrayList<Integer>();
-    # Add the first two elements anyways
-    oList.add(iList.get(0));
-    oList.add(iList.get(1));
-    if (iList.size() > 2) {
-        for (int i = 2; i < iList.size(); i += 2) {
-            # The below IF is attempted to ensure that substring is always
-            # valid
-            if (iSeq.length() > iList.get(i + 1)) {
-                # While creating the substring in next line, I get String
-                # index out of range: -9
-                String testSeq = iSeq.substring(iList.get(i),
-                                                iList.get(i + 1) + 1);
-                boolean check = cpgCriteriaCheck(testSeq);
-                if (check) {
-                    # If condition is met, add the indexes to the final
-                    #list
-                    oList.add(iList.get(i));
-                    oList.add(iList.get(i + 1));
-                }
-                # If condition is not met, start removing one character at
-                # a time until condition is met
-                else {
-                    
-                    int counter = 0;
-                    int currentSequenceLength = testSeq.length();
-                    String newTestSeq = null;
-                    while (counter <= currentSequenceLength) {
-                        counter++;
-                        if (testSeq.length() > 2) {
-                            newTestSeq = testSeq.substring(1,
-                                                           testSeq.length() - 1);
-                            testSeq = newTestSeq;
-                            if (newTestSeq.length() < width) {
-                                counter = currentSequenceLength + 1;
-                            } else {boolean checkAgain = cpgCriteriaCheck(newTestSeq);
-                            # If condition met, add the item to list
-                            # and exit
-                            if (checkAgain) {
-                                oList.add(iList.get(i) + counter);
-                                oList.add(iList.get(i + 1) - counter);
-                                counter = currentSequenceLength + 1;
-                            }
-                            
-                            } # End of Else
-                        } # End of IF
-                        
-                    } # End of While
-                } # End of Else
+functionSynNonSyn<-function(DF){
+    if (length(which(names(DF))=="MUTAA")==0){
+        print("Oh oh there is a problem. No MUTAA column!")
+        return(0)}
+    for (h in 1:nrow(DF)){
+        if(DF$MUTAA[h]== DF$WTAA[h]){
+            #   if(DF[h,"MUTAA"]== DF[h,"WTAA"]){
+            DF[h,"TypeOfSite"] = "syn"
+        }
+        if(DF[h,"MUTAA"] != DF[h,"WTAA"]){
+            if(DF[h,"MUTAA"]=="*"){
+                DF[h,"TypeOfSite"] = "nonsense"}
+            else {
+                DF[h,"TypeOfSite"] = "nonsyn"
             }
-            
-        } # End of For
-    } # End of Else
-    return oList;
-    #example("cpg.assoc")
-    #biostrings
-    
-    library("Biostrings")
-    
-    s = readDNAStringSet("nm.fasta")
-    subseq(s, start=c(1, 2, 3), end=c(3, 6, 5))
-    
-    ## try http:// if https:// URLs are not supported
-    # source("https://bioconductor.org/biocLite.R")
-    #biocLite("AnnotationHub")
-    
-    
+        }
+    }
+    DF$TypeOfSite<-as.factor(DF$TypeOfSite)
+}
 
-################## freq finder? maybe? ####################
-    
-    import sys,re,fileinput
-    
-    Argument = []
-    Argument = sys.argv[1:] 
-    
-    if (len(Argument)) < 3:
-      print "Usage: Input_pileup_file Column_with_information_about_read_bases(usually_column_9_in_pileup) Output_file" 
-    sys.exit()
-    
-    File_Pileup = Argument[0]
-    index = int(Argument[1])-1
-    output = open(str(Argument[2]),"w")
-    
-    
-    nucleotides = ["A","T","C","G","a","t","c","g"]
-    complement = {'a':'T','g':'C','t':'A','c':'G'}
-    
-    output.write("Chromosome\tCoordinate\tReference_base")
-    
-    Frequency_bases = {"A":0,"T":0,"C":0,"G":0}
-    
-    for base in sorted(Frequency_bases.keys()):
-      output.write("\t"+str(base))
-    
-    output.write("\n")
-    
-    for line in fileinput.input([File_Pileup]):
-      rowlist = []
-    rowlist = (line.rstrip("\n")).split('\t')
-    rowlist[2] = rowlist[2].upper()
-    
-    Frequency = {"A":0,"T":0,"C":0,"G":0}
-    
-    if line.startswith("#"):
-      continue
-    else:
-      output.write(str(rowlist[0])+"\t"+str(rowlist[1])+"\t"+str(rowlist[2]))
-    for i in rowlist[index]:
-      if i == ".":
-      Frequency[rowlist[2]] = Frequency[rowlist[2]] + 1
-    continue
-    if i == ",":
-      Frequency[rowlist[2]] = Frequency[rowlist[2]] + 1
-    continue
-    
-    if i in nucleotides:
-      if i.isupper():
-      Frequency[i] = Frequency[i]+1
-    
-    else:
-      Frequency[complement[i]] = Frequency[complement[i]] + 1
-    
-    for base in sorted(Frequency.keys()):
-      output.write("\t"+str(Frequency[base]))
-    
-    output.write("\n")
-    
-    output.close()
-#### Mergerger ####
-    
-    HPIV1a = read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format = "fasta")
-    consensus(HPIV1a)
-    Error in obj[[1]]$tip.label : $ operator is invalid for atomic vectors
-    ??read.alignment
-    ??consensus
-    example(ape::consensus)
-    seqinr::consensus(HPIV1a)
-    
-length(seqinr::consensus(HPIV1a))
-    [1] 15473
-    
+##### Big AA CHANGE  #####
 
-?plot.default
+#Read in shortened entero data
+HPIVseqs<-read.fasta("humanparainfluenzavirus1.fasta_pruned.mu.trim05")
 
+#Align entero data
+HPIValigned<-read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format="fasta")
 
-plot.default(x = c(V1, V2), #plot it!
-             xlab = "Location", ylab = "Frequency", main = "Location vs frequency CpG non-CpG Graph",
-             col =  c("blue","red")
+#Gets DNA into matrix form
+HPIVmatrix<-read.dna("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format="fasta", as.character = TRUE)
+
+#Gets WTnt for each nt position
+cons<-seqinr::consensus(HPIValigned)
+
+#Insert concensus into dataframe
+HPIVdf$WtNt=cons
+WTAA<- NULL
+MUTAA<-NULL
+#removes list data
+
+#Function to return transition mutation
+transition<-function(basepair){
+    #basepair<-("A", "C", "T", "G"),
+    if(basepair=="a") {return("g")}
+    if(basepair=="g") {return ("a")}
+    if(basepair=="t") {return ("c")}
+    if(basepair=="c") {return ("t")}
+}
+head(HPIVdf)
+#Loop to insert the freq of transition mutations
+for(i in 1:nrow(HPIVdf)){
+    HPIVdf$MeanFreq[i]<-length(which(HPIVmatrix[,i]==transition(cons[i])))/
+        (nrow(HPIVmatrix))
+}
+
+#for loop for transitioning each position and translating it 
+for(x in seq(1, length(cons), 3)){
+    codon <- c(cons[x], cons[x+1], cons[x+2])
+    mutated_codon <- codon
+    if(codon[1] == "a"){
+        mutated_codon <- replace(x=mutated_codon, values=c("g", codon[2], codon[3]))
+    }
+    if(codon[1] == "g"){
+        mutated_codon <- replace(x=mutated_codon, values=c("a", codon[2], codon[3]))
+    }
+    if(codon[1] == "c"){
+        mutated_codon <- replace(x=mutated_codon, values=c("t", codon[2], codon[3]))
+    }
+    if(codon[1] == "t"){
+        mutated_codon <- replace(x=mutated_codon, values=c("c", codon[2], codon[3]))
+    }
+    MUTAA[x] <- translate(mutated_codon)
+    
+    if(codon[2] == "a"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], "g", codon[3]))
+    }
+    if(codon[2] == "g"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], "a", codon[3]))
+    }
+    if(codon[2] == "c"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], "t", codon[3]))
+    }
+    if(codon[2] == "t"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], "c", codon[3]))
+    }
+    MUTAA[x+1] <- translate(mutated_codon)
+    
+    if(codon[3] == "a"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], codon[2], "g"))
+    }
+    if(codon[3] == "g"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], codon[2], "a"))
+    }
+    if(codon[3] == "c"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], codon[2], "t"))
+    }
+    if(codon[3] == "t"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], codon[2], "c"))
+    }
+    MUTAA[x+2] <- translate(mutated_codon)
+}
+
+for(x in seq(1, length(cons) - 2, 3)){
+    codon <- c(cons[x], cons[x+1], cons[x+2])
+    new_AA <- translate(codon)
+    WTAA[x] <- new_AA
+    WTAA[x+1] <- new_AA
+    WTAA[x+2] <- new_AA
+}
+
+#places respective things in columns
+HPIVdf$WTAA<- WTAA
+HPIVdf$MUTAA <- MUTAA
+
+#Amino Acid Changes 
+pos <- "R|H|K"
+neg <- "D|E"
+unc <- "S|T|N|Q"
+spe <- "C|U|G|P"
+hyd <- "A|I|L|F|M|W|Y|V"
+amCat <- function(AA){
+    if(regexpr(pos, AA) > 0){ return(0) }
+    if(regexpr(neg, AA) > 0){ return(1) }
+    if(regexpr(unc, AA) > 0){ return(2) }
+    if(regexpr(spe, AA) > 0){ return(3) }
+    if(regexpr(hyd, AA) > 0){ return(4) }
+    return(5)
+}
+
+#Assign wild type AA category
+for(j in 1:nrow(HPIVdf)){
+    HPIVdf$WTAAcat[j]=amCat(HPIVdf$WTAA[j])
+}
+
+#Assign mutated AA category
+for(j in 1:nrow(HPIVdf)){
+    HPIVdf$MUTAAcat[j]=amCat(HPIVdf$MUTAA[j])
+}
+
+#Loop for drastic change or not 
+for(i in 1:nrow(HPIVdf)){
+    if (HPIVdf$WTAAcat[i]==HPIVdf$MUTAAcat[i]){
+        HPIVdf$bigAAchange[i]= "0"
+    }
+    if (HPIVdf$WTAAcat[i]!=HPIVdf$MUTAAcat[i]){
+        HPIVdf$bigAAchange[i] = "1"
+    }
+}
+
+######### Code for Figure 2 ###############
+
+summary(HPIVdf$MeanFreq)
+summary(log(HPIVdf$MeanFreq))
+plot(
+    #x vector
+    HPIVdf$Pos,
+    #y vector
+    HPIVdf$TrNtFreq,
+    #make black empty circles as symbol
+    pch=21,
+    #make outline of symbol black
+    col= "black",
+    #fill inside of point with color by factor category "TypeOfSite" bg=
+    bg=HPIVdf$TypeOfSite,
+    #Title label
+    main = "HIV Practice Data",
+    #x axis label
+    xlab ="Location on Sequence", 
+    #y axis label
+    ylab ="Mean Frequency of Mutation",
+    #cex changes point size
+    cex=2,
+    #grid superimposes grid onto plot 
+    #nx and ny describes x and y axis 
+    #NA will automatically set x-axis to default plot ticks 
+    grid(nx = NA, ny = NULL, col = "black", lty = "dotted",
+         lwd = par("lwd"), equilogs = TRUE),
+    #supress y axis drawing by plot fxn, put # in front to not supress
+    yaxt="n",
+    # or do log of y axis, delete # symbol
+    log="y"
 )
-read.csv("OverviewSelCoeff_BachelerFilter.csv")->n
-head(n)
 
-#follows is reinterpretation of Pleuni's fig2 code
-#im trying to figure out how the plot is formatted....
-LvsF_CpG_Printer <- function(data_frame){
-  png("Location_vs_frequrency_CpG_non-CpG_Graph.png",width=12,height=7.5,units="in",res=100)
-  par(mfrow=c(1,1))
-  maxnuc=1000
-  par(mar = c(3,5,1,2))
-  plot(n$num[40:maxnuc],n$EstSelCoeff[40:maxnuc],
-       log="y", ylab="Frequrency",cex.lab=1.3,
-       xaxt="n",yaxt="n", xlab="",
-       col="darkgrey",t="n",pch=".", ylim=c(3.2*10^-4,1),xlim=c(40,979))
-        axis(1,at=c(3*seq(15,95,by=20)-1,296+30),labels=c(seq(15,95,by=20),""))
-        axis(1,at=3*seq(109,349,by=20)-1,labels=seq(109-99,349-99,by=20))
-        axis(2,at=c(10^-5,10^-4,10^-3,10^-2,10^-1,10^-0),labels=c(10^-5,10^-4,10^-3,10^-2,10^-1,10^-0),las=1,line=0,tick=FALSE)
-        eaxis(side = 2, at = 10^((-0):(-(5))),label=rep("",6))
-         rect(0, 0.00001, 297.5, 2, density = NULL, angle = 45,col="grey70",border = NA)
-          for(i in 1:5){abline(h = 1:10 * 10^(-i), col = "gray41")}
-         cols <- brewer.pal(6, "Set2")[c(1, 2, 3, 6)]
-          for (i in 40:maxnuc){
-            c=0; co = 1
-            if (n$TypeOfSite[i]=="stop"&n$WTnt[i]%in%c("g","c")) {c=1;p=21}
-            if (n$TypeOfSite[i]=="syn"&n$WTnt[i]%in%c("g","c")) {c=cols[1];p=21}
-            if (n$TypeOfSite[i]=="syn"&n$WTnt[i]%in%c("a","t")) {c=cols[1];p=21}
-            if (n$TypeOfSite[i]=="nonsyn"&n$WTnt[i]%in%c("c","g")) {c=cols[2];p=21}
-            if (n$TypeOfSite[i]=="nonsyn"&n$WTnt[i]%in%c("a","t")) {c=cols[4];p=21}
-            if (i %in% 73:81) {p = 22; co = 2} 
-            if (c!=0) points(n$num[i],n$EstSelCoeff[i],pch=p,col=co,
-                     bg=rgb(red=col2rgb(c)[1]/255,
-                            green=col2rgb(c)[2]/255,
-                            blue=col2rgb(c)[3]/255,
-                            maxColorValue = 1,alpha=0.8),
-                     cex=2)
-            }
-          rect(0, 0.000001, 1200, 3.5*10^-4, density = NULL, angle = 45,col=1,border = NA)
-          text(55*3,2.9*10^-4,"PROTEASE",col="white")
-          rect(297.5, 0.000001, 1200, 3.5*10^-4, density = NULL, angle = 45,col="grey40",border = NA)
-          text(220*3,2.9*10^-4,"REVERSE TRANSCRIPTASE",col="white")
-            legpos=296;legposV=0.4
-            rect(legpos*3, 0.4*legposV, (legpos+42.5)*3, 1.7*legposV, density = NULL, angle = 45,col=alpha("white",1))
-            points((legpos+5)*3,legposV/0.7,pch=21,bg=1,col=1,cex=2)
-            text((legpos+9)*3,legposV/0.7,"Nonsense",adj=0)
-            points((legpos+5)*3,legposV,pch=21,bg=cols[2],col=1,cex=2)
-            text((legpos+9)*3,legposV,"Non-syn, C/G",adj=0)
-            points((legpos+5)*3,legposV*0.7,pch=21,bg=cols[4],col=1,cex=2)
-            text((legpos+9)*3,legposV*0.7,"Non-syn, A/T",adj=0)
-            points((legpos+5)*3,legposV*0.49,pch=21,bg=cols[1],col=1,cex=2)
-            text((legpos+9)*3,legposV*0.49,"Synonymous",adj=0)
-dev.off()
-return()        
-}
-
-LvsF_CpG_Printer(n)
-
-
-
-
-FreqsSyn<-n$MeanFreq[n$TypeOfSite=="syn"]
-FreqsNonSyn<-n$MeanFreq[n$TypeOfSite=="nonsyn"]
-FreqsStop<-n$MeanFreq[n$TypeOfSite=="stop"]
-
-wilcox.test(FreqsSyn, FreqsNonSyn,alternative = "greater", paired = FALSE)
-wilcox.test(FreqsNonSyn,FreqsStop,alternative = "greater", paired = FALSE)
-
-if (TRUE){
-  #pdf("../Output/EstSelCoeffPRO_aug2017.pdf",width=12,height=8)
-  png("Location_vs_frequrency_CpG_non-CpG_Graph.png",width=12,height=7.5,units="in",res=100)
-  #?png #prints out the below plot as a png!
-  par(mfrow=c(1,1))
-  maxnuc=1000
-  #??maxnuc #maxnuc? maxnuc sets the maximum number of variables to be used in 
-  # the plot
-  par(mar = c(3,5,1,2))
-  #?par #what does par do?
-  plot(n$num[40:maxnuc],n$EstSelCoeff[40:maxnuc],
-       log="y", ylab="Frequrency",cex.lab=1.3,
-       xaxt="n",yaxt="n", xlab="",
-       col="darkgrey",t="n",pch=".", ylim=c(3.2*10^-4,1),xlim=c(40,979))
-  
-  axis(1,at=c(3*seq(15,95,by=20)-1,296+30),labels=c(seq(15,95,by=20),""))
-  axis(1,at=3*seq(109,349,by=20)-1,labels=seq(109-99,349-99,by=20))
-  axis(2,at=c(10^-5,10^-4,10^-3,10^-2,10^-1,10^-0),labels=c(10^-5,10^-4,10^-3,10^-2,10^-1,10^-0),las=1,line=0,tick=FALSE)
-  eaxis(side = 2, at = 10^((-0):(-(5))),label=rep("",6))
-  
-  #color Protease region grey
-  rect(0, 0.00001, 297.5, 2, density = NULL, angle = 45,col="grey70",border = NA)
-  for(i in 1:5){abline(h = 1:10 * 10^(-i), col = "gray41")}
-  
-  cols <- brewer.pal(6, "Set2")[c(1, 2, 3, 6)]
-  for (i in 40:maxnuc){
-    c=0; co = 1
-    if (n$TypeOfSite[i]=="stop"&n$WTnt[i]%in%c("g","c")) {c=1;p=21}
-    if (n$TypeOfSite[i]=="syn"&n$WTnt[i]%in%c("g","c")) {c=cols[1];p=21}
-    if (n$TypeOfSite[i]=="syn"&n$WTnt[i]%in%c("a","t")) {c=cols[1];p=21}
-    if (n$TypeOfSite[i]=="nonsyn"&n$WTnt[i]%in%c("c","g")) {c=cols[2];p=21}
-    if (n$TypeOfSite[i]=="nonsyn"&n$WTnt[i]%in%c("a","t")) {c=cols[4];p=21}
-    if (i %in% 73:81) {p = 22; co = 2} #for Active site Protease change pch
-    if (c!=0) points(n$num[i],n$EstSelCoeff[i],pch=p,col=co,
-                     bg=rgb(red=col2rgb(c)[1]/255,
-                            green=col2rgb(c)[2]/255,
-                            blue=col2rgb(c)[3]/255,
-                            maxColorValue = 1,alpha=0.8),
-                     cex=2)
-  }
-  
-  #Add "Protease" and "RT" words
-  rect(0, 0.000001, 1200, 3.5*10^-4, density = NULL, angle = 45,col=1,border = NA)
-  text(55*3,2.9*10^-4,"PROTEASE",col="white")
-  rect(297.5, 0.000001, 1200, 3.5*10^-4, density = NULL, angle = 45,col="grey40",border = NA)
-  text(220*3,2.9*10^-4,"REVERSE TRANSCRIPTASE",col="white")
-  
-  
-  
-  #Add legend
-  legpos=296;legposV=0.4
-  rect(legpos*3, 0.4*legposV, (legpos+42.5)*3, 1.7*legposV, density = NULL, angle = 45,col=alpha("white",1))
-  points((legpos+5)*3,legposV/0.7,pch=21,bg=1,col=1,cex=2)
-  text((legpos+9)*3,legposV/0.7,"Nonsense",adj=0)
-  points((legpos+5)*3,legposV,pch=21,bg=cols[2],col=1,cex=2)
-  text((legpos+9)*3,legposV,"Non-syn, C/G",adj=0)
-  points((legpos+5)*3,legposV*0.7,pch=21,bg=cols[4],col=1,cex=2)
-  text((legpos+9)*3,legposV*0.7,"Non-syn, A/T",adj=0)
-  points((legpos+5)*3,legposV*0.49,pch=21,bg=cols[1],col=1,cex=2)
-  text((legpos+9)*3,legposV*0.49,"Synonymous",adj=0)
-  
-  ?dev.off()
-}
-
-  #  1/ make consensus data of our sample DNA (for one file only!)
-n <- data.frame(Pos = c(1:length(seqinr::consensus(HPIV1a))),
-                WTnt = (seqinr::consensus(HPIV1a)),
-                Trans = c(1)
-                )
-rho((seqinr::consensus(HPIV1a)), wordsize = 2, alphabet = s2c("cg"))
-
-head(n)
-tail(n)
-n$Trans
-?seqinr::consensus
-alphabetFrequency(n$WTnt, c("c","g","a","t"), as.prob = T, baseOnly=TRUE
+#axis function to write y axis with only scale by 10s. 
+#USE YOUR OWN APPROPRIATE NUMBERS
+axis(
+    #2 is to specify left axis (aka y axis)
+    2,
+    at=c(0.0001,0.001,0.01,0.1)
+    # dont need to define labels if same as numbers on axis
+    #labels=aty
+    #tck marks
+    #tck=-0.01
 )
-consensusString(HPIV1a, baseOnly=TRUE, ambiguityMap=IUPAC_CODE_MAP)
 
-  #  2/ determine the frequency of mutation at each base
-  #  3/ create a function that will plot the cpg /posible cpg
+#add legend in top right corner
+legend("topright", 
+       #inset legend off from border
+       inset= 0.01,
+       #names of each category based on factors, alphabetical order of category 1-5 of TypeOfSites
+       legend = levels(HPIVdf$TypeOfSite), 
+       #symbols matching dataframe's factors 1:5 of data$TypeOfSite
+       pch=21,
+       #colors matching dataframe's factors 1:5 of data$TypeOfSite
+       col="black",
+       #fill colors of circle matching points of plot
+       pt.bg=c(1:5),
+       #specify scale of whole box of legend to not block data
+       cex=.75,
+       #specify point size in legend
+       pt.cex=3,
+       #remove legend border if "n" is specificed. "o" displays border
+       bty="o",
+       #specific box border thickness/width
+       box.lwd=2,
+       #specify box border type
+       #box.lty=,
+       #text.width change
+       text.width=10,
+       #justify text legend, xjust=0 is left justified, xjust=1 means right justified
+       xjust=1
+)
 
-zscore((seqinr::consensus(HPIV1a)), modele = "codon")
 
+######## code for fig 3 #########
+### THESE PACKAGES MUST BE INSTALLED ONLY ONCE:
+install.packages("ggplot2")
+install.packages("plyr")
+install.packages("grid")
+install.packages("ape")
+install.packages("seqinr")
+install.packages("gridExtra")
 
+### SET YOUR WORKING DIRECTORY BEFORE STARTING 
+### AND READ CSV FILE (WHATEVER YOU CALLED YOUR PRACTICE DATA):
 
+setwd("~/Desktop/Bioinformatics (Biol 738)/Midterm Project/")
+read.csv("HIV practice data.csv") -> CSV
 
-################### pruned section from master script ###################
-#setwd(SharedDataBioinformatics/11AM_Influ_team)    
-seq_CG <- read.alignment("class25Influ.txt", format = "fasta")
-seqinr::consensus(seq_CG) 
-nuc <- data.frame(x = (seqinr::consensus(seq_CG)))
-as.matrix(nuc)
-nuc$x
-?seq.default
-#slide function scrolls through variable set looking for matching pairs then outputs T/F if pair for the phrame is found.
-CpG_Finder <- function(D, window, deslength){
-  total <- length(D)
-  lan <- deslength
-  data <- D$x
-  aa=lapply(x, function(data){
-    x <- gregexpr("gc", data, perl = TRUE)
-    res1 <- sum(attr(x[[1]], "match.length"))
-    res1
-  })
-  bb=lapply(x, function(data){
-    x <- gregexpr("g", data, perl = TRUE)
-    res2 <- regmatches(data, x)
-    res2
-  })
-  cc=lapply(x, function(data){
-    x <- gregexpr("c", data, perl = TRUE)
-    res3 <- regmatches(data, x)
-    res3
-  })
-  
-  result <- vector(length = length(data))
-  for(i in 1:length(data)){result[i]}
-  
-  
-  return(result)
+library(ggplot2)
+library(plyr)
+library(grid)
+library(scales)
+library(gridExtra)
+
+#### FUNCTION FOR FIGURE 3 STARTS HERE
+
+pug<-function(dfx){
+    
+    CSV<-dfx
+    
+    class(CSV)
+    
+    ##SYN SITES (LEFT GRAPH)
+    #all green points for the left synonomous site graphs
+    a <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "a" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
+    summary(a)
+    c <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "t" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
+    e <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "c" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
+    f <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "g" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
+    
+    #blue dots of left graph that show a CpG-forming mutation
+    b <- frequenciesOfSynAmutsCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "a") & (CSV$bigAAChange == "0") & (CSV$makesCpG == "1")),"MeanFreq"]
+    d <- frequenciesOfSynTmutsCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "t") & (CSV$bigAAChange == "0") & (CSV$makesCpG == "1")),"MeanFreq"]
+    
+    
+    
+    
+    #NON SYNONYMOUS SITES (RIGHT GRAPH)
+    #all green points for the right NON-synonomous site graph
+    g <- frequenciesOfNONSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "a" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
+    k <- frequenciesOfNONSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "t" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
+    o <- frequenciesOfNONSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "c" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
+    q <- frequenciesOfNONSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "g" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
+    
+    #blue dots of right graph that show a CpG-forming mutation
+    h <- frequenciesOfNONSynAmutsCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "a") & (CSV$bigAAChange == "0") & (CSV$makesCpG == "1")),"MeanFreq"]
+    l <- frequenciesOfNONSynTmutsCP <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "t") & (CSV$bigAAChange == "0") & (CSV$makesCpG == "1")),"MeanFreq"]
+    
+    #all yellow points for the right NON-SYN site graph
+    i <- frequenciesOfNONSynAmutsDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "a" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "0"))),"MeanFreq"]
+    m <- frequenciesOfNONSynTmutsDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "t" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "0"))),"MeanFreq"]
+    p <- frequenciesOfNONSynGmutsDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "c" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "0"))),"MeanFreq"]
+    r <- frequenciesOfNONSynCmutsDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "g" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "0"))),"MeanFreq"]
+    
+    
+    #red points on the right
+    j <- frequenciesOfNONSynAmutsCPDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "a" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "1"))),"MeanFreq"]
+    n <- frequenciesOfNONSynTmutsCPDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "t" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "1"))),"MeanFreq"]
+    mylist <- list (a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r) 
+    mylist
+    
+    
+    # Finding maximum row length and filling empty space with "NA"
+    llngths<-lapply(mylist, function(x) length(x))
+    vlngths<-unlist(llngths)
+    maxlngth <- max(vlngths)
+    
+    myfn<-function(x,maxlngth){
+        length(x)<-maxlngth
+        return (x)}
+    mtxmylst <-sapply(mylist, myfn, maxlngth)
+    mtxmylst
+    
+    rm (mxstats)
+    fnclcls<-function(x){
+        if(mean(x, na.rm = TRUE) - 0.3*sd(x, na.rm = TRUE)<0){
+            return (mean(x, na.rm = TRUE) - 0.001)}
+        return(mean(x, na.rm = TRUE) - 0.3*sd(x, na.rm = TRUE))}
+    means<-sapply(mylist, function(x) mean(x,na.rm = TRUE))
+    ucls<-sapply(mylist, function(x) (0.3*sd(x, na.rm = TRUE) + mean(x, na.rm = TRUE)))
+    lcls <- sapply (mylist, fnclcls)
+    mxstats<-rbind(means,ucls)
+    mxstats<-rbind(mxstats,lcls)
+    mxstats
+    
+    # Constructing the data frame
+    dfval<-data.frame(mtxmylst)
+    names<-c("means","ucls","lcls")
+    dfstats<-data.frame(mxstats,row.names = names)
+    dfstats
+    
+    
+    # Labelling/Naming
+    rename
+    dfval<-rename(dfval,c("X1"="val_a","X2"="val_b","X3"="val_c","X4"="val_d","X5"="val_e","X6"="val_f","X7"="val_g","X8"="val_h","X9"="val_i","X10"="val_j","X11"="val_k","X12"="val_l","X13"="val_m","X14"="val_n","X15"="val_o","X16"="val_p","X17"="val_q", "X18"= "val_r"))
+    dfstats<-rename(dfstats,c("X1"="mut_a","X2"="mut_b","X3"="mut_c","X4"="mut_d","X5"="mut_e","X6"="mut_f","X7"="mut_g","X8"="mut_h","X9"="mut_i","X10"="mut_j","X11"="mut_k","X12"="mut_l","X13"="mut_m","X14"="mut_n","X15"="mut_o","X16"="mut_p","X17"="mut_q", "X18"= "mut_r"))
+    dfval[,"val_m"]
+    mean(dfval[,"val_m"])
+    dfstats
+    sink("Routput(sap).txt")
+    print(dfstats)
+    sink()
+    
+    class(dfval[,2])
+    class(dfstats[,2])
+    
+    # Creating Synonymous Plot
+    Synplt <- ggplot() +
+        
+        geom_point( data = dfval, mapping = aes(x="a", y= val_a), colour = "green", size = 0.1) +xlab("Mutation Type") + ylab("Mutation Frequency") +
+        geom_point(data = dfstats, mapping = aes (x = "a", y = dfstats["means","mut_a"]), colour = "green",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "a", ymin= dfstats["lcls","mut_a"], ymax= dfstats["ucls","mut_a"]), color = "green",width=.5) +
+        
+        annotate("text", x  = 1.5, y = 0.00001, label = "A -> G") +
+        
+        geom_point( data = dfval, mapping = aes(x="b", y= val_b), colour = "blue", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "b", y = dfstats["means","mut_b"]), colour = "blue",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "b", ymin= dfstats["lcls","mut_b"], ymax= dfstats["ucls","mut_b"]), color = "blue",width=.5) +
+        
+        geom_vline(aes(linetype=1, colour="black"),xintercept =c(2.5)) +
+        
+        geom_point( data = dfval, mapping = aes(x="c", y= val_c), colour = "green", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "c", y = dfstats["means","mut_c"]), colour = "green",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "c", ymin= dfstats["lcls","mut_c"], ymax= dfstats["ucls","mut_c"]), color = "green",width=.5) +
+        
+        annotate("text", x  = 3.5, y = 0.00001, label = "T -> C") +
+        
+        geom_point( data = dfval, mapping = aes(x="d", y= val_d), colour = "blue", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "d", y = dfstats["means","mut_d"]), colour = "blue",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "d", ymin= dfstats["lcls","mut_d"], ymax= dfstats["ucls","mut_d"]), color = "blue",width=.5) +
+        
+        geom_vline(aes(linetype=1, colour="black"),xintercept =c(4.5)) +
+        
+        geom_point( data = dfval, mapping = aes(x="e", y= val_e), colour = "green", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "e", y = dfstats["means","mut_e"]), colour = "green",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "e", ymin= dfstats["lcls","mut_e"], ymax= dfstats["ucls","mut_e"]), color = "green",width=.5) +
+        
+        geom_point(data = dfstats, mapping = aes (x = "e1", y = 0.0), colour = "red",size = 0.0) +
+        
+        annotate("text", x  = 5.5, y = 0.00001, label = "C -> T") +
+        
+        geom_vline(aes(linetype=1, colour="black"),xintercept =c(6.5)) +
+        
+        geom_point( data = dfval, mapping = aes(x="f", y= val_f), colour = "green", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "f", y = dfstats["means","mut_f"]), colour = "green",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "f", ymin= dfstats["lcls","mut_f"], ymax= dfstats["ucls","mut_f"]), color = "green",width=.5) +
+        
+        geom_point(data = dfstats, mapping = aes (x = "f1", y = 0.0), colour = "red",size = 0.0) +
+        
+        annotate("text", x  = 7.5, y = 0.00001, label = "G -> A") +
+        
+        
+        scale_x_discrete(labels=c("a" = "", "b" = "", "c" = "", "d" = "","e" = "", "e1" = "","f" ="", "f1" = "")) +
+        
+        #ggtitle("HIV Genetic Mutations Study - Frequency vs Type") +
+        scale_y_log10(labels = comma) +
+        theme(legend.position="none") +
+        expand_limits(y = c(0.00001, 0.1)) +
+        theme(plot.margin = unit(c(1,1,3.0,1), "cm")) +
+        theme (panel.border = element_rect(colour = "black", fill=NA, size=3),plot.title = element_text(hjust = 0.5))
+    
+    
+    
+    
+    
+    
+    # Creating Non-Synonymous Plot
+    NonSynplt <- ggplot() +
+        
+        geom_point( data = dfval, mapping = aes(x="g", y= val_g), colour = "green", size = 0.1) +xlab("Mutation Type") + ylab("Mutation Frequency") +
+        geom_point(data = dfstats, mapping = aes (x = "g", y = dfstats["means","mut_g"]), colour = "green",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "g", ymin= dfstats["lcls","mut_g"], ymax= dfstats["ucls","mut_g"]), color = "green",width=.5) +
+        
+        annotate("text", x  = 2.5, y = 0.00001, label = "A -> G") +
+        
+        geom_point( data = dfval, mapping = aes(x="h", y= val_h), colour = "blue", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "h", y = dfstats["means","mut_h"]), colour = "blue",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "h", ymin= dfstats["lcls","mut_h"], ymax= dfstats["ucls","mut_h"]), color = "blue",width=.5) +
+        
+        
+        geom_point( data = dfval, mapping = aes(x="i", y= val_i), colour = "orange", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "i", y = dfstats["means","mut_i"]), colour = "orange",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "i", ymin= dfstats["lcls","mut_i"], ymax= dfstats["ucls","mut_i"]), color = "orange",width=.5) +
+        
+        geom_point( data = dfval, mapping = aes(x="j", y= val_j), colour = "red", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "j", y = dfstats["means","mut_j"]), colour = "red",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "j", ymin= dfstats["lcls","mut_j"], ymax= dfstats["ucls","mut_j"]), color = "red",width=.5) +
+        
+        
+        geom_vline(aes(linetype=1, colour="black"),xintercept =c(4.5)) +
+        
+        
+        
+        annotate("text", x  = 6.5, y = 0.00001, label = "T -> C") +
+        
+        geom_point( data = dfval, mapping = aes(x="k", y= val_k), colour = "green", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "k", y = dfstats["means","mut_k"]), colour = "green",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "k", ymin= dfstats["lcls","mut_k"], ymax= dfstats["ucls","mut_k"]), color = "green",width=.5) +
+        
+        
+        geom_point( data = dfval, mapping = aes(x="l", y= val_l), colour = "blue", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "l", y = dfstats["means","mut_l"]), colour = "blue",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "l", ymin= dfstats["lcls","mut_l"], ymax= dfstats["ucls","mut_l"]), color = "blue",width=.5) +
+        
+        geom_vline(aes(linetype=1, colour="black"),xintercept =c(8.5)) +
+        
+        geom_point( data = dfval, mapping = aes(x="m", y= val_m), colour = "orange", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "m", y = dfstats["means","mut_m"]), colour = "orange",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "m", ymin= dfstats["lcls","mut_m"], ymax= dfstats["ucls","mut_m"]), color = "orange",width=.5) +
+        
+        annotate("text", x  = 9.5, y = 0.00001, label = "C -> T") +
+        
+        geom_point( data = dfval, mapping = aes(x="n", y= val_n), colour = "red", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "n", y = dfstats["means","mut_n"]), colour = "red",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "n", ymin= dfstats["lcls","mut_n"], ymax= dfstats["ucls","mut_n"]), color = "red",width=.5) +
+        
+        geom_vline(aes(linetype=1, colour="black"),xintercept =c(10.5)) +
+        
+        geom_point( data = dfval, mapping = aes(x="o", y= val_o), colour = "green", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "o", y = dfstats["means","mut_o"]), colour = "green",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "o", ymin= dfstats["lcls","mut_o"], ymax= dfstats["ucls","mut_o"]), color = "green",width=.5) +
+        
+        annotate("text", x  = 11.5, y = 0.00001, label = "G -> A") +
+        
+        
+        geom_point( data = dfval, mapping = aes(x="p", y= val_p), colour = "orange", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "p", y = dfstats["means","mut_p"]), colour = "orange",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "p", ymin= dfstats["lcls","mut_p"], ymax= dfstats["ucls","mut_p"]), color = "orange",width=.5) +
+        
+        
+        geom_point( data = dfval, mapping = aes(x="q", y= val_q), colour = "green", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "q", y = dfstats["means","mut_q"]), colour = "green",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "q", ymin= dfstats["lcls","mut_q"], ymax= dfstats["ucls","mut_q"]), color = "green",width=.5) +
+        
+        
+        geom_point( data = dfval, mapping = aes(x="r", y= val_r), colour = "orange", size = 0.1) +
+        geom_point(data = dfstats, mapping = aes (x = "r", y = dfstats["means","mut_r"]), colour = "orange",size = 5.0) +
+        geom_errorbar(data = dfstats,aes(x = "r", ymin= dfstats["lcls","mut_r"], ymax= dfstats["ucls","mut_r"]), color = "orange",width=.5) +
+        
+        
+        
+        
+        
+        
+        
+        
+        scale_x_discrete(labels=c("g" = "", "h" = "", "i" = "", "j" = "","k" = "","l" ="","m" ="", "n"="","o" = "","p" = "","q"="","r"="")) +
+        
+        #ggtitle("HIV Genetic Mutations Study - Frequency vs Type") +
+        scale_y_log10(labels = comma) +
+        theme(legend.position="none") +
+        expand_limits(y = c(0.00001, 0.1)) +
+        theme(plot.margin = unit(c(1,1,3.0,1), "cm")) +
+        theme (panel.border = element_rect(colour = "black", fill=NA, size=3),plot.title = element_text(hjust = 0.5))
+    
+    #, vp=viewport(width=1.0, height=0.97)
+    require(grid)
+    require(gridExtra)
+    title1=textGrob("
+                    Fig. 3: Frequencies", gp=gpar(fontface="bold", fontsize = 16, cex = 1))
+    grid.arrange( top =title1,Synplt + ggtitle('Synonymous Sites'), NonSynplt + ggtitle('Non-synonymous Sites'),  nrow=1)
+    
+    # Creating the plot keys
+    grid.text("KEY:
+              Green = No Drastic AA change (non-CpG forming)
+              Blue = No Drastic AA change (CpG forming)
+              Orange = Drastic AA change (non-CpG-forming)
+              Red = Drastic AA change (CpG forming) ", 
+              x = unit(2, "cm"), y = unit(0.25,"cm"), just = "left", vjust = unit(0.0,"cm"))
+    
+    
+    #sink("Routput(loop).txt")
+    #print(dfval)
+    #print(dfstats)
+    #class(dfstats)
+    #sink()
+    
+    
 }
-CpG_Finder(nuc,2,500)
 
+### ENTER IN WHATEVER YOU NAMED THE PRACTICE DATA ###
+anything<-read.csv("HIV practice data.csv")
+pug(anything)
+#######
 
-#### notes and comments section ####
-# CpG graphing function()
-n <- data.frame(read.csv("OverviewSelCoeff_BachelerFilter.csv"))
-
-LvsF_CpG_Printer <- function(data_frame){
-  maxnuc=1000
-  plot(n$makesCpG[40:maxnuc],n$MeanFreq[40:maxnuc],
-       log="y", ylab="frequency CpG non-CpG",cex.lab=1.3,
-       xlab="Location",
-       col="gray",t="n",pch=".", ylim=c(3.4*10^-4,1),xlim=c(40,979))
-  
-  points(c(n$MeanFreq[which(n$makesCpG=="1")],
-           n$MeanFreq[which(n$makesCpG=="0")]),pch=p,col=co,
-         bg=rgb(red=col2rgb(c)[1]/255,
-                green=col2rgb(c)[2]/255,
-                blue=col2rgb(c)[3]/255,
-                maxColorValue = 1,alpha=0.8),
-         cex=2)}#close for:
-legpos=293;legposV=0.4
-rect(legpos*3, 0.4*legposV, (legpos+42.5)*3, 1.7*legposV, density = NULL, angle = 45,col=alpha("white",1))
-
-
-return()
-}#close function
-
-LvsF_CpG_Printer(n) #run function
-
-#10-17-2017 nathan 12:53
-#Formatted the group master script
-# added sections
+source("functionWTAA.R")
