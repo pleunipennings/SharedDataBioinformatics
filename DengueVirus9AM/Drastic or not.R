@@ -1,5 +1,5 @@
 
-
+setwd("~/Desktop/638groupproject")
 library(seqinr)
 
 #reading the data
@@ -183,7 +183,19 @@ VIRUS_DATA <- data.frame(num,wtnt,freq)
 View(VIRUS_DATA)
 
 
+####subsetting
+VIRUS_DATA$wtnt[1:50]-> ORF
+class(ORF)
+ORF<-as.character(ORF)
 
+
+#VIRUS_DF<-VIRUS_DATA$ORF<-""
+#VIRUS_DATA
+
+for(i in 1:length(ORF)){
+    reading_frame<-ORF[i]
+    VIRUS_DATA$ORF[i]<-reading_frame
+}
 
 
 ####### Investigating CPG
