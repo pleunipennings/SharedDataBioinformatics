@@ -6,6 +6,9 @@ functionSynNonSyn<-function(dengue_df){
     if (length(which(names(dengue_df)=="TypeOfSite"))==0){
         dengue_df$TypeOfSite<-0}
     
+ 
+    
+    
     if (length(which(names(dengue_df)=="MUTAA"))==0){
         print("Oh oh there is a problem. No MUTAA column!")
         return(0)}
