@@ -2,11 +2,11 @@
 
 functionSynNonSyn<-function(dengue_df){
     
-    #Create "TypeOfSite" column if not already
-    #if (length(which(names(dengue_df)=="TypeOfSite"))==0){
-       # dengue_df$TypeOfSite=0}
+    Create "TypeOfSite" column if not already
+    if (length(which(names(dengue_df)=="TypeOfSite"))==0){
+        dengue_df$TypeOfSite=0}
     
-    dengue_df$TypeOfSite=""
+ 
     
     
     if (length(which(names(dengue_df)=="MUTAA"))==0){
