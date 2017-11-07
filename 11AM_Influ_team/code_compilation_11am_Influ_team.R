@@ -98,13 +98,13 @@ for (h in nrow(df)){
 
 
 ##### Big AA CHANGE  #####
-PracticeData<-read.csv("OverviewSelCoeff_BachelerFilter.csv")
+PracticeData<-read.fasta("humanparainfluenzavirus1.fasta_pruned.mu.trim05")
 
 library(seqinr)
 library(ape)
 
 #First we'll create the data frame
-Pos<-c(1:891)
+Pos<-c(1:15473)
 enterodata<-data.frame(Pos)
 enterodata$WtNt=""
 enterodata$TrNtFreq=""
@@ -115,13 +115,13 @@ enterodata$MUTAAcat=""
 enterodata$bigAAchange=""
 
 #Read in shortened entero data
-enteroseqs<-read.fasta("EnterovirusA_VP1.fasta_pruned.mu.trim05")
+enteroseqs<-read.fasta("humanparainfluenzavirus1.fasta_pruned.mu.trim05")
 
 #Align entero data
-enteroaligned<-read.alignment("EnterovirusA_VP1.fasta_pruned.mu.trim05", format="fasta")
+enteroaligned<-read.alignment("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format="fasta")
 
 #Gets DNA into matrix form
-enteromatrix<-read.dna("EnterovirusA_VP1.fasta_pruned.mu.trim05", format="fasta", as.character = TRUE)
+enteromatrix<-read.dna("humanparainfluenzavirus1.fasta_pruned.mu.trim05", format="fasta", as.character = TRUE)
 
 #Gets WTnt for each nt position
 cons<-seqinr::consensus(enteroaligned)
