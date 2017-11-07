@@ -322,7 +322,8 @@ Fig3<-function(dfx, virusname){
   
   #grid.arrange(top =title1, grobs = gs, layout_matrix = lay)
   
-  pdf(paste("synplot_",virusname,".pdf",sep=""), height=15,width=15)
+#add name of virus to name of pdf 
+pdf(paste("synplot_",virusname,".pdf",sep=""), height=15,width=15)
   print(Synplot)
   dev.off()
 
