@@ -36,7 +36,7 @@ CpG_finder <- function(virus_data){
     if(current_nuc == "C"){
       if(current_neighbor == "A"){
         #here, instead of changing the position of the current nuc to a 1, we change the neighbor's position because that is where the mutation would be, hence x+1
-        virus_data$makesCpG[x] = 1
+        virus_data$makesCpG[x+1] = 1
       }
       else{}
     }
