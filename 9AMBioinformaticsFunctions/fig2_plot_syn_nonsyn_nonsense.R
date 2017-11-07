@@ -2,7 +2,7 @@
 #the command should be something like the function pulls out information
   #from the dataframe and uses that info to plot
 #output should be plot of Meanfreq vs. Position (num), colored by TypeofSite
-virus_plot = function(df) {
+plot_NonSynNon = function(df) {
     plot(df$num, df$freq+0.1, type = "p", main = "Nucleotide Positon (num) vs. Mean Frequency (freq) of Virus", 
          log = "y", xlab = "num", ylab = "log of freq", col = as.factor(df$TypeOfSite))
 }
