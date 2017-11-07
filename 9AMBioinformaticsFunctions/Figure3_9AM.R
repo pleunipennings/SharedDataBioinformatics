@@ -335,6 +335,7 @@ comparing_mutation_graph = function(data){
         graph<- graph +geom_errorbar(data = nonsynYYt, aes(ymin = nonsynYYtconf[[1]], ymax = nonsynYYtconf[[2]], width = 0.2))
         graph<- graph +geom_point(data =nonsynYYt, aes('16',mean(nonsynYYt$MeanFreq)))
     } 
+    #this get rid of some of the back ground lines
     graph <- graph +  theme_bw() +
         theme(axis.line = element_line(colour = "black"),
               panel.grid.major = element_blank(),
