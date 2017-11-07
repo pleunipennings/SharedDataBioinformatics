@@ -28,4 +28,6 @@ meanFreq <- function(fasta_file){
   }
   return(Dengue_DF)
 }
-meanFreq("DengueViruses/DengueVirus1.fasta")
+
+#example
+#meanFreq("DengueViruses/DengueVirus1.fasta")
