@@ -1,4 +1,5 @@
 #9am
+#members - Rebecca, Will, Adrienne, Jesse
 #function for syn/non/nonsence
 #This function intakes a dataframe with the columns MUTAA, WTAA, and TypeOfSite created. Then evaluates the values in the WTAA and MUTAA columns to determine the value for the TypeOfSite column
 for (h in nrow(df)){ #looks at each row in the dataframe df
