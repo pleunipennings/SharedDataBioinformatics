@@ -22,6 +22,7 @@ DF$TypeOfSite=""
 #Insert Synonymous/Nonsynonymous data into dataframe
 ####Determining the category of S/N (TypeOfSite)
  #Assigning Synonymous/Nonsynonymous Function
+ #Code is dependent on differences between WTAA and MUTAA
  
    for(i in 1:length(DF$WTAA)){
               if(DF$WTAA[i] == DF$MUTAA[i]){DF$TypeOfSite[i] <- "syn"}
@@ -30,3 +31,5 @@ DF$TypeOfSite=""
            # DF$TypeOfSite<- length(which(DF$WTAA=!DF$MUTAA)){return(non)}
       }
 #DF$TypeOfSite<-Syn(s)
+
+###Team members: Fernando Lorenzo, Jasmine Sims, Darryl Cudia, Krystal Tran, and Anjani Pradhananga. Deshawn and his team contributed and Liz and her team also contributed. 
