@@ -34,6 +34,10 @@ if (TRUE) {
     # data.frame has the value $MeanFreq
     # data.frame has the value $makesCpG
     # values in $makesCpG are listed as "0" and "1"
+        # If not listed as 0's or 1's 
+        #  or
+        # If title is wrong prints out: 
+          # Error in `$<-.data.frame`(`*tmp*`, "MakesCpG", value = numeric(0)) 
 
 ####### function() for plotting location by frequency for CpG's occurence  #########
 
