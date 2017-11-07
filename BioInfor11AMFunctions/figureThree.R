@@ -1,3 +1,4 @@
+ #assumes df with proper column names and corresponding data
 Fig3<-function(dfx){
   library(ggplot2)
   library(plyr)
@@ -6,15 +7,9 @@ Fig3<-function(dfx){
   library(gridExtra)
   CSV<-dfx
   
-  
-  #assumes df with proper column names and corresponding data
-  ##SYN SITES (LEFT GRAPH)
-  #all green points for the left synonomous site grapha
-  
-  ##SYN SITES (LEFT GRAPH)
+  ##SYNONOMOUS SITES TO PLOT THE LEFT GRAPH
   #all green points for the left synonomous site graphs
   a <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "a" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
-  summary(a)
   c <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "t" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
   e <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "c" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
   f <- frequenciesOfSynAmutsNONCP <- CSV[which(((CSV$TypeOfSite == "syn"  )) & (CSV$WTnt == "g" & (CSV$bigAAChange == "0") &(CSV$makesCpG == "0"))),"MeanFreq"]
@@ -39,7 +34,6 @@ Fig3<-function(dfx){
   m <- frequenciesOfNONSynTmutsDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "t" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "0"))),"MeanFreq"]
   p <- frequenciesOfNONSynGmutsDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "c" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "0"))),"MeanFreq"]
   r <- frequenciesOfNONSynCmutsDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "g" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "0"))),"MeanFreq"]
-  
   
   #red points on the right
   j <- frequenciesOfNONSynAmutsCPDRASTIC <- CSV[which(((CSV$TypeOfSite == "nonsyn"  )) & (CSV$WTnt == "a" & (CSV$bigAAChange == "1") &(CSV$makesCpG == "1"))),"MeanFreq"]
@@ -70,9 +64,6 @@ Fig3<-function(dfx){
     colnames(dfwkg)<-c("values","refvec")
     dfmylist<-rbind(dfmylist,dfwkg)
   }
-  #View (dfmylist)
-  
-  
   
   #Now add a column for AA_Category and a column for colors so tha ggplot can pull colors and legend from data.frame 
   dfmylist[which(dfmylist$refvec == "a"),"AA_category"]<-"Non-drastic, non-CpG" 
@@ -94,14 +85,12 @@ Fig3<-function(dfx){
   dfmylist[which(dfmylist$refvec == "m"),"AA_category"]<-"Drastic, non-CpG" 
   dfmylist[which(dfmylist$refvec == "n"),"AA_category"]<-"Drastic, CpG"
   
-  
   dfmylist[which(dfmylist$refvec == "o"),"AA_category"]<-"Non-drastic, non-CpG" 
   dfmylist[which(dfmylist$refvec == "p"),"AA_category"]<-"Drastic, non-CpG" 
   
   
   dfmylist[which(dfmylist$refvec == "q"),"AA_category"]<-"Non-drastic, non-CpG" 
   dfmylist[which(dfmylist$refvec == "r"),"AA_category"]<-"Drastic, non-CpG" 
-  
   
   dfmylist[which(dfmylist$refvec == "a"),"color"]<-"green" 
   dfmylist[which(dfmylist$refvec == "b"),"color"]<-"blue" 
@@ -129,24 +118,19 @@ Fig3<-function(dfx){
   
   dfmylist[which(dfmylist$refvec == "q"),"color"]<-"green" 
   dfmylist[which(dfmylist$refvec == "r"),"color"]<-"orange" 
-  
-  #View(dfmylist)
+ 
   #the plot will have a log y scale so all zero y values must go away.
   
   dfmylist <-dfmylist[which((dfmylist$values != 0)|(is.na(dfmylist$values))),]
   
-  
-  
   #split the data as there will be two plots one for "Synonomous" & one for "Non-synonomous" sites
+  
   vec1<-c("a","b","c","d","e","f")
   dfmylist1<-dfmylist[which((dfmylist$refvec=="a")|(dfmylist$refvec=="b")|(dfmylist$refvec=="c")
                             |(dfmylist$refvec=="d")|(dfmylist$refvec=="e")|(dfmylist$refvec=="f")),]
   
   dfmylist2<-dfmylist[-which((dfmylist$refvec=="a")|(dfmylist$refvec=="b")|(dfmylist$refvec=="c")
                              |(dfmylist$refvec=="d")|(dfmylist$refvec=="e")|(dfmylist$refvec=="f")),]
-  
-  
-  
   
   #prepare mean & error values for synonomous plot
   
@@ -179,13 +163,10 @@ Fig3<-function(dfx){
   dfmylist1$UCLS = dfmylist1$mean_vals + dfmylist1$sem_vals
   
   
-  
-  
   #create vector with named elements for ggplot to use to generate colors and legend
   col <- as.character(dfmylist1$color)
   col
   names(col) <- as.character(dfmylist1$AA_category)
-  
   
   #plot synonomous points
   Synplot<-ggplot() +
@@ -196,9 +177,6 @@ Fig3<-function(dfx){
     geom_errorbar(data = dfmylist1,aes(x = refvec, ymin= LCLS, ymax= UCLS, color = AA_category),width=.5) +
     scale_color_manual(values=col) +
     theme(legend.text=element_text(size=7),legend.title = element_text(size=10)) +
-    
-    
-    
     
     annotate("text", x  = 1.5, y = 0.00001, label = "A -> G") +
     
@@ -226,11 +204,6 @@ Fig3<-function(dfx){
     theme(plot.margin = unit(c(1,1,3.0,1), "cm")) +
     theme (panel.border = element_rect(colour = "black", fill=NA, size=3),plot.title = element_text(hjust = 0.5))
   
-  
-  
-  
-  
-  
   #prepare mean & error values for nonsynonomous plot
   
   dfmylist2$mean_vals = 0.0001
@@ -247,11 +220,8 @@ Fig3<-function(dfx){
   dfmylist2$mean_vals[(which(dfmylist2$refvec == "q"))]<-mean(dfmylist2$values[(which(dfmylist2$refvec == "q"))], na.rm = FALSE)
   dfmylist2$mean_vals[(which(dfmylist2$refvec == "r"))]<-mean(dfmylist2$values[(which(dfmylist2$refvec == "r"))], na.rm = FALSE)
   
-  
   dfmylist2$sem_vals = 0.0001
-  
-  
-  
+
   sem(dfmylist2$values) 
   sem(dfmylist2$values[(which(dfmylist2$refvec == "g"))])
   dfmylist2$sem_vals[(which(dfmylist2$refvec == "g"))]<-sem(dfmylist2$values[(which(dfmylist2$refvec == "g"))])
@@ -273,11 +243,7 @@ Fig3<-function(dfx){
   
   dfmylist2$LCLS = dfmylist2$mean_vals -dfmylist2$sem_vals
   dfmylist2$UCLS = dfmylist2$mean_vals + dfmylist2$sem_vals
-  
-  
-  
-  
-  
+ 
   #create vector with named elements for ggplot to use to generate colors and legend
   col <- as.character(dfmylist2$color)
   col
@@ -310,12 +276,12 @@ Fig3<-function(dfx){
     theme(plot.margin = unit(c(1,1,3.0,1), "cm")) +
     theme (panel.border = element_rect(colour = "black", fill=NA, size=3),plot.title = element_text(hjust = 0.5))
   
-  
-  
  #prints both graphs seperately 
  print(NonSynplt)
  print(Synplot)
+  
 }
+
 Fig3(dfx)
 
 #written by jenn, omar, nicole + jacob
