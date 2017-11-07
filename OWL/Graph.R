@@ -1,3 +1,8 @@
+#the function creates a graph 
+#the graph is the CpG/no CpG vs Mean Frequency
+# the assumption is that there is already a data frame for the data to create the graph
+#creators= Christen, Nicole, Rima,Kellen 
+
 read.csv("OverviewSelCoeff_BachelerFilter.csv")->HIVdata
 print(HIVdata)
 

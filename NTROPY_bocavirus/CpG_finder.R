@@ -3,18 +3,18 @@ library(seqinr)
 library(ape)
 
 #boca NS1 stands for bocavirus NS1 gene
-bocaNS1seqs<-read.fasta("HumanBocavirus1_NS1.fasta_pruned.mu copy.trim05") 
+bocaNS1seqs<-read.fasta("HumanBocavirus1_NS1.fasta_pruned.mu.trim05") 
 
 
 #How to get the consensus (= most common nucleotide for each position)
-bocaNS1seqsAli<-read.alignment("HumanBocavirus1_NS1.fasta_pruned.mu copy.trim05", format="fasta")
+bocaNS1seqsAli<-read.alignment("HumanBocavirus1_NS1.fasta_pruned.mu.trim05", format="fasta")
 
 
 #works when using con() instead of consensus()
 seqinr::consensus(bocaNS1seqsAli)->WTnt
 
 #use read.dna to get the data in matrix form, this makes it easier to count
-bocaNS1seqsDNA<-read.dna("HumanBocavirus1_NS1.fasta_pruned.mu copy.trim05", format = "fasta",as.character=TRUE)
+bocaNS1seqsDNA<-read.dna("HumanBocavirus1_NS1.fasta_pruned.mu.trim05", format = "fasta",as.character=TRUE)
 
 # Writes new function to create transition mutations in nucleotides
 transition <- function(nt){
@@ -88,23 +88,25 @@ CpG_finder <- function(new_virus_data){
   #when the entire function is done, return the amended data file
   return(virus_data)
 }
-CpG_finder(BoNS1df)
+CpGGraphData<-CpG_finder(BoNS1df)
 
 #start of CpG Graph Function 
-LvsF_CpG_Printer <- function(data_frame){
-  if (T) {n$makesCpG <- n$makesCpG+1}
-  YCpG <- which(n$makesCpG=="2")
-  NCpG <- which(n$makesCpG=="1")
-  x1 <- n$MeanFreq[YCpG]
-  x2 <- n$MeanFreq[NCpG]
+LvsF_CpG_Printer <- function(CpGGraphData){
+  if (T) {CpGGraphData$makesCpG <- CpGGraphData$makesCpG+1}
+  YCpG <- which(CpGGraphData$makesCpG=="2")
+  NCpG <- which(CpGGraphData$makesCpG=="1")
+  x1 <- CpGGraphData$MeanFreq[YCpG]
+  x2 <- CpGGraphData$MeanFreq[NCpG]
   plot.default(x = c(x1, x2), 
                xlab = "Location", ylab = "Frequency", main = "Location vs frequency CpG non-CpG Graph",
-               col = (as.integer(n$makesCpG)),
+               col = (as.integer(CpGGraphData$makesCpG)),
                log = "y"
   )#close plot.default
   
-  return()#close return
+  return(CpGGraphData)
+  #close return
 }#close function
 
-LvsF_CpG_Printer(data_frame) #run function
-head(data_frame)
+LvsF_CpG_Printer(CpGGraphData) 
+plot.d#run function
+head(CpGGraphData)
