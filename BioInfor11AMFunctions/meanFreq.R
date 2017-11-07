@@ -7,7 +7,7 @@ meanFreq <- function(fasta_file){
   dengue_consensus_matrix <- seqinr :: consensus(dengue_align, method = "profile")
   consensus_length <- length(dengue_consensus)
   number_column <- seq(1, consensus_length)
-  Dengue_DF <- data.frame("num" = number_column, "MeanFreq" = 0, "WTnt" = dengue_consensus)
+  Dengue_DF <- data.frame("num" = number_column, "MeanFreq" = 0, "wtnt" = dengue_consensus)
   for(x in 1:consensus_length){
     current_base <- dengue_consensus[x]
     current_matrix_base_count <- dengue_consensus_matrix[,x]
@@ -28,4 +28,6 @@ meanFreq <- function(fasta_file){
   }
   return(Dengue_DF)
 }
-meanFreq("DengueViruses/DengueVirus1.fasta")
+
+#example
+#meanFreq("DengueViruses/DengueVirus1.fasta")
