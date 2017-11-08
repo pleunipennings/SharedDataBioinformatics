@@ -30,3 +30,4 @@ legend("topleft",c("noCpG","CpG"),cex=0.6,
       col ="black",bg=c(rgb(1,0,0,0.5),rgb(0,0,1,0.5)),bty="n",
        title="Legend",inset=.02,pch =21,pt.bg = c(rgb(1,0,0,0.5),rgb(0,0,1,0.5)))
 
+
