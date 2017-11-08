@@ -1,16 +1,13 @@
-
-
 library(seqinr)
 library(ape)
 
 #various set directories for file paths in diff parts of my computer
 setwd("~/bioinformatics/bioinformaticsproject")
-
 setwd("~/SharedDataBioinformatics/BioInfor11AMFunctions")
 
 source("MeanFreq.R")
 setwd("~/bioinformatics/bioinformaticsproject")
-meanFreq("HumanBocavirus1_NS1.fasta_pruned.mu.trim05")->DF
+meanFreq("HumanBocavirus1_VP1.fasta_pruned.mu.trim05")->DF
 
 setwd("~/SharedDataBioinformatics/BioInfor11AMFunctions")
 source("functionWTAA.R")
