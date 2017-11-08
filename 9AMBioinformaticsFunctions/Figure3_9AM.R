@@ -10,10 +10,14 @@ library(ggplot2)
 
 #this function graphs transition mutations separated by Synonymous Sites and Nonsynonymous sites
 # this graph show the frequencies of the changes and also seperates combinations of drastic AA and CpG sites by color
-#Start of the graph function, here data is your dataset. Make sure you have these columns and the column names are the same.bigAAChange, makesCpG, TypeOfSite, num, MeanFreqor or freq, wtnt or WTnt 
+#Start of the graph function, here data is your dataset. Make sure you have these columns and the column names are the same.bigAAChange, makesCpG/CPG, TypeOfSite, num, MeanFreqor/freq, wtnt/WTnt 
 #In column TypeOfSite make sure that syn, nonsyn are present. No - or full names
 comparing_mutation_graph = function(data){
     #building the combo lines to help sort (used later when info is subsetted) 
+    #This will change your colomn name to what we orginally used to make our graph
+    colnames(data)[which(names(data) == "wtnt")] <- "WTnt"
+    colnames(data)[which(names(data) == "freq")] <- "MeanFreq"
+    colnames(data)[which(names(data) == "CPG")] <- "makesCpG"
     data$combo<- (data$bigAAChange*3) + (data$makesCpG*2)
     data$combo<- as.factor(data$combo)
     levels(data$combo) <- gsub("0", "noAA noCPG", levels(data$combo))
