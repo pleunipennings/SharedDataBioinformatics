@@ -2,6 +2,8 @@
 
 setwd("~/Desktop/Git")
 
+install.packages("scales")
+
 #install.packages('ggplot2')
 #install.packages('scales')
 #scales is used to log the y axis in the graoh and ggplot2 is used to create the graph
@@ -9,7 +11,7 @@ library(scales)
 library(ggplot2)
 
 #reading in data
-data<-read.csv('OverviewSelCoeff_BachelerFilter.csv') 
+data<-read.fasta("DengueViruses/DengueVirus1.fasta_pruned.mu.trim05") 
 
 #Start of the graph function
 nightcrewgraph = function(data){
@@ -367,5 +369,4 @@ print(nightmare)
 
 nightcrewgraph(data)
 
-
-
+View(nightcrewgraph)
