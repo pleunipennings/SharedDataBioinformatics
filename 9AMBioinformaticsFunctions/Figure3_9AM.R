@@ -13,11 +13,13 @@ library(ggplot2)
 #Start of the graph function, here data is your dataset. Make sure you have these columns and the column names are the same.bigAAChange, makesCpG/CPG, TypeOfSite, num, MeanFreqor/freq, wtnt/WTnt 
 #In column TypeOfSite make sure that syn, nonsyn are present. No - or full names
 comparing_mutation_graph = function(data){
-    #building the combo lines to help sort (used later when info is subsetted) 
+
     #This will change your colomn name to what we orginally used to make our graph
     colnames(data)[which(names(data) == "wtnt")] <- "WTnt"
     colnames(data)[which(names(data) == "freq")] <- "MeanFreq"
     colnames(data)[which(names(data) == "CPG")] <- "makesCpG"
+    colnames(data)[which(names(data) == "bigAAchange")] <- "bigAAChange"
+    #building the combo lines to help sort (used later when info is subsetted) 
     data$combo<- (data$bigAAChange*3) + (data$makesCpG*2)
     data$combo<- as.factor(data$combo)
     levels(data$combo) <- gsub("0", "noAA noCPG", levels(data$combo))
@@ -351,7 +353,7 @@ comparing_mutation_graph = function(data){
     print(graph)
 }
 
-comparing_mutation_graph(bk_data)
+#comparing_mutation_graph(bk_data)
 #data is your dataframe
 
 
