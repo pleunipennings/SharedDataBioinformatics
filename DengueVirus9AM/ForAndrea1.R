@@ -245,7 +245,7 @@ Drastic ##########
 
 library(seqinr)
 #library(Biostrings)
-install.packages("ape")
+#install.packages("ape")
 library(ape)
 
 # names(VIRUS_DATA)=c("WTseq", "Mutseq", "WTAA", "MutAA", "WTcat", "Mutcat", "DrasticAA")
@@ -473,7 +473,7 @@ View(VIRUS_DATA)
 #setwd("~/Desktop/Git")
 
 #install.packages('ggplot2')
-install.packages('scales')
+#install.packages('scales')
 #scales is used to log the y axis in the graoh and ggplot2 is used to create the graph
 library(scales)
 library(ggplot2)
@@ -501,7 +501,7 @@ comparing_mutation_graph = function(VIRUS_DATA){
     VIRUS_DATAtww <- subset(VIRUS_DATA, TypeOfSite=="syn" | TypeOfSite=="nonsyn")
     #if your dataframe has "-" try using the following line of code
     #datatww<-datatww[!(which(datatww$wtnt=="-")),]
-    VIRUS_DATAtww$TypeOfSite <- ifelse(VIRUS_DATAtww$TypeOfSite == "syn", "Synonymous Sites", "Non-synonymous Sites")
+    VIRUS_DATAtww$TypeOfSite <- ifelse(VIRUS_DATAtww$TypeOfSite == "syn", "nonsense", "nonsyn")
     
     #gives values to each nucecotide and if they have a cetain combo
     #first need to introduce new columes for collecting the xvalue and the color
@@ -561,7 +561,7 @@ comparing_mutation_graph = function(VIRUS_DATA){
     }
     #subsetiing all the VIRUS_DATA by amino acid, drastic AA, and CpG forming: Helps with analyst 
     #syn subset 
-    synVIRUS_DATA <- subset(VIRUS_DATAtww, TypeOfSite=="Synonymous Sites")
+    synVIRUS_DATA <- subset(VIRUS_DATAtww, TypeOfSite=="syn")
     #syn subset for no AA and no CPG
     synNNVIRUS_DATA <- subset(synVIRUS_DATA, combo=="noAA noCPG")
     #syn subset for no AA and no CPG for a, c, g, t (for HIV all 4 should be here)
@@ -592,7 +592,7 @@ comparing_mutation_graph = function(VIRUS_DATA){
     synYYt  <- subset(synYYVIRUS_DATA, wtnt=="t")
     
     #nonsyn sub set 
-    nonsynVIRUS_DATA <- subset(VIRUS_DATAtww, TypeOfSite=="Non-synonymous Sites")
+    nonsynVIRUS_DATA <- subset(VIRUS_DATAtww, TypeOfSite=="nonsyn")
     nonyescpGVIRUS_DATA<- subset(nonsynVIRUS_DATA, combo=="noAA yesCPG")
     #nonsyn subset for no AA and no CPG
     nonNNVIRUS_DATA <- subset(nonsynVIRUS_DATA, combo=="noAA noCPG")
@@ -825,4 +825,4 @@ comparing_mutation_graph(VIRUS_DATA)
 #data is your dataframe
 
 
-
+View(VIRUS_DATA)
