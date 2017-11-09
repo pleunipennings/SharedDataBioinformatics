@@ -14,8 +14,7 @@ plot_NonSynNon = function(df) {
     #col = as.factor(df$TypeOfSite) was so that we could color everything based on TypeOfSite, but first we had to 
         #ensure that R read it as factors; otherwise it wouldn't color it b/c "nonsyn" was not a color (tl;dr R is picky)
 
-
-virus_plot(final_BOCA) #this is what using the function should look like, our df was titled final_BOCA
+virus_plot(final_boca) #this is what using the function should look like, our df was titled final_BOCA
 
 
 #making a legend

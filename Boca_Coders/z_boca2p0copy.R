@@ -144,6 +144,10 @@ View(VIRUS_DATA)
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+VIRUS_DATA <- VIRUS_DATA[2981:5024,]
+source()
+# # # # # # # # # # # # # # # # # # # # # # # # #
+
 
 # -- note for 10/31 --
 #need to try out drastic/ nondrastic
@@ -188,7 +192,9 @@ for (i in seq.int(1,nrow(VIRUS_DATA),3)) {
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
-
+#subset to only have open reading frame 
+VIRUS_DATA <- VIRUS_DATA[2981:5024,]
+source()
 
 
 #THIS IS NOT MY CODE -- THIS IS AVERY'S CODE THANKS AVERY!!
