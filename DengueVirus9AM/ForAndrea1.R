@@ -501,7 +501,7 @@ comparing_mutation_graph = function(VIRUS_DATA){
     VIRUS_DATAtww <- subset(VIRUS_DATA, TypeOfSite=="syn" | TypeOfSite=="nonsyn")
     #if your dataframe has "-" try using the following line of code
     #datatww<-datatww[!(which(datatww$wtnt=="-")),]
-    VIRUS_DATAtww$TypeOfSite <- ifelse(VIRUS_DATAtww$TypeOfSite == "syn", "nonsense", "nonsyn")
+    VIRUS_DATAtww$TypeOfSite <- ifelse(VIRUS_DATAtww$TypeOfSite == "syn", "Synonymous Sites", "Non-synonymous Sites")
     
     #gives values to each nucecotide and if they have a cetain combo
     #first need to introduce new columes for collecting the xvalue and the color
@@ -561,7 +561,7 @@ comparing_mutation_graph = function(VIRUS_DATA){
     }
     #subsetiing all the VIRUS_DATA by amino acid, drastic AA, and CpG forming: Helps with analyst 
     #syn subset 
-    synVIRUS_DATA <- subset(VIRUS_DATAtww, TypeOfSite=="syn")
+    synVIRUS_DATA <- subset(VIRUS_DATAtww, TypeOfSite=="Synonymous Sites")
     #syn subset for no AA and no CPG
     synNNVIRUS_DATA <- subset(synVIRUS_DATA, combo=="noAA noCPG")
     #syn subset for no AA and no CPG for a, c, g, t (for HIV all 4 should be here)
@@ -592,7 +592,7 @@ comparing_mutation_graph = function(VIRUS_DATA){
     synYYt  <- subset(synYYVIRUS_DATA, wtnt=="t")
     
     #nonsyn sub set 
-    nonsynVIRUS_DATA <- subset(VIRUS_DATAtww, TypeOfSite=="nonsyn")
+    nonsynVIRUS_DATA <- subset(VIRUS_DATAtww, TypeOfSite=="Non-synonymous Sites")
     nonyescpGVIRUS_DATA<- subset(nonsynVIRUS_DATA, combo=="noAA yesCPG")
     #nonsyn subset for no AA and no CPG
     nonNNVIRUS_DATA <- subset(nonsynVIRUS_DATA, combo=="noAA noCPG")
@@ -658,9 +658,9 @@ comparing_mutation_graph = function(VIRUS_DATA){
         graph<- graph + geom_point(data =synNNc, aes('9',mean(synNNc$freq)))
     } 
     if (nrow(synNNg)!=0) {
-        synNNgconf <- t.test(synNNg$freq)$conf.int
-        graph<- graph +geom_errorbar(data = synNNg, aes(ymin = synNNgconf[[1]], ymax = synNNgconf[[2]], width = 0.2))
-        graph<- graph +geom_point(data =synNNg, aes('5',mean(synNNg$freq)))
+        #synNNgconf <- t.test(synNNg$freq)$conf.int
+        #graph<- graph +geom_errorbar(data = synNNg, aes(ymin = synNNgconf[[1]], ymax = synNNgconf[[2]], width = 0.2))
+        #graph<- graph +geom_point(data =synNNg, aes('5',mean(synNNg$freq)))
     } 
     if (nrow(synNNt)!=0) {
         synNNtconf <- t.test(synNNt$freq)$conf.int
@@ -669,9 +669,9 @@ comparing_mutation_graph = function(VIRUS_DATA){
     } 
     #synNYdata
     if (nrow(synNYa)!=0) {
-        synNYaconf <- t.test(synNYa$freq)$conf.int
-        graph<- graph +geom_errorbar(data = synNYa, aes(ymin = synNYaconf[[1]], ymax = synNYaconf[[2]], width = 0.2))
-        graph<- graph +geom_point(data =synNYa, aes('2',mean(synNYa$freq)))
+        #synNYaconf <- t.test(synNYa$freq)$conf.int
+        #graph<- graph +geom_errorbar(data = synNYa, aes(ymin = synNYaconf[[1]], ymax = synNYaconf[[2]], width = 0.2))
+        #graph<- graph +geom_point(data =synNYa, aes('2',mean(synNYa$freq)))
     } 
     if (nrow(synNYc)!=0) {
         synNYcconf <- t.test(synNYc$freq)$conf.int
@@ -720,8 +720,8 @@ comparing_mutation_graph = function(VIRUS_DATA){
     } 
     if (nrow(synYYg)!=0) {
         synYYgconf <- t.test(synYYg$freq)$conf.int
-        graph<- graph +geom_errorbar(data = synYYg, aes(ymin = synYYgconf[[1]], ymax = synYYgconf[[2]], width = 0.2))
-        graph<- graph +geom_point(data =synYYg, aes('8',mean(synYYg$freq)))
+        #graph<- graph +geom_errorbar(data = synYYg, aes(ymin = synYYgconf[[1]], ymax = synYYgconf[[2]], width = 0.2))
+        #graph<- graph +geom_point(data =synYYg, aes('8',mean(synYYg$freq)))
     } 
     if (nrow(synYYt)!=0) {
         synYYtconf <- t.test(synYYt$freq)$conf.int
@@ -731,8 +731,8 @@ comparing_mutation_graph = function(VIRUS_DATA){
     #nonsyn data
     if (nrow(nonsynNNa)!=0) {
         nonsynNNaconf <- t.test(nonsynNNa$freq)$conf.int
-        graph<- graph +geom_errorbar(data = nonsynNNa, aes(ymin = nonsynNNaconf[[1]], ymax = nonsynNNaconf[[2]], width = 0.2))
-        graph<- graph +geom_point(data =nonsynNNa, aes('1',mean(nonsynNNa$freq)))
+        #graph<- graph +geom_errorbar(data = nonsynNNa, aes(ymin = nonsynNNaconf[[1]], ymax = nonsynNNaconf[[2]], width = 0.2))
+        #graph<- graph +geom_point(data =nonsynNNa, aes('1',mean(nonsynNNa$freq)))
     } 
     if (nrow(nonsynNNc)!=0) {
         nonsynNNcconf <- t.test(nonsynNNc$freq)$conf.int
@@ -826,3 +826,6 @@ comparing_mutation_graph(VIRUS_DATA)
 
 
 View(VIRUS_DATA)
+
+
+
