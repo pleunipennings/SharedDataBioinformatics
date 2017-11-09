@@ -8,6 +8,7 @@ read.fasta("HumanBocavirus1_VP1.fasta_pruned.mu.txt") -> VIRUS
 
 # reference sequence
 ref <- VIRUS[[1]]
+ref
 length(ref)->Seqlength
 
 # dataframe columns
@@ -110,7 +111,6 @@ for (i in 1:length(absfreq)) {
 
 #making the dataframe so far 
 VIRUS_DATA <- data.frame(num,wtnt,freq)
-View(VIRUS_DATA)
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
@@ -140,7 +140,6 @@ mutnt = transition_vec(wtnt)
 
 #making a dataframe out of all the data compiled -- position num, wtnt, mutnt, mean freq, wtAA, and MUTAA
 VIRUS_DATA <- data.frame(num,wtnt,mutnt,freq)
-View(VIRUS_DATA)
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
@@ -151,55 +150,89 @@ View(VIRUS_DATA)
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
-# THIS IS NOT MY CODE, THIS IS SCOTT'S CODE FOR THE WTAA AND MUTAA !!!
+#read Boca virus file 
+setwd("/Users/shantothenel/Desktop/HumanBocaVirus")
 
-transition_nuc = function(nuc) {
-  # %in% means if you find any of these things in the list, return 
-  # what I want anyways
-  if(nuc %in% c("A","a")) {
-    mutatedNuc = "G" 
-  } else if(nuc %in% c("G","g")) {
-    mutatedNuc = "A" 
-  } else if(nuc %in% c("T","t")) {
-    mutatedNuc = "C"
-  } else if(nuc %in% c("C","c")) {
-    mutatedNuc = "T"
-  } else if(nuc != T) {
-    mutatedNuc = "ERROR"
-  }
-  return(mutatedNuc)
+library(seqinr)
+read.fasta("HumanBocavirus1_VP1.fasta_pruned.mu.txt") -> VIRUS
+#save Boca file as a variable
+library(ape)
+WTAA<-c()
+MUTAA<-c()
+#for loop for transition mutation at each position and translating it 
+for(x in seq(1, length(cons), 3)){
+    codon <- c(cons[x], cons[x+1], cons[x+2])
+    mutated_codon <- codon
+    if(codon[1] == "a"){
+        mutated_codon <- replace(x=mutated_codon, values=c("g", codon[2], codon[3]))
+    }
+    if(codon[1] == "g"){
+        mutated_codon <- replace(x=mutated_codon, values=c("a", codon[2], codon[3]))
+    }
+    if(codon[1] == "c"){
+        mutated_codon <- replace(x=mutated_codon, values=c("t", codon[2], codon[3]))
+    }
+    if(codon[1] == "t"){
+        mutated_codon <- replace(x=mutated_codon, values=c("c", codon[2], codon[3]))
+    }
+    MUTAA[x] <- translate(mutated_codon)
+    
+    if(codon[2] == "a"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], "g", codon[3]))
+    }
+    if(codon[2] == "g"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], "a", codon[3]))
+    }
+    if(codon[2] == "c"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], "t", codon[3]))
+    }
+    if(codon[2] == "t"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], "c", codon[3]))
+    }
+    MUTAA[x+1] <- translate(mutated_codon)
+    
+    if(codon[3] == "a"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], codon[2], "g"))
+    }
+    if(codon[3] == "g"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], codon[2], "a"))
+    }
+    if(codon[3] == "c"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], codon[2], "t"))
+    }
+    if(codon[3] == "t"){
+        mutated_codon <- replace(x=mutated_codon, values=c(codon[1], codon[2], "c"))
+    }
+    MUTAA[x+2] <- translate(mutated_codon)
 }
 
-for (i in seq.int(1,nrow(VIRUS_DATA),3)) {
-  codon <- c(VIRUS_DATA$wtnt[i],VIRUS_DATA$wtnt[i+1],VIRUS_DATA$wtnt[i+2])
-  VIRUS_DATA$WTAA[i] = seqinr::translate(codon)
-  VIRUS_DATA$WTAA[i+1] = seqinr::translate(codon)
-  VIRUS_DATA$WTAA[i+2] = seqinr::translate(codon)
-  copy = codon
-  copy[1] = transition_nuc(codon[1])
-  VIRUS_DATA$MUTAA[i] = seqinr::translate(copy)
-  copy = codon
-  copy[2] = transition_nuc(codon[2])
-  VIRUS_DATA$MUTAA[i+1] = seqinr::translate(copy)
-  copy = codon
-  copy[3] = transition_nuc(codon[3])
-  VIRUS_DATA$WTAA[i+2] = seqinr::translate(copy)
+for(x in seq(1, length(cons)-2, 3)){
+    codon <- c(cons[x], cons[x+1], cons[x+2])
+    new_AA <- translate(codon)
+    WTAA[x] <- new_AA
+    WTAA[x+1] <- new_AA
+    WTAA[x+2] <- new_AA
 }
+#Insert WTaa and MTaa into dataframe
+WTAA->VIRUS_DATA$WTAA
+MUTAA->VIRUS_DATA$MUTAA
+
+
+#subset to only have open reading frame
+VIRUS_DATA <- VIRUS_DATA[2981:4996,]
+
+###Get Wildtype amino acid###
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 
-
-
 #THIS IS NOT MY CODE -- THIS IS AVERY'S CODE THANKS AVERY!!
 
-#setting up enviroment
 library(seqinr)
-#library(Biostrings) ; i was not able to get this to download
+#library(Biostrings)
 library(ape)
 
-#reading files and setting data 
-
+#reading files and setting data  
 seqs = read.dna("HumanBocavirus1_VP1.fasta_pruned.mu.txt", format = "fasta", as.character=TRUE)
 a=nrow(seqs)
 b=ncol(seqs)
@@ -207,28 +240,33 @@ b=ncol(seqs)
 
 # Let's establish the new data frame
 # Number of columns is arbitrary. I just want to print the WT sequence down a column
-VIRUS_DATA2=data.frame(matrix(nrow=b, ncol=7)) 
-names(VIRUS_DATA2)=c("WTseq", "Mutseq", "WTAA", "MUTAA", "WTcat", "Mutcat", "bigAAchange")
+df=data.frame(matrix(nrow=b, ncol=10)) 
+names(df)=c("WTseq", "Freq", "Mutseq", "WTAA", "MutAA", "WTcat", "Mutcat", "DrasticAA", "TypeofSite", "CpG")
 
 #mean frequency
+
+
 # We're defining the wild type sequence as the most common sequence
 for(i in 0:(b-1)){
-  x=table(seqs[,i+1])
-  y=names(x[which.max(x)])
-  VIRUS_DATA2[i+1,1]=y
+    x=table(seqs[,i+1])
+    y=names(x[which.max(x)])
+    z=((x[which.max(x)])/a)
+    df[i+1,]$WTseq = y
+    df[i+1,]$Freq = z
 }
 
 # Translate the WT DNA sequence to AA sequence
-curSeq <- translate(paste(VIRUS_DATA2[,1], sep=" "), NAstring="X", ambiguous = FALSE, sens="F")
+
+curSeq <- translate(paste(df[,]$WTseq, sep=" "), NAstring="X", ambiguous = FALSE, sens="F")
 count <- 0
 
 for(i in 1:length(curSeq)){ # incrementing down sequence by 3 (needs work)
-  count <- count + 1
-  VIRUS_DATA2[count,]$WTAA <- curSeq[i]
-  count <- count + 1
-  VIRUS_DATA2[count,]$WTAA <- curSeq[i]
-  count <- count + 1
-  VIRUS_DATA2[count,]$WTAA <- curSeq[i]
+    count <- count + 1
+    df[count,]$WTAA <- curSeq[i]
+    count <- count + 1
+    df[count,]$WTAA <- curSeq[i]
+    count <- count + 1
+    df[count,]$WTAA <- curSeq[i]
 }
 
 #Defining AA changes
@@ -238,95 +276,89 @@ unc <- "S|T|N|Q"
 spe <- "C|U|G|P"
 hyd <- "A|I|L|F|M|W|Y|V"
 amCat <- function(AA){
-  if(regexpr(pos, AA) > 0){ return("pos") }
-  if(regexpr(neg, AA) > 0){ return("neg") }
-  if(regexpr(unc, AA) > 0){ return("unc") }
-  if(regexpr(spe, AA) > 0){ return("spe") }
-  if(regexpr(hyd, AA) > 0){ return("hyd") }
-  return(5)
+    if(regexpr(pos, AA) > 0){ return("pos") }
+    if(regexpr(neg, AA) > 0){ return("neg") }
+    if(regexpr(unc, AA) > 0){ return("unc") }
+    if(regexpr(spe, AA) > 0){ return("spe") }
+    if(regexpr(hyd, AA) > 0){ return("hyd") }
+    return(5)
 }
 
-# categorizing the WT amino acids
+# Categorizing the WT amino acids
 for(j in 1:b){
-  VIRUS_DATA2[j,5]=amCat(VIRUS_DATA2[j,3])
+    df[j,]$WTcat=amCat(df[j,]$WTAA)
 }
 
-# creates Mut strain of current WTseq enters it into 
+#creates Mut strain of current WTseq enters it into 
 for (i in 1:b){
-  curNuc <-  VIRUS_DATA2[i,1]
-  if(curNuc == "a" || curNuc == "g"){
-    if(curNuc == "a"){
-      VIRUS_DATA2 [i, 2] = "g"
+    curNuc <-  df[i,1]
+    if(curNuc == "a" || curNuc == "g"){
+        if(curNuc == "a"){
+            df [i, 3] = "g"
+        }else{
+            df [i, 3] = "a"
+        }
     }else{
-      VIRUS_DATA2 [i, 2] = "a"
+        if(curNuc == "t"){
+            df [i, 3] = "c"
+        }else{
+            df [i, 3] = "t"
+        }
     }
-  }else{
-    if(curNuc == "t"){
-      VIRUS_DATA2 [i, 2] = "c"
-    }else{
-      VIRUS_DATA2 [i, 2] = "t"
-    }
-  }
 }
 
-
-
-# Let's Creates 
-
-VIRUS_DATA2$MUTAA <-c(0)
-
+# Let's make a column where the WT AA is printed three times over their codons 
+df$MutAA <-c(0)
 count <- 1
 i = 1
 j = 1
-for(i in 1:(nrow(VIRUS_DATA2)/3)){ # Workspace for MUTAA filling don't run this loop
-  for (j in 1:3){
-    if(j == 1){                     #first codon
-      VIRUS_DATA2[count, ]$MUTAA <- translate(firstC <- c(as.character(VIRUS_DATA2[count,]$Mutseq), as.character(VIRUS_DATA2[count + 1,]$WTseq), as.character(VIRUS_DATA2[count +2,]$WTseq)))
-    } 
-    if(j == 2){                #second codon
-      VIRUS_DATA2[count, ]$MUTAA <- translate(secondC <- c(as.character(VIRUS_DATA2[count - 1,]$WTseq), as.character(VIRUS_DATA2[count,]$Mutseq), as.character(VIRUS_DATA2[count +1,]$WTseq)))
+for(i in 1:(nrow(df)/3)){ # Workspace for MutAA filling don't run this loop
+    for (j in 1:3){
+        if(j == 1){                #first nucleotide in codon
+            df[count,]$MutAA <- translate(firstC <- c(as.character(df[count,]$Mutseq), as.character(df[count + 1,]$WTseq), as.character(df[count +2,]$WTseq)))
+        } 
+        if(j == 2){                #second nucleotide in codon
+            df[count,]$MutAA <- translate(secondC <- c(as.character(df[count - 1,]$WTseq), as.character(df[count,]$Mutseq), as.character(df[count +1,]$WTseq)))
+        }
+        if(j == 3){                #third nucleotide in codon
+            df[count, ]$MutAA <- translate(thirdC <- c(as.character(df[count - 2,]$WTseq), as.character(df[count - 1,]$WTseq), as.character(df[count,]$Mutseq)))
+        }
+        count <- count + 1
+        print(j)
+        print(i)
+        print(count)
     }
-    if(j == 3){          #third codon
-      VIRUS_DATA2[count, ]$MUTAA <- translate(thirdC <- c(as.character(VIRUS_DATA2[count - 2,]$WTseq), as.character(VIRUS_DATA2[count - 1,]$WTseq), as.character(VIRUS_DATA2[count,]$Mutseq)))
-    }
-    count <- count + 1
-    print(j)
-    print(i)
-    print(count)
-  }
-}
+}                                           
 
 
-VIRUS_DATA2[,4]=seqinr::translate(paste(VIRUS_DATA2[,2], sep=" "),
-                                  NAstring="X", ambiguous=FALSE, sens="F")            # Translating from nucleic acid to AA
+df$MutAA=seqinr::translate(paste(df$Mutseq, sep=" "),
+                           NAstring="X", ambiguous=FALSE, sens="F")            # Translating from nucleic acid to AA
 
 for(j in 1:b){                                              
-  VIRUS_DATA2[j,6]=amCat(VIRUS_DATA2[j,4])                                    # Categorizing the AA 
+    df[j,]$Mutcat=amCat(df[j,]$MutAA)                                    # Categorizing the AA 
 }
 
-
+# Function to compare DrasticAAChanges
 DrasticChange <- function(df){
-  for(h in 1:nrow(df)){
-    if (df[h,]$WTcat==df[h,]$Mutcat){
-      df[h,]$bigAAchange= 0                      # If WT AA category = Mut AA Category, no drastic change
+    for(h in 1:nrow(df)){
+        if (df[h,]$WTcat==df[h,]$Mutcat){
+            df[h,]$DrasticAA= 0                      # If WT AA category = Mut AA Category, no drastic change
+        }
+        if (df[h,]$WTcat!=df[h,]$Mutcat){
+            df[h,]$DrasticAA= 1                      # If WT AA category =/= Mut AA Category, yes drastic change
+        }
     }
-    if (df[h,]$WTcat!=df[h,]$Mutcat){
-      df[h,]$bigAAchange= 1                      # If WT AA category =/= Mut AA Category, yes drastic change
-    }
-  }
-  return(df)
+    return(df)
 }
 
 
-
-
-VIRUS_DATA2 <- DrasticChange(VIRUS_DATA2)
+VIRUS_DATA2 <- DrasticChange(VIRUS_DATA2[2981:4997,])
 View(VIRUS_DATA2)
 
 VIRUS_DATA$WTAA <- VIRUS_DATA2$WTAA
 head(VIRUS_DATA,10)
 
-VIRUS_DATA$MUTAA <- VIRUS_DATA2$MUTAA
+VIRUS_DATA$MUTAA <- VIRUS_DATA2$MutAA
 head(VIRUS_DATA,10)
 
 VIRUS_DATA$WTcat <- VIRUS_DATA2$WTcat
@@ -354,6 +386,8 @@ View(VIRUS_DATA)
 
 VIRUS_DATA$bigAAchange <- VIRUS_DATA2$bigAAchange
 head(VIRUS_DATA,10)
+
+safe <- VIRUS_DATA
 
 
 # # # # # # # # # # # # # # CPG SECTION # # # # # # # # # # # # # # # #
@@ -443,13 +477,14 @@ CpG_finder(BoNS1df)->BoNS1df
 head(BoNS1df, 100)
 
 
-VIRUS_DATA$makesCpG <- BoNS1df$makesCpG
+VIRUS_DATA$makesCpG <- BoNS1df[2981:5024,]$makesCpG
 View(VIRUS_DATA)
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 final_BOCA_VP1 <- VIRUS_DATA
+View(final_BOCA_VP1)
 
 head(final_BOCA_VP1,10)
 save(final_BOCA_VP1,file="final_BOCAdf_VP1.Rda")
@@ -481,9 +516,9 @@ legend("topleft",
        bty = "n")
 
 
-which(final_BOCA_VP1$TypeOfSite=="syn") #279 positions
-which(final_BOCA_VP1$TypeOfSite=="nonsyn") #4762 positions -> why is it mostly red
-which(final_BOCA_VP1$TypeOfSite=="nonsense") #116 positions
+which(final_BOCA_VP1$TypeOfSite=="syn") #102 positions
+which(final_BOCA_VP1$TypeOfSite=="nonsyn") #1897 positions -> why is it mostly red
+which(final_BOCA_VP1$TypeOfSite=="nonsense") #45 positions
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
@@ -495,7 +530,7 @@ abline(v = 25, col = "red") #indicates number of alleles where the partial match
 dev.off()
 
 #this is for BOCA
-pdf(file="Nucleotide Position (num) vs. Mean Frequency (freq) of Boca VP1")
+pdf(file="Nuc Position (num) vs. Mean Frequency (freq) of Boca VP1")
 virus_plot(final_BOCA_VP1)
 legend("topleft",
        c("syn", "nonsyn", "nonsense"),
@@ -508,37 +543,46 @@ dev.off()
 
 #TRIED THE CPG FIGURE
 
-read.csv("HumanBocavirus1_NS1.fasta_pruned.mu.txt")-> BOCAdata
+read.csv("HumanBocavirus1_VP1.fasta_pruned.mu.txt")-> BOCAdata
 print(BOCAdata)
 
+VIRUS_DATA
+
+
+#This function makes a plot that shows the location of CpG and noCpG sites vs. Frequency.
+#This function assumes that you have num, freq, and CPG are already in your dataframe.
+
+#Team: Christen, Rima, Nicole, and Kellen.
+#Would also like to thank Scott and Pleuni for their help with making corrections to our code. 
+
 #Identify noCpG sites
-which(BOCAdata$makesCpG=="0")->noCpG
+which(VIRUS_DATA$makesCpG=="0")->noCpG
 print(noCpG)
 #Identify CpG sites
-which(BOCAdata$makesCpG=="1")->CpG
+which(VIRUS_DATA$makesCpG=="1")->CpG
 CpG
 
+####### beginning of JACKY'S CODE #######
+
+VIRUS_DATA[noCpG,1] -> NEWnoCpG
+NEWnoCpG
+VIRUS_DATA[CpG, 1] -> NEWCpG
+NEWCpG
+
 #Identify mean frequency in association with noCpG sites
-BOCAdata[noCpG,"MeanFreq"]->Freq
-Freq
+VIRUS_DATA[noCpG,"freq"]->freq
 #Identify mean frequency in association with CpG sites
-BOCAdata[CpG,"MeanFreq"]->Freq2
-Freq2
+VIRUS_DATA[CpG,"freq"]->freq2
 
+plot(NEWnoCpG, freq+0.0001, ylim=c(0.001,0.3), col="black",pch=21.25, bg=rgb(1,0,0,0.5), main="CpG/noCpG location vs. Mean Frequency", xlab = "Location", ylab = "Mean Frequency")
+points(NEWCpG, freq2+0.0001, col="black",pch=21.25, bg=rgb(0,0,1,0.5))
 
-
-#Making a plot of mean frequency vs. CpG/nonCpG location
-plot(noCpG, Freq+0.0001, ylim=c(0.0001,0.5), xlim = c(0.1, 1), log = "y", col="black",pch=21.25, bg=rgb(1,0,0,0.5), main="CpG/noCpG location vs. Mean Frequency", xlab = "Location", ylab = "Mean Frequency")
-
-#Overlapping the two graphs
-points(CpG, Freq2+0.0001, col="black",pch=21.25, bg=rgb(0,0,1,0.5),xaxt='n',yaxt='n', ann = FALSE)
-
-
-
-#legend with circle instead of line  
-legend("topleft",c("noCpG","CpG"),cex=0.6, 
+legend("topleft",c("noCpG","CpG"),cex = 1,
        col ="black",bg=c(rgb(1,0,0,0.5),rgb(0,0,1,0.5)),bty="n",
        title="Legend",inset=.02,pch =21,pt.bg = c(rgb(1,0,0,0.5),rgb(0,0,1,0.5)))
+
+####### ending of JACKY'S CODE #######
+
 
 
 
