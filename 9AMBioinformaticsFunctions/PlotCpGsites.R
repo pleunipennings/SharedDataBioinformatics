@@ -3,7 +3,7 @@
 
 #Team: Christen, Rima, Nicole, and Kellen.
 #Would also like to thank Scott and Pleuni for their help with making corrections to our code. 
-
+virus = function(VIRUS_DATA) {
 #Identify noCpG sites
 which(VIRUS_DATA$CPG=="0")->noCpG
 print(noCpG)
@@ -23,7 +23,8 @@ plot(noCpG, Freq+0.0001, ylim=c(0.0001,0.5), col="black",pch=21.25, bg=rgb(1,0,0
 #Overlapping the two graphs
 points(CpG, Freq2+0.0001, col="black",pch=21.25, bg=rgb(0,0,1,0.5))
 
-
+}
+virus(VIRUS_DATA)
 
 #legend with circle instead of line  
 legend("topleft",c("noCpG","CpG"),cex=0.6, 
