@@ -33,7 +33,7 @@ amCat <- function(AA){
   df$WTcat <- 0
   df$bigAAchange <- 0
  
-  for(j in 1:b){
+  for(j in 1:nrow(df){
     df[j,]$WTcat=amCat(df[j,]$WTAA)
   }
   
