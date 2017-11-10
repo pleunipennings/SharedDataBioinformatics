@@ -5,6 +5,13 @@ library(ape)
 setwd("~/bioinformatics/bioinformaticsproject")
 setwd("~/SharedDataBioinformatics/BioInfor11AMFunctions")
 
+fasta_file<-"HumanBocavirus1_VP1.fasta_pruned.mu.trim05"
+dengue_basic <- read.fasta(fasta_file)
+number_of_seqs <- length(dengue_basic)
+dengue_align <- read.alignment(fasta_file, format = "fasta", forceToLower = T)
+
+
+
 source("MeanFreq.R")
 setwd("~/bioinformatics/bioinformaticsproject")
 meanFreq("HumanBocavirus1_VP1.fasta_pruned.mu.trim05")->DF

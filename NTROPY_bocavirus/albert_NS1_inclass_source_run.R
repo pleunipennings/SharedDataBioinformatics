@@ -33,7 +33,7 @@ LvsF_CpG_Printer(dffull)
 
 #plot syn nonsyn
 source("figure2_plot_meanfreq_syn_nonsyn.R")
-plotsyn(dffull,"Bocavirus NS1: Higher Frequency of Synonymous Mutations", logy)
+plotsyn(dffull,"Bocavirus NS1: Higher Frequency of Synonymous Mutations")
 
 #Figure 3
 source("figureThree.R")

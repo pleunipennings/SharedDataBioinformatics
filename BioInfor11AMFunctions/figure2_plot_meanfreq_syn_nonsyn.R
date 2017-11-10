@@ -17,10 +17,10 @@
 
 plotsyn<-function(DF, Title, logy){
     #code to ignore any 0's in MeanFreq column
-    DF->df
-    df1<-data.frame("num"=df$num, "MeanFreq"=df$MeanFreq, "TypeOfSite"=df$TypeOfSite)
-    NA->df1[df1==0]
-    na.omit(df1)->df2
+    DF->df2
+    #df1<-data.frame("num"=df$num, "MeanFreq"=df$MeanFreq, "TypeOfSite"=df$TypeOfSite)
+    #NA->df1[df1==0]
+   # na.omit(df1)->df2
 #set xy window to fit data from 0 to its max
         plot.window(c(0,nrow(DF)), c(0,max(DF$MeanFreq)))
     if(missing("logy")){
