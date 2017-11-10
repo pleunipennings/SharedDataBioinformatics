@@ -43,7 +43,7 @@ head(df)
 
 source("BioInfor11AMFunctions/functionWTAA.R") #stuck here
 df$WTAA=""
-df<-getWTAA(df)
+df$WTAA<-getWTAA(df)
 df <- df[1:(nrow(df)-2),]
 head(df)
 source("BioInfor11AMFunctions/getMUTAA.R")
@@ -64,7 +64,7 @@ source("BioInfor11AMFunctions/plotCpGByFeq&Location.R")
 LvsF_CpG_Printer(df)
 
 source("BioInfor11AMFunctions/figure2_plot_meanfreq_syn_nonsyn.R")
-plotsyn(df,"Title",logy)
+plotsyn(df,"meanfreq of syn vs nonsyn",logy)
 
 source("BioInfor11AMFunctions/figureThree.R")
-Fig3(df)
+Fig3(df, "HIPV")
