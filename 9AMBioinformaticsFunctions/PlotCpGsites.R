@@ -27,8 +27,7 @@ points(CpG, Freq2+0.0001, col="black",pch=21.25, bg=rgb(0,0,1,0.5))
 virus(VIRUS_DATA)
 
 #legend with circle instead of line  
-legend("topleft",c("noCpG","CpG"),cex=0.6, 
-      col ="black",bg=c(rgb(1,0,0,0.5),rgb(0,0,1,0.5)),bty="n",
-       title="Legend",inset=.02,pch =21,pt.bg = c(rgb(1,0,0,0.5),rgb(0,0,1,0.5)))
+legend("topleft",c("noCpG","CpG"),cex=1, 
+      col ="black",bg=c(rgb(1,0,0,0.5),rgb(0,0,1,0.5)),bty="n",pch =21.25,pt.bg = c(rgb(1,0,0,0.5),rgb(0,0,1,0.5)))
 
 

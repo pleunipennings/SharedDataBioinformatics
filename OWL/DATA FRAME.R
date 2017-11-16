@@ -254,6 +254,7 @@ legend("topleft",c("noCpG","CpG"),cex=0.6,
 #  need mutaa and wt Note that this depends on the columns MUTAA and WTAA being already complete!
 VIRUS_DATA$MUTAA<-("")
 VIRUS_DATA$WTAA<-("")
+
 VIRUS_DATA$TypeOfSite<-("")
 transition<-function(basepair){
     #basepair<-("A", "C", "T", "G"),
@@ -279,7 +280,61 @@ for (i in seq.int(1,nrow(VIRUS_DATA),3)) {
     copy = codon
     copy[3] = transition(codon[3])
     VIRUS_DATA$MUTAA[i+2] = seqinr::translate(copy)
+    
 }
+
+###Big AA change###
+big_aa_change <- function(VIRUS_DATA){
+    
+    #Function for amino acid categories
+    pos <- "R|H|K"
+    neg <- "D|E"
+    unc <- "S|T|N|Q"
+    spe <- "C|U|G|P"
+    hyd <- "A|I|L|F|M|W|Y|V"
+    amCat <- function(AA){
+        if(regexpr(pos, AA) > 0){ return(0) }
+        if(regexpr(neg, AA) > 0){ return(1) }
+        if(regexpr(unc, AA) > 0){ return(2) }
+        if(regexpr(spe, AA) > 0){ return(3) }
+        if(regexpr(hyd, AA) > 0){ return(4) }
+        return(5)
+    }
+    
+    #Create empty vectors
+    WTAAcategory <- c()
+    MUTAAcategory <- c()
+    bigAAchange <- c()
+    WTAA<-VIRUS_DATA$WTAA
+    MUTAA<-VIRUS_DATA$MUTAA
+    
+    #Assign wild type AA category
+    for(j in 1:15466){
+        WTAAcategory[j]=amCat(WTAA[j])
+    }
+    
+    #Assign mutated AA category
+    for(j in 1:15466){
+        MUTAAcategory[j]=amCat(MUTAA[j])
+    }
+    
+    #Loop for drastic change or not 
+    for(i in 1:15466){
+        if (WTAAcategory[i]==MUTAAcategory[i]){
+            bigAAchange[i]= 0
+        }
+        if (WTAAcategory[i]!=MUTAAcategory[i]){
+            bigAAchange[i] = 1
+        }
+    }
+    VIRUS_DATA$bigAAchange <- bigAAchange
+    
+    return(VIRUS_DATA)
+}
+
+
+VIRUS_DATA<-big_aa_change(VIRUS_DATA)
+
 
 for (h in 1:15466){
     
@@ -293,11 +348,11 @@ for (h in 1:15466){
         
         if(VIRUS_DATA[h,"MUTAA"]=="*"){
             
-            VIRUS_DATA[h,"TypeOfSite"] = "non-sense"}
+            VIRUS_DATA[h,"TypeOfSite"] = "nonsense"}
         
         else {
             
-            VIRUS_DATA[h,"TypeOfSite"] = "non-syn"
+            VIRUS_DATA[h,"TypeOfSite"] = "nonsyn"
             
         }
         
