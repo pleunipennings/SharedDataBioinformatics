@@ -26,7 +26,7 @@ if (TRUE) {
     library(plyr)
     library(grid)
     library(scales)
-    library(gridExtra)
+#    library(gridExtra)
     library(seqinr)
 }
 ##### assumptions #####
@@ -43,7 +43,6 @@ if (TRUE) {
 
 LvsF_CpG_Printer <- function(n){ # value "n" will represent our data.frame of use
 
-    
     #    if (T) {n$makesCpG <- n$makesCpG+1} #this adds one value in "n" data.frame to the "0" and "1" boolian values to "1" and "2" this is for the as.integer condition to work
     #PSP: instead, let's use n$makesCpG+1 directly for the colors
 

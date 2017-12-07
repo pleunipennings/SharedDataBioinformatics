@@ -1,7 +1,7 @@
 ###Get Wildtype amino acid###
 getWTAA<-function(df){
     
-    df<-DF
+    #df<-DF
     #Assign consensus to a variable
     cons =  df$wtnt
     

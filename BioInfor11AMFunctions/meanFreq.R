@@ -1,16 +1,16 @@
 meanFreq <- function(fasta_file){
   library(seqinr)
-  dengue_basic <- read.fasta(fasta_file)
-  number_of_seqs <- length(dengue_basic)
-  dengue_align <- read.alignment(fasta_file, format = "fasta", forceToLower = T)
-  dengue_consensus <- seqinr :: consensus(dengue_align, method = "majority")
-  dengue_consensus_matrix <- seqinr :: consensus(dengue_align, method = "profile")
-  consensus_length <- length(dengue_consensus)
+  virus_basic <- read.fasta(fasta_file)
+  number_of_seqs <- length(virus_basic)
+  virus_align <- read.alignment(fasta_file, format = "fasta", forceToLower = T)
+  virus_consensus <- seqinr :: consensus(virus_align, method = "majority")
+  virus_consensus_matrix <- seqinr :: consensus(virus_align, method = "profile")
+  consensus_length <- length(virus_consensus)
   number_column <- seq(1, consensus_length)
-  Dengue_DF <- data.frame("num" = number_column, "MeanFreq" = 0, "wtnt" = dengue_consensus)
+  virus_DF <- data.frame("num" = number_column, "MeanFreq" = 0, "wtnt" = virus_consensus)
   for(x in 1:consensus_length){
-    current_base <- dengue_consensus[x]
-    current_matrix_base_count <- dengue_consensus_matrix[,x]
+    current_base <- virus_consensus[x]
+    current_matrix_base_count <- virus_consensus_matrix[,x]
     ts_count <- 0
         if(current_base == "a"){
       ts_count <- current_matrix_base_count[["g"]]
@@ -24,11 +24,13 @@ meanFreq <- function(fasta_file){
     if(current_base == "t"){
       ts_count <- current_matrix_base_count[["c"]]
     }
-    Dengue_DF[x, 2] <- ts_count/number_of_seqs
+    virus_DF[x, 2] <- ts_count/number_of_seqs
   }
-  Dengue_DF$wtnt<-as.character(Dengue_DF$wtnt)
-  return(Dengue_DF)
+  virus_DF$wtnt<-as.character(virus_DF$wtnt)
+  return(virus_DF)
 }
 
+#made by 11 AM dengue team
+
 #example
-#meanFreq("DengueViruses/DengueVirus1.fasta")
+#meanFreq("virusViruses/virusVirus1.fasta")
