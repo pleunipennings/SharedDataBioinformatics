@@ -42,16 +42,25 @@ if (TRUE) {
 ####### function() for plotting location by frequency for CpG's occurence  #########
 
 LvsF_CpG_Printer <- function(n){ # value "n" will represent our data.frame of use
-    if (T) {n$makesCpG <- n$makesCpG+1} #this adds one value in "n" data.frame to the "0" and "1" boolian values to "1" and "2" this is for the as.integer condition to work
-    YCpG <- which(n$makesCpG=="2") #lists which variables return a "2" these make a CpG island when mutated "yes cpg or Y"
-    NCpG <- which(n$makesCpG=="1") #lists which variables return a "1" these do not make a CpG island when mutated "No cpg or N"
-    x1 <- n$MeanFreq[YCpG] #create a Value that looks at mean frequency by yes cpg
-    x2 <- n$MeanFreq[NCpG] #create a Value that looks at mean frequency by no cpg
-    plot.default(x = c(x1, x2), #y values not listed this is intended as x value to be plotted represents two sets of values on a log.
+
+    
+    #    if (T) {n$makesCpG <- n$makesCpG+1} #this adds one value in "n" data.frame to the "0" and "1" boolian values to "1" and "2" this is for the as.integer condition to work
+    #PSP: instead, let's use n$makesCpG+1 directly for the colors
+
+    smallestvalue = min(n$MeanFreq[n$MeanFreq>0]) # a small value to add to all frequencies to be able to see zeros on a log scale
+    
+    YCpG <- which(n$makesCpG==1) #lists which variables return a "2" these make a CpG island when mutated "yes cpg or Y"
+    NCpG <- which(n$makesCpG==0) #lists which variables return a "1" these do not make a CpG island when mutated "No cpg or N"
+    #x1 <- n$MeanFreq[YCpG] #create a Value that looks at mean frequency by yes cpg
+    #x2 <- n$MeanFreq[NCpG] #create a Value that looks at mean frequency by no cpg
+    plot.default( n$MeanFreq + smallestvalue/5, 
+        #y values not listed this is intended as x value to be plotted represents two sets of values on a log.
                  xlab = "Position Location", ylab = "Frequency", main = "Location vs frequency CpG non-CpG Graph", # labled titles for plot
-                 col = (as.integer(n$makesCpG)), #colors the values by their integer, using default association. 
-                 log = "y" #the plot is put into a log scale 
+                 col = (as.integer(n$makesCpG)+1), #colors the values by their integer, using default association. 
+                 log = "y", #the plot is put into a log scale 
+                yaxt="n"
     )#close plot.default
+    axis(side = 2, at = smallestvalue/5+c(0, round(smallestvalue,4),max(n$MeanFreq)), labels = c(0, round(smallestvalue,4),max(n$MeanFreq)))
     legend('topright', #add legend in top right corner
            legend = c(unique(n$makesCpG)), #names of each category based on the factors in n$makesCpG
            col=unique(as.integer(n$makesCpG)), #colors the factors as is found by integers in n$MakeCpG
