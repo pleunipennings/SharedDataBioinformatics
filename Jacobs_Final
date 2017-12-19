@@ -1,0 +1,187 @@
+setwd("~/Computer Science Texts + Syllabus/BioInformatics/R Data/Chan Lab Data")
+library("ggplot2", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.4")
+library("plyr", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.4")
+
+#first step = get all data into single data frame so that different varieties can be compared
+read.csv("apl5 population data clean matched.csv") -> apl5_CSV
+read.csv("BY population data clean matched.csv") -> BY_CSV
+read.csv("vac8  population data clean matched.csv") -> vac8_CSV
+read.csv("vac8  calc population data clean matched.csv") -> vac8_calc_CSV
+read.csv("W3 population data clean matched.csv") -> W3_CSV
+View(apl5_CSV)
+#all columns must have same names to be joined
+col.nms<-names(apl5_CSV)
+col.nms->names(BY_CSV)
+col.nms->names(vac8_CSV)
+col.nms->names(vac8_calc_CSV)
+col.nms->names(W3_CSV)
+consol.df<-rbind(apl5_CSV,BY_CSV)
+consol.df<-rbind(consol.df,vac8_CSV)
+consol.df<-rbind(consol.df,vac8_calc_CSV)
+consol.df<-rbind(consol.df,W3_CSV)
+
+#create felative volume (vac / cell) column for plot
+mean(consol.df$Mom.cell.vol)
+consol.df$relVol <- 0.0
+consol.df$relVol <- consol.df$Mom.bud.vac.vol/consol.df$Mom.bud.cell.vol
+consol.df$rvMean<-0.0
+mean(consol.df[which(consol.df$Variety=="apl5"),"relVol"])
+consol.df[which(consol.df$Variety=="apl5"),"rvMean"] = mean(consol.df[which(consol.df$Variety=="apl5"),"relVol"])
+consol.df[which(consol.df$Variety=="vac8"),"rvMean"] = mean(consol.df[which(consol.df$Variety=="vac8"),"relVol"])
+consol.df[which(consol.df$Variety=="BY"),"rvMean"] = mean(consol.df[which(consol.df$Variety=="BY"),"relVol"])
+consol.df[which(consol.df$Variety=="W3"),"rvMean"] = mean(consol.df[which(consol.df$Variety=="W3"),"relVol"])
+consol.df[which(consol.df$Variety=="vac8 calc"),"rvMean"] = mean(consol.df[which(consol.df$Variety=="vac8 calc"),"relVol"], na.rm = TRUE)
+
+#create standard deviation column for 1 sigma confidence interval confidence 
+consol.df$rvsd<-0.0
+sd(consol.df[which(consol.df$Variety=="apl5"),"relVol"])
+consol.df[which(consol.df$Variety=="apl5"),"rvsd"] = sd(consol.df[which(consol.df$Variety=="apl5"),"relVol"])
+consol.df[which(consol.df$Variety=="vac8"),"rvsd"] = sd(consol.df[which(consol.df$Variety=="vac8"),"relVol"])
+consol.df[which(consol.df$Variety=="BY"),"rvsd"] = sd(consol.df[which(consol.df$Variety=="BY"),"relVol"])
+consol.df[which(consol.df$Variety=="W3"),"rvsd"] = sd(consol.df[which(consol.df$Variety=="W3"),"relVol"])
+consol.df[which(consol.df$Variety=="vac8 calc"),"rvsd"] = sd(consol.df[which(consol.df$Variety=="vac8 calc"),"relVol"], na.rm = TRUE)
+consol.df$rvUpLim<-0.0
+consol.df$rvLoLim<-0.0
+consol.df$rvUpLim<-consol.df$rvMean+consol.df$rvsd
+consol.df$rvLoLim<-consol.df$rvMean-consol.df$rvsd
+
+
+#means with 1 sigma upper & lower confidence limits 
+ggplot(consol.df) +
+  geom_point(aes(x= Variety, y=relVol)) +
+  geom_point (aes (x = Variety, y = rvMean, color = "red", size = 2.0)) +
+  geom_errorbar(aes(x = Variety,ymin = rvLoLim, ymax = rvUpLim), width = 0.2, color = "red") +
+  ggtitle("Scatter Plot - Relative Volume vs Variety (65% confidence)") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+#add vacuole volume means 
+consol.df$vacvolMean<-0.0
+consol.df[which(consol.df$Variety=="apl5"),"vacvolMean"] = mean(consol.df[which(consol.df$Variety=="apl5"),"Mom.bud.vac.vol"])
+consol.df[which(consol.df$Variety=="vac8"),"vacvolMean"] = mean(consol.df[which(consol.df$Variety=="vac8"),"Mom.bud.vac.vol"])
+consol.df[which(consol.df$Variety=="BY"),"vacvolMean"] = mean(consol.df[which(consol.df$Variety=="BY"),"Mom.bud.vac.vol"])
+consol.df[which(consol.df$Variety=="W3"),"vacvolMean"] = mean(consol.df[which(consol.df$Variety=="W3"),"Mom.bud.vac.vol"])
+consol.df[which(consol.df$Variety=="vac8 calc"),"vacvolMean"] = mean(consol.df[which(consol.df$Variety=="vac8 calc"),"Mom.bud.vac.vol"], na.rm = TRUE)
+
+#separate data frames for variety based plots of vacuole volume vs cell volume
+consol.dfapl<-consol.df[which(consol.df$Variety=="apl5"),c("Variety","Mom.bud.cell.vol","Mom.bud.vac.vol")]
+consol.dfBY<-consol.df[which(consol.df$Variety=="BY"),c("Variety","Mom.bud.cell.vol","Mom.bud.vac.vol")]
+consol.dfvac8<-consol.df[which(consol.df$Variety=="vac8"),c("Variety","Mom.bud.cell.vol","Mom.bud.vac.vol")]
+consol.dfvac8_calc<-consol.df[which(consol.df$Variety=="vac8 calc"),c("Variety","Mom.bud.cell.vol","Mom.bud.vac.vol")]
+consol.dfW3<-consol.df[which(consol.df$Variety=="W3"),c("Variety","Mom.bud.cell.vol","Mom.bud.vac.vol")]
+
+
+ggplot(consol.df) +
+  geom_point(aes(x=Variety, y=Mom.bud.vac.vol))+
+  geom_point (aes (x = Variety, y = vacvolMean, color = "red", size = 2.0)) +
+  ggtitle("Scatter Plot - Total Vac Volume vs Variety 
+          Linear regression line in red with its 95% confidence interval in green ") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+  
+consol.df$Mom.bud.cell.vol
+consol.df$cellvolMean<-0.0
+consol.df[which(consol.df$Variety=="apl5"),"cellvolMean"] = mean(consol.df[which(consol.df$Variety=="apl5"),"Mom.bud.cell.vol"])
+consol.df[which(consol.df$Variety=="vac8"),"cellvolMean"] = mean(consol.df[which(consol.df$Variety=="vac8"),"Mom.bud.cell.vol"])
+consol.df[which(consol.df$Variety=="BY"),"cellvolMean"] = mean(consol.df[which(consol.df$Variety=="BY"),"Mom.bud.cell.vol"])
+consol.df[which(consol.df$Variety=="W3"),"cellvolMean"] = mean(consol.df[which(consol.df$Variety=="W3"),"Mom.bud.cell.vol"])
+consol.df[which(consol.df$Variety=="vac8 calc"),"cellvolMean"] = mean(consol.df[which(consol.df$Variety=="vac8 calc"),"Mom.bud.cell.vol"], na.rm = TRUE)
+consol.df$Mom.bud.vac.vol
+ggplot(consol.df) +
+  geom_point(aes(x=Variety, y=Mom.bud.cell.vol))+
+  geom_point (aes (x = Variety, y = cellvolMean, color = "red", size = 2.0)) +
+  ggtitle("Scatter Plot - Total Cell Volume vs Variety") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+#95% confidence interval for regression line green
+ggplot(consol.df,aes(x=Mom.bud.cell.vol, y=Mom.bud.vac.vol)) +
+  geom_point(aes(shape = Variety, color = Variety),alpha = 0.5) +
+  geom_smooth(method='lm', color = "red", fill = "green") +
+  ggtitle("Scatter Plot - Vac Volume vs Cell Volume, Entire Data Set 
+          Linear regression line in red with its 95% confidence interval in green ") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+#95% confidence interval for regression line green; apl5
+regVacvsCell<-lm(formula = Mom.bud.vac.vol ~ Mom.bud.cell.vol, data = consol.dfapl)
+summary(regVacvsCell)
+ggplot(consol.dfapl,aes(x=Mom.bud.cell.vol, y=Mom.bud.vac.vol)) +
+  geom_point() +
+  geom_smooth(method='lm', color = "red", fill = "green") +
+  ggtitle("Scatter Plot - Vac Volume vs Cell Volume, apl5 
+          Linear regression line in red with its 95% confidence interval in green ") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+#95% confidence interval for regression line green; BY
+ggplot(consol.dfBY,aes(x=Mom.bud.cell.vol, y=Mom.bud.vac.vol)) +
+  geom_point() +
+  geom_smooth(method='lm', color = "red", fill = "green") +
+  ggtitle("Scatter Plot - Vac Volume vs Cell Volume, BY 
+          Linear regression line in red with its 95% confidence interval in green ") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+#95% confidence interval for regression line green; vac8
+ggplot(consol.dfvac8,aes(x=Mom.bud.cell.vol, y=Mom.bud.vac.vol)) +
+  geom_point() +
+  geom_smooth(method='lm', color = "red", fill = "green") +
+  ggtitle("Scatter Plot - Vac Volume vs Cell Volume, vac8 
+          Linear regression line in red with its 95% confidence interval in green ") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+#95% confidence interval for regression line green; vac8 calc
+ggplot(consol.dfvac8_calc,aes(x=Mom.bud.cell.vol, y=Mom.bud.vac.vol)) +
+  geom_point() +
+  geom_smooth(method='lm', color = "red", fill = "green") +
+  ggtitle("Scatter Plot - Vac Volume vs Cell Volume, vac8 calc 
+          Linear regression line in red with its 95% confidence interval in green ") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+#95% confidence interval for regression line green; W3
+ggplot(consol.dfW3,aes(x=Mom.bud.cell.vol, y=Mom.bud.vac.vol)) +
+  geom_point() +
+  geom_smooth(method='lm', color = "red", fill = "green") +
+  ggtitle("Scatter Plot - Vac Volume vs Cell Volume, W3 
+          Linear regression line in red with its 95% confidence interval in green ") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+
+
+
+
+#One-way anova tests to check if means of any volume values differ statistically by variety 
+#note that Variety "vac8 calc" was excluded from this test as it appears to be a variant of vac8
+
+res.aov <- aov(Mom.bud.vac.vol ~ Variety, data = consol.df[-which(consol.df$Variety == "vac8 calc"),])
+summary(res.aov)
+#**********************VacVol Results**********************
+#             Df Sum Sq Mean Sq F value Pr(>F)    
+#Variety       3   3477  1159.0   64.73 <2e-16 ***
+#Residuals   864  15470    17.9                   
+#---
+#Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+res.aov <- aov(Mom.bud.cell.vol ~ Variety, data = consol.df[-which(consol.df$Variety == "vac8 calc"),])
+summary(res.aov)
+#**********************Total CellVol Results****************
+#             Df Sum Sq Mean Sq F value Pr(>F)    
+#Variety       3 122157   40719   79.29 <2e-16 ***
+#Residuals   864 443719     514                   
+#---
+#Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+res.aov <- aov(relVol ~ Variety, data = consol.df[-which(consol.df$Variety == "vac8 calc"),])
+summary(res.aov)
+#********************** relVol Results****************
+#             Df Sum Sq Mean Sq F value Pr(>F)    
+#Variety       3 0.3247 0.10822   63.19 <2e-16 ***
+#Residuals   864 1.4797 0.00171                   
+#---
+#Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+#Therefore , there is no indication of stastically different mean values between varieties
+#This would be expected because of the relatively large standard deviations of the samples
