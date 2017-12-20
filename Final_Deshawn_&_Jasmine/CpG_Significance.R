@@ -4,8 +4,8 @@ library(ggplot2)
 library(seqinr)
 setwd("~/Final Project")
 
-#A variable that contains the virus fasta files from our wd folder
-Files <- list.files(recursive = TRUE, pattern = "trim")
+#A variable that contains the virus fasta files from our wd folder (1 of each virus)
+Files <- list.files(recursive = TRUE, pattern = "trim") #Includes all files that have "trim" in name, which are all the virus files.
 
 #Loop to run through each fasta file and output the resuts of the wilcox tests for -a and -t CpG / no-CpG transition mutations
 for(i in 1:length(Files)){ #Will go the length of number of files
